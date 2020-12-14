@@ -1,4 +1,6 @@
-﻿using Harmony;
+﻿using CellMenu;
+using GTFO_DataDumper.HotReload;
+using Harmony;
 using MelonLoader;
 using System;
 using System.Collections;
@@ -10,7 +12,8 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnhollowerRuntimeLib;
+using UnityEngine;
 
 namespace DataDumper
 {
@@ -24,6 +27,9 @@ namespace DataDumper
 
         public override void OnApplicationStart()
         {
+            //Inject hot reloader
+            ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
+
             MelonLogger.Log("Reading game version...");
             
             if (!Directory.Exists(GameDataSavePath))
@@ -41,6 +47,12 @@ namespace DataDumper
 
 
             var harmony = HarmonyInstance.Create("com.dakkhuza.offshoot");
+            if (true) //Temp force on until meeelon loader config is setup
+            {
+                var hotReloadInjectPoint = typeof(CM_PageIntro).GetMethod("EXT_PressInject");
+                var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
+                harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
+            }
             harmony.PatchAll();
             /*
             *  Hash local game data for comparing
@@ -122,6 +134,17 @@ namespace DataDumper
                         File.WriteAllText(errorFilePath, __result);
                     }
                 }
+            }
+        }
+
+        public class HotReloadInjector
+        {
+            //[HarmonyPostfix]
+            public static void PostFix()
+            {
+                GameObject gameObject = new GameObject();
+                gameObject.AddComponent<HotReloader>();
+                UnityEngine.Object.DontDestroyOnLoad(gameObject);
             }
         }
     }

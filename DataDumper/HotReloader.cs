@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace GTFO_DataDumper
+namespace GTFO_DataDumper.HotReload
 {
 	class HotReloader : MonoBehaviour
 	{
