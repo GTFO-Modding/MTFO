@@ -36,7 +36,7 @@ namespace DataDumper
             string gameVersionPath = Path.Combine(Imports.GetGameDirectory(), "revision.txt");
             string gameVersion = File.ReadAllText(gameVersionPath);
             int.TryParse(gameVersion, out int result);
-            GAME_VERSION = 21848;
+            GAME_VERSION = result;
             MelonLogger.Log($"Game Version: {GAME_VERSION}");
 
 
