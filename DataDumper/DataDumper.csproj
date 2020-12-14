@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{36EFE303-E896-4042-8C58-F49BB19AA265}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataDumper</RootNamespace>
+    <AssemblyName>DataDumper</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Addons-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Addons-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MelonLoader.ModHandler">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\MelonLoader.ModHandler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Modules-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Modules-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnhollowerBaseLib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Utils-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Utils-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataDumperMain.cs" />
+    <Compile Include="HotReloader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GameData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameData.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GameData.ArchetypeDataBlock_bin.json" />
+    <None Include="Resources\GameData.BigPickupDistributionDataBlock_bin.json" />
+    <None Include="Resources\GameData.ChainedPuzzleDataBlock_bin.json" />
+    <None Include="Resources\GameData.ChainedPuzzleTypeDataBlock_bin.json" />
+    <None Include="Resources\GameData.CommodityDataBlock_bin.json" />
+    <None Include="Resources\GameData.ComplexResourceSetDataBlock_bin.json" />
+    <None Include="Resources\GameData.ConsumableDistributionDataBlock_bin.json" />
+    <None Include="Resources\GameData.CustomAssetShardDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyBalancingDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyBehaviorDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyDetectionDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyGroupDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyMovementDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemyPopulationDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnemySFXDataBlock_bin.json" />
+    <None Include="Resources\GameData.EnvironmentFeedbackDataBlock_bin.json" />
+    <None Include="Resources\GameData.EventSequenceActionDataBlock_bin.json" />
+    <None Include="Resources\GameData.EventSequenceDataBlock_bin.json" />
+    <None Include="Resources\GameData.ExpeditionBalanceDataBlock_bin.json" />
+    <None Include="Resources\GameData.ExtractionEventDataBlock_bin.json" />
+    <None Include="Resources\GameData.FeedbackDataBlock_bin.json" />
+    <None Include="Resources\GameData.FlashlightSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.FogSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.GameSetupDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearCategoryDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearCategoryFilterDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearDecalDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearFlashlightPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearFrontPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearMagPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearMeleeHandlePartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearMeleeHeadPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearMeleeNeckPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearMeleePommelPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearPaletteDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearPartAttachmentDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearPatternDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearPerkDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearReceiverPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearSightPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearStockPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolDeliveryPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolGripPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolMainPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolPayloadPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolScreenPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.GearToolTargetingPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.ItemDataBlock_bin.json" />
+    <None Include="Resources\GameData.ItemFPSSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.ItemPartDataBlock_bin.json" />
+    <None Include="Resources\GameData.LevelGenSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.LevelLayoutDataBlock_bin.json" />
+    <None Include="Resources\GameData.LightSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.LootDataBlock_bin.json" />
+    <None Include="Resources\GameData.MarkerGroupDataBlock_bin.json" />
+    <None Include="Resources\GameData.MiningMarkerDataBlock_bin.json" />
+    <None Include="Resources\GameData.MusicStateDataBlock_bin.json" />
+    <None Include="Resources\GameData.PlayerDataBlock_bin.json" />
+    <None Include="Resources\GameData.PlayerDialogDataBlock_bin.json" />
+    <None Include="Resources\GameData.PlayerOfflineGearDataBlock_bin.json" />
+    <None Include="Resources\GameData.RecoilDataBlock_bin.json" />
+    <None Include="Resources\GameData.RundownDataBlock_bin.json" />
+    <None Include="Resources\GameData.ServiceMarkerDataBlock_bin.json" />
+    <None Include="Resources\GameData.StaticSpawnDataBlock_bin.json" />
+    <None Include="Resources\GameData.SurvivalWavePopulationDataBlock_bin.json" />
+    <None Include="Resources\GameData.SurvivalWaveSettingsDataBlock_bin.json" />
+    <None Include="Resources\GameData.TechMarkerDataBlock_bin.json" />
+    <None Include="Resources\GameData.WardenObjectiveDataBlock_bin.json" />
+    <None Include="Resources\GameData.WeaponAudioDataBlock_bin.json" />
+    <None Include="Resources\GameData.WeaponDataBlock_bin.json" />
+    <None Include="Resources\GameData.WeaponMuzzleFlashDataBlock_bin.json" />
+    <None Include="Resources\GameData.WeaponShellCasingDataBlock_bin.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
