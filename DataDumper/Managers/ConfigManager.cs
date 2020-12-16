@@ -1,24 +1,21 @@
 ﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataDumper
+namespace DataDumper.Managers
 {
     public static class ConfigManager
     {
+        public static readonly string SECTION = "Data Dumper";
         static ConfigManager()
         {
             //Setup Config
-            MelonPrefs.RegisterString("Data Dumper", "RundownPackage", "default");
-            MelonPrefs.RegisterBool("Data Dumper", "EnableHotReload", false);
+            MelonPrefs.RegisterString(SECTION, "RundownPackage", "default");
+            MelonPrefs.RegisterBool(SECTION, "EnableHotReload", false);
+            MelonPrefs.RegisterBool(SECTION, "Verbose", false);
             MelonPrefs.SaveConfig();
 
             //Setup Hotreload
-            IsHotReloadEnabled = MelonPrefs.GetBool("Data Dumper", "EnableHotReload");
+            IsHotReloadEnabled = MelonPrefs.GetBool(SECTION, "EnableHotReload");
 
 
             //Get game version
@@ -30,14 +27,19 @@ namespace DataDumper
             int.TryParse(gameVersion, out int result);
             GAME_VERSION = result;
 
-            //Setup game data path
+            //Setup Paths
             GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, "GameData_" + GAME_VERSION);
 
-            string path = MelonPrefs.GetString("Data Dumper", "RundownPackage");
+            string path = MelonPrefs.GetString(SECTION, "RundownPackage");
             if (path != "default")
             {
                 GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, path);
             }
+            CustomPath = Path.Combine(GameDataPath, "Custom");
+
+            //Setup flags 
+            HasCustomContent = Directory.Exists(CustomPath);
+            IsVerbose = MelonPrefs.GetBool(SECTION, "Verbose");
 
             //Setup folders
             if (!Directory.Exists(GameDataPath))
@@ -47,7 +49,19 @@ namespace DataDumper
         }
 
         public static int GAME_VERSION;
+
+        //Strings
+        public static string MenuText;
+
+        //Paths
         public static string GameDataPath;
+        public static string CustomPath;
+
+        //Flags
+        public static bool HasCustomContent;
+        public static bool IsVerbose;
+
+        //Dev Tools
         public static bool IsHotReloadEnabled;
     }
 }
