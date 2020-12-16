@@ -19,10 +19,12 @@ namespace DataDumper
 {
     public class DataDumperMain : MelonMod
     {
-        public int GAME_VERSION;
         public static Dictionary<int, string> gameDataLookup;
-        //hardcoded
-        public static string GameDataSavePath = Path.Combine(MelonLoaderBase.UserDataPath, "GameData");
+        public const string
+            MODNAME = "Data-Dumper",
+            AUTHOR = "Dak",
+            GUID = "com." + AUTHOR + "." + MODNAME,
+            VERSION = "2.1.0";
 
 
         public override void OnApplicationStart()
@@ -30,30 +32,17 @@ namespace DataDumper
             //Inject hot reloader
             ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
 
-            MelonLogger.Log("Reading game version...");
-            
-            if (!Directory.Exists(GameDataSavePath))
-            {
-                Directory.CreateDirectory(GameDataSavePath);
-            }
+            MelonLogger.Log($"Game Version: {ConfigManager.GAME_VERSION}");
 
-            //This is really backwards because I was getting werid crashes when just trying to read the text
-            //and couldn't be bothered to figure out why
-            string gameVersionPath = Path.Combine(Imports.GetGameDirectory(), "revision.txt");
-            string gameVersion = File.ReadAllText(gameVersionPath);
-            int.TryParse(gameVersion, out int result);
-            GAME_VERSION = result;
-            MelonLogger.Log($"Game Version: {GAME_VERSION}");
-
-
-            var harmony = HarmonyInstance.Create("com.dakkhuza.offshoot");
-            if (true) //Temp force on until meeelon loader config is setup
+            //Setup hotreload if enabled
+            var harmony = HarmonyInstance.Create(GUID);
+            if (ConfigManager.IsHotReloadEnabled)
             {
                 var hotReloadInjectPoint = typeof(CM_PageIntro).GetMethod("EXT_PressInject");
                 var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
                 harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
             }
-            harmony.PatchAll();
+
             /*
             *  Hash local game data for comparing
             */
@@ -93,7 +82,7 @@ namespace DataDumper
                         MelonLogger.Log("Found " + name);
                         try
                         {
-                            string filePath = Path.Combine(GameDataSavePath, name + ".json");
+                            string filePath = Path.Combine(ConfigManager.GameDataPath, name + ".json");
                             if (File.Exists(filePath))
                             {
                                 MelonLogger.Log("Reading [" + name + "] from disk...");
@@ -113,7 +102,7 @@ namespace DataDumper
                     }
                     else
                     {
-                        string errorPath = Path.Combine(GameDataSavePath, "UNKNOWN");
+                        string errorPath = Path.Combine(ConfigManager.GameDataPath, "UNKNOWN");
                         if (!Directory.Exists(errorPath))
                         {
                             Directory.CreateDirectory(errorPath);
@@ -134,17 +123,6 @@ namespace DataDumper
                         File.WriteAllText(errorFilePath, __result);
                     }
                 }
-            }
-        }
-
-        public class HotReloadInjector
-        {
-            //[HarmonyPostfix]
-            public static void PostFix()
-            {
-                GameObject gameObject = new GameObject();
-                gameObject.AddComponent<HotReloader>();
-                UnityEngine.Object.DontDestroyOnLoad(gameObject);
             }
         }
     }

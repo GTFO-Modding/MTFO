@@ -10,6 +10,17 @@ using UnityEngine;
 
 namespace GTFO_DataDumper.HotReload
 {
+	public class HotReloadInjector
+	{
+		public static void PostFix()
+		{
+			GameObject gameObject = new GameObject();
+			gameObject.AddComponent<HotReloader>();
+			UnityEngine.Object.DontDestroyOnLoad(gameObject);
+		}
+	}
+
+
 	class HotReloader : MonoBehaviour
 	{
 		private CM_PageRundown_New Rundown;

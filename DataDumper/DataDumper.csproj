@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigManager.cs" />
     <Compile Include="DataDumperMain.cs" />
     <Compile Include="HotReloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
