@@ -20,7 +20,7 @@ namespace DataDumper
             MODNAME = "Data-Dumper",
             AUTHOR = "Dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
-            VERSION = "2.1.0";
+            VERSION = "2.2.0";
 
 
         public override void OnApplicationStart()
