@@ -47,6 +47,9 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Modules-ASM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,13 +72,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom\Scans.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="DataDumperMain.cs" />
     <Compile Include="HotReloader.cs" />
-    <Compile Include="Managers\CustomManager.cs" />
+    <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Patches\Patch_BinaryDecoder.cs" />
     <Compile Include="Patches\Patch_IntroText.cs" />
-    <Compile Include="PathUtil.cs" />
+    <Compile Include="Patches\Patch_PuzzleManager.cs" />
+    <Compile Include="Utilities\Log.cs" />
+    <Compile Include="Utilities\PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameData.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -165,5 +171,9 @@
     <None Include="Resources\GameData.WeaponMuzzleFlashDataBlock_bin.json" />
     <None Include="Resources\GameData.WeaponShellCasingDataBlock_bin.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\bin\Debug\$(ProjectName).dll" "C:\Program Files (x86)\Steam\steamapps\common\GTFO\Mods" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Resources;
 using System.Text;
 using UnhollowerRuntimeLib;
@@ -17,7 +16,6 @@ namespace DataDumper
     public class DataDumperMain : MelonMod
     {
         public static Dictionary<int, string> gameDataLookup;
-        public CustomManager CustomManager;
         public const string
             MODNAME = "Data-Dumper",
             AUTHOR = "Dak",
@@ -29,10 +27,6 @@ namespace DataDumper
         {
             //Inject hot reloader
             ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
-            if (ConfigManager.HasCustomContent)
-            {
-                CustomManager = new CustomManager();
-            }
 
             MelonLogger.Log($"Game Version: {ConfigManager.GAME_VERSION}");
 
