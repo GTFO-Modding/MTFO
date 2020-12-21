@@ -1,4 +1,5 @@
 ﻿using DataDumper.Managers;
+using DataDumper.Utilities;
 using Harmony;
 using MelonLoader;
 using System.IO;
@@ -19,19 +20,19 @@ namespace DataDumper.Patches
 
                 if (name != null)
                 {
-                    MelonLogger.Log("Found " + name);
+                    Log.Verbose("Found " + name);
                     try
                     {
                         string filePath = Path.Combine(ConfigManager.GameDataPath, name + ".json");
                         if (File.Exists(filePath))
                         {
-                            MelonLogger.Log("Reading [" + name + "] from disk...");
+                            Log.Verbose("Reading [" + name + "] from disk...");
                             __result = File.ReadAllText(filePath);
                             return;
                         }
                         else
                         {
-                            MelonLogger.Log("No file found at [" + filePath + "], writing file to disk...");
+                            Log.Verbose("No file found at [" + filePath + "], writing file to disk...");
                             File.WriteAllText(filePath, __result);
                         }
                     }
