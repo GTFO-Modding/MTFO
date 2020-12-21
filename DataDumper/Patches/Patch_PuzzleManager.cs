@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Harmony;
+﻿using Harmony;
 using DataDumper.Managers;
 using DataDumper.Custom.Scans;
 using DataDumper.Utilities;
@@ -49,7 +44,6 @@ namespace DataDumper.Patches
                 CP_Bioscan_Graphics scanGx = scanPrefab.GetComponent<CP_Bioscan_Graphics>();
                 scanGx.m_radius = scan.BioScanGraphics.Radius;
                 scanGx.m_colors = ConvertToColorMode(scan.BioScanGraphics.colorModeColor);
-
 
 
                 instance.m_puzzleComponentPrefabs.Add(scan.PersistentID, scanPrefab);
