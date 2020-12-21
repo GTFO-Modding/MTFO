@@ -61,14 +61,17 @@ namespace DataDumper.Patches
             foreach(CustomClusterScan cluster in ConfigManager.CustomContent.ScanHolder.Clusters)
             {
                 Log.Debug($"Adding cluster with ID of [{cluster.PersistentID}]");
+
                 //Base Instance
                 GameObject clusterBase = instance.m_puzzleComponentPrefabs[cluster.BaseCluster];
                 GameObject clusterPrefab = UnityEngine.Object.Instantiate(clusterBase);
                 clusterPrefab.transform.position = new Vector3(1000, 1000, 1000);
 
-                //Setup Cluster
+                //Get references
                 CP_Cluster_Core clusterCore = clusterPrefab.GetComponent<CP_Cluster_Core>();
                 GameObject scanPrefab = instance.m_puzzleComponentPrefabs[cluster.BioscanID];
+
+                //Set values
                 clusterCore.m_amountOfPuzzles = cluster.ClusterCount;
                 clusterCore.m_childPuzzlePrefab = scanPrefab;
                 clusterCore.m_distanceBetween = cluster.DistanceBetweenScans;
@@ -77,7 +80,7 @@ namespace DataDumper.Patches
 
 
 
-                instance.m_puzzleComponentPrefabs.Add(cluster.PersistentID, scanPrefab);
+                instance.m_puzzleComponentPrefabs.Add(cluster.PersistentID, clusterPrefab);
             }
         }
 
