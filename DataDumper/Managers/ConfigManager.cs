@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using DataDumper.Utilities;
+using MelonLoader;
 using System.IO;
 
 namespace DataDumper.Managers
@@ -45,6 +46,10 @@ namespace DataDumper.Managers
 
             //Setup Managers
             CustomContent = new ContentManager();
+
+
+            //Debug
+            Log.Debug("HasCustomContent: " + HasCustomContent);
         }
 
         public static int GAME_VERSION;
