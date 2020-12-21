@@ -18,7 +18,7 @@ namespace DataDumper.Managers
             Handlers = new Dictionary<string, Action<string>>
             {
                 { "welcome.txt", SetupWelcomeText },
-                { "chainedpuzzle.json", SetupChainedPuzzles }
+                { "puzzletypes.json", SetupChainedPuzzles }
             };
             Init();
         }
@@ -40,70 +40,13 @@ namespace DataDumper.Managers
 
         public void SetupWelcomeText(string path)
         {
+            Log.Debug("Welcome text found");
             ConfigManager.MenuText = File.ReadAllText(path);
         }
 
         public void SetupChainedPuzzles(string path)
         {
-            /*ScanHolder testing = new ScanHolder() { 
-                Scans = new List<CustomBioScan> { 
-                    new CustomBioScan() { 
-                        BaseScan = 2, 
-                        PersistentID = 100,
-                        ScanProgression = 2f, 
-                        ScanRadius = 10f, 
-                        ReduceWhenNoPlayer = true,
-                        ReduceSpeed = 10,
-                        PlayersInScanMulti = new float[] { 1f, 1f, 1f, 1f }, 
-                        BioScanGraphics = new CustomBioScan.BioScanGx() { 
-                            Radius = 10f,
-                            colorModeColor = new CustomBioScan.BioScanColorByMode[]
-                            {
-                                new CustomBioScan.BioScanColorByMode()
-                                {
-                                    mode = ChainedPuzzles.eChainedPuzzleGraphicsColorMode.Active,
-                                    r = 0,
-                                    b = 1,
-                                    g = 0
-                                },
-                                new CustomBioScan.BioScanColorByMode()
-                                {
-                                    mode = ChainedPuzzles.eChainedPuzzleGraphicsColorMode.Alarm_Active,
-                                    r = 0,
-                                    b = 1,
-                                    g = 1
-                                },
-                                new CustomBioScan.BioScanColorByMode()
-                                {
-                                    mode = ChainedPuzzles.eChainedPuzzleGraphicsColorMode.Waiting,
-                                    r = 0,
-                                    b = 0,
-                                    g = 1
-                                },
-                                new CustomBioScan.BioScanColorByMode()
-                                {
-                                    mode = ChainedPuzzles.eChainedPuzzleGraphicsColorMode.Alarm_Waiting,
-                                    r = 1,
-                                    b = 1,
-                                    g = 0
-                                }
-                            }
-                        } 
-                    } 
-                },
-                Clusters = new List<CustomClusterScan>
-                {
-                    new CustomClusterScan()
-                    {
-                        BaseCluster = 4,
-                        PersistentID = 101,
-                        ClusterCount = 16,
-                        BioscanID = 100
-                    }
-                }
-            };*/
-            //File.WriteAllText(path, JsonConvert.SerializeObject(testing));
-
+            Log.Debug("Custom puzzles found");
             ScanHolder = JsonConvert.DeserializeObject<ScanHolder>(File.ReadAllText(path));
         }
     }
