@@ -22,6 +22,11 @@ namespace DataDumper.Utilities
             MelonLogger.Log("DEBUG: " + msg);
         }
 
+        public static void Message(string msg)
+        {
+            MelonLogger.Log(msg);
+        }
+
         public static void Error(string msg)
         {
             MelonLogger.LogError(msg);
