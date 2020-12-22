@@ -1,6 +1,6 @@
 ﻿using CellMenu;
 using DataDumper.Managers;
-using GTFO_DataDumper.HotReload;
+using DataDumper.HotReload;
 using Harmony;
 using MelonLoader;
 using System.Collections;

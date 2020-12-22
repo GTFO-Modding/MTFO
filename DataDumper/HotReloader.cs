@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace GTFO_DataDumper.HotReload
+namespace DataDumper.HotReload
 {
 	public class HotReloadInjector
 	{
