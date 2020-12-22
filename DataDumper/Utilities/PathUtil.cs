@@ -10,11 +10,27 @@ namespace DataDumper.Utilities
 {
     public static class PathUtil
     {
-        public static bool CheckPath(string path, out string CombinedPath)
+        public static bool CheckCustomFile(string file, out string CombinedPath)
         {
-            CombinedPath = Path.Combine(ConfigManager.CustomPath, path);
+            CombinedPath = Path.Combine(ConfigManager.CustomPath, file);
             if (File.Exists(CombinedPath)) return true;
             return false;
+        }
+
+        public static bool CheckFile(string pathToFile)
+        {
+            if (File.Exists(pathToFile)) return true;
+            return false;
+        }
+
+        public static string MakeRelativeDirectory(string path)
+        {
+            string CombinedPath = Path.Combine(MelonLoader.MelonLoaderBase.UserDataPath, path);
+            if (!Directory.Exists(CombinedPath))
+            {
+                Directory.CreateDirectory(CombinedPath);
+            }
+            return CombinedPath;
         }
     }
 }

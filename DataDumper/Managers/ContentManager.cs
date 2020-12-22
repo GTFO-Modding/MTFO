@@ -29,7 +29,7 @@ namespace DataDumper.Managers
 
             foreach(string key in Handlers.Keys)
             {
-                if (PathUtil.CheckPath(key, out string path))
+                if (PathUtil.CheckCustomFile(key, out string path))
                 {
                     Handlers.TryGetValue(key, out Action<string> value);
                     value?.Invoke(path);
