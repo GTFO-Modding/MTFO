@@ -21,5 +21,10 @@ namespace DataDumper.Utilities
             if (!ConfigManager.IsDebug) return;
             MelonLogger.Log("DEBUG: " + msg);
         }
+
+        public static void Error(string msg)
+        {
+            MelonLogger.LogError(msg);
+        }
     }
 }

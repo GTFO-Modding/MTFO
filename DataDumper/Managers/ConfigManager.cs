@@ -45,7 +45,14 @@ namespace DataDumper.Managers
             }
 
             //Setup Managers
-            CustomContent = new ContentManager();
+            try
+            {
+                CustomContent = new ContentManager();
+            } catch
+            {
+                HasCustomContent = false;
+                Log.Error("Failed to init custom content!\nIs the JSON in your PuzzleTypes.json file valid?");
+            }
 
 
             //Debug
