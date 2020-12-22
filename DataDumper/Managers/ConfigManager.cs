@@ -6,18 +6,25 @@ namespace DataDumper.Managers
 {
     public static class ConfigManager
     {
-        public static readonly string SECTION = "Data Dumper";
+        private const string 
+            SECTION = "Data Dumper",
+            RUNDOWNPACKAGE = "RundownPackage",
+            HOTRELOAD = "EnableHotReload",
+            VERBOSE = "Verbose",
+            DEBUG = "Debug",
+            CUSTOM_FOLDER = "Custom";
+
         static ConfigManager()
         {
             //Setup Config
-            MelonPrefs.RegisterString(SECTION, "RundownPackage", "default");
-            MelonPrefs.RegisterBool(SECTION, "EnableHotReload", false);
-            MelonPrefs.RegisterBool(SECTION, "Verbose", false);
-            MelonPrefs.RegisterBool(SECTION, "Debug", false);
+            MelonPrefs.RegisterString(SECTION, RUNDOWNPACKAGE, "default"); 
+            MelonPrefs.RegisterBool(SECTION, HOTRELOAD, false);
+            MelonPrefs.RegisterBool(SECTION, VERBOSE, false);
+            MelonPrefs.RegisterBool(SECTION, DEBUG, false);
             MelonPrefs.SaveConfig();
 
             //Setup Hotreload
-            IsHotReloadEnabled = MelonPrefs.GetBool(SECTION, "EnableHotReload");
+            IsHotReloadEnabled = MelonPrefs.GetBool(SECTION, HOTRELOAD);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
@@ -25,18 +32,18 @@ namespace DataDumper.Managers
             //Setup Paths
             GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, "GameData_" + GAME_VERSION);
 
-            string path = MelonPrefs.GetString(SECTION, "RundownPackage");
+            string path = MelonPrefs.GetString(SECTION, RUNDOWNPACKAGE);
             if (path != "default")
             {
                 GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, path);
             }
 
-            CustomPath = Path.Combine(GameDataPath, "Custom");
+            CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
 
             //Setup flags 
             HasCustomContent = Directory.Exists(CustomPath);
-            IsVerbose = MelonPrefs.GetBool(SECTION, "Verbose");
-            IsDebug = MelonPrefs.GetBool(SECTION, "Debug");
+            IsVerbose = MelonPrefs.GetBool(SECTION, VERBOSE);
+            IsDebug = MelonPrefs.GetBool(SECTION, DEBUG);
 
             //Setup folders
             if (!Directory.Exists(GameDataPath))
