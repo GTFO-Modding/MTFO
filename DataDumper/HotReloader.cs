@@ -1,4 +1,5 @@
 ﻿using CellMenu;
+using DataDumper.Utilities;
 using GameData;
 using MelonLoader;
 using System;
@@ -32,6 +33,7 @@ namespace DataDumper.HotReload
 
 		public void Update()
 		{
+			//this is the worst code ive ever written but it kept breaking when i did it otherways, please someone fix this
 			if (Rundown == null)
 			{
 				Rundown = FindObjectOfType<CM_PageRundown_New>();
@@ -88,7 +90,7 @@ namespace DataDumper.HotReload
 
 			GameDataInit.ReInitialize();
 			Rundown.gameObject.SetActive(true);
-			MelonLogger.Log("Reloaded");
+			Log.Message("Reloaded!");
 		}
 	}
 }
