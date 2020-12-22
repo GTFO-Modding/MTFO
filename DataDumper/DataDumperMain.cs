@@ -63,10 +63,6 @@ namespace DataDumper
             sw.Stop();
             MelonLogger.Log("Hash done!");
             MelonLogger.Log("Time elapsed: " + sw.Elapsed);
-
-            File.WriteAllText(@"D:\Modding\GTFO_modding\DataDumper_ResourceGenerator\DataDumper_ResourceGenerator\bin\right.json", JsonConvert.SerializeObject(gameDataLookup));
-
-            //gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(@"D:\Modding\GTFO_modding\DataDumper_ResourceGenerator\DataDumper_ResourceGenerator\bin\21982.json"));
         }
     }
 }
