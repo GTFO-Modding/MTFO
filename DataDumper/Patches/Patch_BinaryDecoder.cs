@@ -16,7 +16,7 @@ namespace DataDumper.Patches
             if (__result.Contains("Headers"))
             {
                 int hash = __result.GetHashCode();
-                DataDumperMain.gameDataLookup.TryGetValue(hash, out string name);
+                ConfigManager.gameDataLookup.TryGetValue(hash, out string name);
 
                 if (name != null)
                 {

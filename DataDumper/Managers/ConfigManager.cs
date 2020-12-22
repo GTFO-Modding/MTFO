@@ -1,6 +1,9 @@
 ﻿using DataDumper.Utilities;
 using MelonLoader;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace DataDumper.Managers
 {
@@ -12,7 +15,11 @@ namespace DataDumper.Managers
             HOTRELOAD = "EnableHotReload",
             VERBOSE = "Verbose",
             DEBUG = "Debug",
-            CUSTOM_FOLDER = "Custom";
+            CUSTOM_FOLDER = "Custom",
+            GAMEDATA_LOOKUP = @"https://www.dakkhuza.com/projects/GTFO/gdlookup/";
+
+        private static readonly WebClient webClient = new WebClient();
+        
 
         static ConfigManager()
         {
@@ -30,13 +37,18 @@ namespace DataDumper.Managers
             GAME_VERSION = GetGameVersion();
 
             //Setup Paths
-            GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, "GameData_" + GAME_VERSION);
+            GameDataLookupPath = PathUtil.MakeRelativeDirectory("_gamedatalookup");
 
             string path = MelonPrefs.GetString(SECTION, RUNDOWNPACKAGE);
-            if (path != "default")
-            {
-                GameDataPath = Path.Combine(MelonLoaderBase.UserDataPath, path);
-            }
+            GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
+
+            //if (path != "default")
+            //{
+            //    GameDataPath = PathUtil.MakeRelativeDirectory(path);
+            //} else
+            //{
+            //    GameDataPath = PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
+            //}
 
             CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
 
@@ -61,12 +73,40 @@ namespace DataDumper.Managers
                 Log.Error("Failed to init custom content!\nIs the JSON in your PuzzleTypes.json file valid?");
             }
 
+            //Setup GameData Lookup
+            string versionLookupPath = Path.Combine(GameDataLookupPath, GAME_VERSION + ".json");
+            if (PathUtil.CheckFile(versionLookupPath))
+            {
+                Log.Message("Found game data lookup locally!");
+                gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
+            } 
+            else
+            {
+                Log.Message("No local game data lookup found!");
+                Log.Message("Downloading game data lookup...");
+                try
+                {
+                    string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
+                    string gameDataLookupString = webClient.DownloadString(downloadURL);
+                    gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
+                    Log.Message("Writing game data lookup to disk...");
+                    File.WriteAllText(versionLookupPath, gameDataLookupString);
+                }
+                catch
+                {
+                    Log.Error("Failed to download the gamedata lookup table! Cannot load custom mods and game data blocks will be named incorrectly!");
+                }
+                Log.Message("Done!");
+            }
 
             //Debug
             Log.Debug("HasCustomContent: " + HasCustomContent);
         }
 
         public static int GAME_VERSION;
+
+        //GameData Lookup
+        public static Dictionary<int, string> gameDataLookup = new Dictionary<int, string>();
 
         //Managers
         public static ContentManager CustomContent;
@@ -77,6 +117,7 @@ namespace DataDumper.Managers
         //Paths
         public static string GameDataPath;
         public static string CustomPath;
+        private static string GameDataLookupPath;
 
         //Flags
         public static bool HasCustomContent;

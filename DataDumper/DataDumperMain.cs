@@ -18,7 +18,6 @@ namespace DataDumper
 {
     public class DataDumperMain : MelonMod
     {
-        public static Dictionary<int, string> gameDataLookup;
         public const string
             MODNAME = "Data-Dumper",
             AUTHOR = "Dak",
@@ -41,28 +40,6 @@ namespace DataDumper
                 var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
                 harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
             }
-
-            /*
-            *  Hash local game data for comparing
-            */
-            //Create gamedata lookup
-            MelonLogger.Log("Hashing GameData...");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            gameDataLookup = new Dictionary<int, string>();
-            ResourceSet gameData = GameData.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
-            IDictionaryEnumerator gameDataCollection = gameData.GetEnumerator();
-            
-            while (gameDataCollection.MoveNext())
-            {
-                byte[] byteKey = gameDataCollection.Value as byte[];
-                string key = Encoding.UTF8.GetString(byteKey);
-                int hash = key.GetStableHashCode();
-                gameDataLookup.Add(hash, gameDataCollection.Key as string);
-            }
-            sw.Stop();
-            MelonLogger.Log("Hash done!");
-            MelonLogger.Log("Time elapsed: " + sw.Elapsed);
         }
     }
 }
