@@ -1,6 +1,7 @@
 ﻿using CellMenu;
 using DataDumper.Managers;
 using DataDumper.HotReload;
+using DataDumper.Utilities;
 using Harmony;
 using MelonLoader;
 using System.Collections;
@@ -10,6 +11,8 @@ using System.Globalization;
 using System.Resources;
 using System.Text;
 using UnhollowerRuntimeLib;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace DataDumper
 {
@@ -49,17 +52,21 @@ namespace DataDumper
             gameDataLookup = new Dictionary<int, string>();
             ResourceSet gameData = GameData.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
             IDictionaryEnumerator gameDataCollection = gameData.GetEnumerator();
-
+            
             while (gameDataCollection.MoveNext())
             {
                 byte[] byteKey = gameDataCollection.Value as byte[];
                 string key = Encoding.UTF8.GetString(byteKey);
-                int hash = key.GetHashCode();
+                int hash = key.GetStableHashCode();
                 gameDataLookup.Add(hash, gameDataCollection.Key as string);
             }
             sw.Stop();
             MelonLogger.Log("Hash done!");
             MelonLogger.Log("Time elapsed: " + sw.Elapsed);
+
+            File.WriteAllText(@"D:\Modding\GTFO_modding\DataDumper_ResourceGenerator\DataDumper_ResourceGenerator\bin\right.json", JsonConvert.SerializeObject(gameDataLookup));
+
+            //gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(@"D:\Modding\GTFO_modding\DataDumper_ResourceGenerator\DataDumper_ResourceGenerator\bin\21982.json"));
         }
     }
 }

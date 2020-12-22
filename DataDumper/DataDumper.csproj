@@ -80,6 +80,7 @@
     <Compile Include="Patches\Patch_BinaryDecoder.cs" />
     <Compile Include="Patches\Patch_IntroText.cs" />
     <Compile Include="Patches\Patch_PuzzleManager.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
