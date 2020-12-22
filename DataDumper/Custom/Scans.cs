@@ -20,7 +20,6 @@ namespace DataDumper.Custom.Scans
         public uint PersistentID;
         public bool RequireAll;
         public float ScanRadius;
-        public float ScanProgression;
         public float[] PlayersInScanMulti;
         public float ReduceSpeed;
         public bool ReduceWhenNoPlayer;

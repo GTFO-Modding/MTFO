@@ -36,7 +36,6 @@ namespace DataDumper.Patches
                 playerScanner.m_reduceSpeed = scan.ReduceSpeed;
                 playerScanner.m_reduceWhenNoPlayer = scan.ReduceWhenNoPlayer;
                 playerScanner.m_scanSpeedDecline = scan.ScanSpeedDecline;
-                playerScanner.m_scanProgression = scan.ScanProgression;
                 playerScanner.m_scanRadius = scan.ScanRadius;
                 playerScanner.m_scanSpeeds = scan.PlayersInScanMulti;
 
