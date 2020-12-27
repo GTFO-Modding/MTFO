@@ -19,7 +19,8 @@ namespace DataDumper.Managers
             GAMEDATA_LOOKUP = @"https://www.dakkhuza.com/projects/GTFO/gdlookup/";
 
         private static readonly WebClient webClient = new WebClient();
-        
+
+        // Anylitics Manager
 
         static ConfigManager()
         {
@@ -74,30 +75,7 @@ namespace DataDumper.Managers
             }
 
             //Setup GameData Lookup
-            string versionLookupPath = Path.Combine(GameDataLookupPath, GAME_VERSION + ".json");
-            if (PathUtil.CheckFile(versionLookupPath))
-            {
-                Log.Message("Found game data lookup locally!");
-                gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
-            } 
-            else
-            {
-                Log.Message("No local game data lookup found!");
-                Log.Message("Downloading game data lookup...");
-                try
-                {
-                    string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
-                    string gameDataLookupString = webClient.DownloadString(downloadURL);
-                    gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
-                    Log.Message("Writing game data lookup to disk...");
-                    File.WriteAllText(versionLookupPath, gameDataLookupString);
-                }
-                catch
-                {
-                    Log.Error("Failed to download the gamedata lookup table! Cannot load custom mods and game data blocks will be named incorrectly!");
-                }
-                Log.Message("Done!");
-            }
+            GetGameDataLookup();
 
             //Debug
             Log.Debug("HasCustomContent: " + HasCustomContent);
@@ -123,9 +101,38 @@ namespace DataDumper.Managers
         public static bool HasCustomContent;
         public static bool IsVerbose;
         public static bool IsDebug;
+        public static bool IsModded;
 
         //Dev Tools
         public static bool IsHotReloadEnabled;
+
+        private static void GetGameDataLookup()
+        {
+            string versionLookupPath = Path.Combine(GameDataLookupPath, GAME_VERSION + ".json");
+            if (PathUtil.CheckFile(versionLookupPath))
+            {
+                Log.Message("Found game data lookup locally!");
+                gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
+            }
+            else
+            {
+                Log.Message("No local game data lookup found!");
+                Log.Message("Downloading game data lookup...");
+                try
+                {
+                    string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
+                    string gameDataLookupString = webClient.DownloadString(downloadURL);
+                    gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
+                    Log.Message("Writing game data lookup to disk...");
+                    File.WriteAllText(versionLookupPath, gameDataLookupString);
+                }
+                catch
+                {
+                    Log.Error("Failed to download the gamedata lookup table! Cannot load custom mods and game data blocks will be named incorrectly!");
+                }
+                Log.Message("Done!");
+            }
+        }
 
 
         private static int GetGameVersion()
