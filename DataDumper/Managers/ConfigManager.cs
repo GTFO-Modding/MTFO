@@ -42,15 +42,6 @@ namespace DataDumper.Managers
 
             string path = MelonPrefs.GetString(SECTION, RUNDOWNPACKAGE);
             GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
-
-            //if (path != "default")
-            //{
-            //    GameDataPath = PathUtil.MakeRelativeDirectory(path);
-            //} else
-            //{
-            //    GameDataPath = PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
-            //}
-
             CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
 
             //Setup flags 
@@ -95,7 +86,7 @@ namespace DataDumper.Managers
         //Paths
         public static string GameDataPath;
         public static string CustomPath;
-        private static string GameDataLookupPath;
+        private static readonly string GameDataLookupPath;
 
         //Flags
         public static bool HasCustomContent;
@@ -116,21 +107,34 @@ namespace DataDumper.Managers
             }
             else
             {
-                Log.Message("No local game data lookup found!");
-                Log.Message("Downloading game data lookup...");
+                Log.Message($"No local game data lookup found matching version {GAME_VERSION}!");
+                Log.Message($"Trying to download game data lookup for version {GAME_VERSION}...");
                 try
                 {
                     string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
                     string gameDataLookupString = webClient.DownloadString(downloadURL);
                     gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
-                    Log.Message("Writing game data lookup to disk...");
+                    Log.Message("Caching game data lookup to disk...");
                     File.WriteAllText(versionLookupPath, gameDataLookupString);
                 }
                 catch
                 {
-                    Log.Error("Failed to download the gamedata lookup table! Cannot load custom mods and game data blocks will be named incorrectly!");
+                    Log.Warn("Failed to download game data lookup for this version!");
+                    Log.Message("Checking for previous version to fallback too...");
+                    //This could be better, make it grab all the files in the lookup folder, order by name, pick latest / highest numbered
+                    for (int version = GAME_VERSION; version > GAME_VERSION - 500; version--)
+                    {
+                        string localVerPath = Path.Combine(GameDataLookupPath, version + ".json");
+                        if (PathUtil.CheckFile(localVerPath))
+                        {
+                            Log.Message("Found older lookup table!");
+                            gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(localVerPath));
+                            Log.Warn($"USING OLD LOOKUP TABLE - Version {version}, SOME GAME DATA BLOCKS MAY BE MISSNAMED AND CUSTOM DATA BLOCKS MAY NOT LOAD!!");
+                            return;
+                        }
+                    }
+                    Log.Error("Failed to find any lookup tables! Cannot load custom mods and game data blocks will be named incorrectly!");
                 }
-                Log.Message("Done!");
             }
         }
 
