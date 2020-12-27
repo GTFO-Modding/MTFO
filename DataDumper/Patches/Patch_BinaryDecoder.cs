@@ -38,7 +38,7 @@ namespace DataDumper.Patches
                     }
                     catch
                     {
-                        MelonLogger.LogError("Failed to write " + name + " to disk!!");
+                        Log.Error("Failed to write " + name + " to disk!!");
                     }
                 }
                 else
@@ -49,18 +49,18 @@ namespace DataDumper.Patches
                         Directory.CreateDirectory(errorPath);
                     }
                     string errorFilePath = Path.Combine(errorPath, hash + ".json");
-                    MelonLogger.LogError("Failed to find match for hash [" + hash + "]!");
+                    Log.Error("Failed to find match for hash [" + hash + "]! Cannot load custom data for this block!");
                     if (File.Exists(errorFilePath))
                     {
-                        MelonLogger.LogWarning("-- FILE FOUND IN DUMP FOLDER WITH MATCHING HASH FILE NAME, LOADING INSTEAD --");
+                        Log.Warn("-- FILE FOUND IN DUMP FOLDER WITH MATCHING HASH FILE NAME, LOADING INSTEAD --");
                         __result = File.ReadAllText(errorFilePath);
                         return;
                     }
 
-                    MelonLogger.LogError("----- FILE CONTENT DUMP START -----");
-                    MelonLogger.LogError(__result);
-                    MelonLogger.LogError("----- FILE CONTENT DUMP END -----");
-                    MelonLogger.LogError("DUMPING FILE CONTENTS TO [" + errorFilePath + "]");
+                    Log.Debug("----- FILE CONTENT DUMP START -----");
+                    Log.Debug(__result);
+                    Log.Debug("----- FILE CONTENT DUMP END -----");
+                    Log.Debug("DUMPING FILE CONTENTS TO [" + errorFilePath + "]");
                     File.WriteAllText(errorFilePath, __result);
                 }
             }
