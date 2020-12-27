@@ -38,6 +38,7 @@ namespace DataDumper.Patches
                 playerScanner.m_scanSpeedDecline = scan.ScanSpeedDecline;
                 playerScanner.m_scanRadius = scan.ScanRadius;
                 playerScanner.m_scanSpeeds = scan.PlayersInScanMulti;
+                playerScanner.m_requireAllPlayers = scan.RequireAll;
 
                 //Setup Graphics
                 CP_Bioscan_Graphics scanGx = scanPrefab.GetComponent<CP_Bioscan_Graphics>();
