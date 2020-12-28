@@ -13,13 +13,13 @@ namespace DataDumper.Utilities
         public static void Verbose(string msg)
         {
             if (!ConfigManager.IsVerbose) return;
-            MelonLogger.Log("VERBOSE: " + msg);
+            MelonLogger.Log("[VERBOSE]: " + msg);
         }
 
         public static void Debug(string msg)
         {
             if (!ConfigManager.IsDebug) return;
-            MelonLogger.Log("DEBUG: " + msg);
+            MelonLogger.Log("[DEBUG] " + msg);
         }
 
         public static void Message(string msg)
@@ -30,6 +30,11 @@ namespace DataDumper.Utilities
         public static void Error(string msg)
         {
             MelonLogger.LogError(msg);
+        }
+
+        public static void Warn(string msg)
+        {
+            MelonLogger.LogWarning(msg);
         }
     }
 }

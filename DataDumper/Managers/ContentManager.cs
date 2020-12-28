@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MelonLoader;
 using System.IO;
 using DataDumper.Custom.Scans;
+using DataDumper.Custom.Glowstick;
 using Newtonsoft.Json;
 using DataDumper.Utilities;
 
@@ -12,13 +13,15 @@ namespace DataDumper.Managers
     {
         private readonly Dictionary<string, Action<string>> Handlers;
         public ScanHolder ScanHolder;
+        public GlowstickHolder GlowstickHolder;
 
         public ContentManager()
         {
             Handlers = new Dictionary<string, Action<string>>
             {
                 { "welcome.txt", SetupWelcomeText },
-                { "puzzletypes.json", SetupChainedPuzzles }
+                { "puzzletypes.json", SetupChainedPuzzles },
+                { "glowsticks.json", SetupGlowsticks }
             };
             Init();
         }
@@ -48,6 +51,13 @@ namespace DataDumper.Managers
         {
             Log.Debug("Custom puzzles found");
             ScanHolder = JsonConvert.DeserializeObject<ScanHolder>(File.ReadAllText(path));
+        }
+
+        public void SetupGlowsticks(string path)
+        {
+            Log.Debug("Custom glowsticks found");
+            GlowstickHolder = JsonConvert.DeserializeObject<GlowstickHolder>(File.ReadAllText(path));
+            GlowstickHolder.Setup();
         }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using CellMenu;
 using DataDumper.Utilities;
 using GameData;
-using MelonLoader;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace DataDumper.HotReload
@@ -52,6 +47,9 @@ namespace DataDumper.HotReload
 					RectTransform rect = ReloadButton.gameObject.GetComponent<RectTransform>();
 					rect.transform.position += new Vector3(0, 100, 0);
 					CM_Item Button = ReloadButton.GetComponent<CM_Item>();
+
+
+
 
 
 					Button.SetText("Reload Game Data");

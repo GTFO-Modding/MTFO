@@ -35,6 +35,15 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Addons-ASM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CellSound-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\CellSound-ASM.dll</HintPath>
+    </Reference>
+    <Reference Include="DropServerSDK-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\DropServerSDK-ASM.dll</HintPath>
+    </Reference>
+    <Reference Include="GlobalFramework-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\GlobalFramework-ASM.dll</HintPath>
+    </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
@@ -49,6 +58,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SNet_ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\SNet_ASM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,20 +78,30 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
     <Reference Include="Utils-ASM">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Utils-ASM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Wwise-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Wwise-ASM.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\HotReloader.cs" />
+    <Compile Include="Custom\Glowsticks.cs" />
     <Compile Include="Custom\Scans.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="DataDumperMain.cs" />
-    <Compile Include="HotReloader.cs" />
     <Compile Include="Managers\ContentManager.cs" />
+    <Compile Include="Patches\Patch_RichPresence.cs" />
     <Compile Include="Patches\Patch_BinaryDecoder.cs" />
     <Compile Include="Patches\Patch_IntroText.cs" />
     <Compile Include="Patches\Patch_PuzzleManager.cs" />
+    <Compile Include="Patches\Patch_Glowstick.cs" />
+    <Compile Include="Patches\Patch_RundownTierMarker.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\PathUtil.cs" />
