@@ -1,6 +1,7 @@
 ﻿using DataDumper.Utilities;
 using MelonLoader;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -59,9 +60,10 @@ namespace DataDumper.Managers
             try
             {
                 CustomContent = new ContentManager();
-            } catch
+            } catch (Exception err)
             {
                 HasCustomContent = false;
+                Log.Error(err.ToString());
                 Log.Error("Failed to init custom content!\nIs the JSON in your PuzzleTypes.json file valid?");
             }
 
