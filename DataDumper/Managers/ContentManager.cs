@@ -36,7 +36,7 @@ namespace DataDumper.Managers
                 {
                     Handlers.TryGetValue(key, out Action<string> value);
                     value?.Invoke(path);
-                    MelonLogger.Log(path);
+                    Log.Debug(path);
                 }
             }
         }
