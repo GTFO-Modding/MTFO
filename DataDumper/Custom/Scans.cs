@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DataDumper.Custom.Scans
+namespace DataDumper.Custom
 {
     public class ScanHolder
     {

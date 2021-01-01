@@ -7,16 +7,19 @@ using GameData;
 using Harmony;
 using UnityEngine;
 using DataDumper.Managers;
-using DataDumper.Custom.Glowstick;
 using DataDumper.Utilities;
 using FX_EffectSystem;
 using SNetwork;
+using DataDumper.Custom;
 
 namespace DataDumper.Patches
 {
     [HarmonyPatch(typeof(GlowstickInstance), "Update")]
     class Patch_Glowstick
     {
+        //This could be written more efficently if you re-make the glowstick logic and then just overwrite the original
+        //
+        //but im lazy
         public static void Postfix(ref GlowstickInstance __instance)
         {
             if (ConfigManager.CustomContent.GlowstickHolder == null) return; 

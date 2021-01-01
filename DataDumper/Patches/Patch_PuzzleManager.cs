@@ -1,10 +1,10 @@
 ﻿using Harmony;
 using DataDumper.Managers;
-using DataDumper.Custom.Scans;
 using DataDumper.Utilities;
 using ChainedPuzzles;
 using UnityEngine;
-using static DataDumper.Custom.Scans.CustomBioScan;
+using static DataDumper.Custom.CustomBioScan;
+using DataDumper.Custom;
 
 namespace DataDumper.Patches
 {

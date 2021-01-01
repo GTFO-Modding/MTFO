@@ -7,7 +7,7 @@ using UnityEngine;
 using DataDumper.Utilities;
 using Newtonsoft.Json;
 
-namespace DataDumper.Custom.Glowstick
+namespace DataDumper.Custom
 {
     public class GlowstickHolder
     {
