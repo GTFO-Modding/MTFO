@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MelonLoader;
 using System.IO;
-using DataDumper.Custom.Scans;
-using DataDumper.Custom.Glowstick;
 using Newtonsoft.Json;
 using DataDumper.Utilities;
+using DataDumper.Custom;
 
 namespace DataDumper.Managers
 {
@@ -14,6 +12,8 @@ namespace DataDumper.Managers
         private readonly Dictionary<string, Action<string>> Handlers;
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
+        public TierNames TierNames;
+        public FogRepellerConfig FogRepellerConfig;
 
         public ContentManager()
         {
@@ -21,7 +21,9 @@ namespace DataDumper.Managers
             {
                 { "welcome.txt", SetupWelcomeText },
                 { "puzzletypes.json", SetupChainedPuzzles },
-                { "glowsticks.json", SetupGlowsticks }
+                { "glowsticks.json", SetupGlowsticks },
+                { "tiernames.json", SetupTierNames },
+                { "fogrep_config.json", SetupFogRep }
             };
             Init();
         }
@@ -58,6 +60,16 @@ namespace DataDumper.Managers
             Log.Debug("Custom glowsticks found");
             GlowstickHolder = JsonConvert.DeserializeObject<GlowstickHolder>(File.ReadAllText(path));
             GlowstickHolder.Setup();
+        }
+
+        public void SetupTierNames(string path)
+        {
+            TierNames = JsonConvert.DeserializeObject<TierNames>(File.ReadAllText(path));
+        }
+
+        public void SetupFogRep(string path)
+        {
+            FogRepellerConfig = JsonConvert.DeserializeObject<FogRepellerConfig>(File.ReadAllText(path));
         }
     }
 }

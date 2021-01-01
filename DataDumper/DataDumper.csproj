@@ -91,15 +91,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\HotReloader.cs" />
+    <Compile Include="Custom\FogRepellerConfig.cs" />
     <Compile Include="Custom\Glowsticks.cs" />
     <Compile Include="Custom\Scans.cs" />
+    <Compile Include="Custom\TierNames.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="DataDumperMain.cs" />
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Patches\Patch_BinaryDecoder.cs" />
+    <Compile Include="Patches\Patch_FogRepellerInstance.cs" />
     <Compile Include="Patches\Patch_IntroText.cs" />
     <Compile Include="Patches\Patch_PuzzleManager.cs" />
     <Compile Include="Patches\Patch_Glowstick.cs" />
+    <Compile Include="Patches\Patch_RundownTierMarker.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\PathUtil.cs" />
