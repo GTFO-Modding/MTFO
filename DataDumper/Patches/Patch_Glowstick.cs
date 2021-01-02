@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameData;
-using Harmony;
-using UnityEngine;
+﻿using HarmonyLib;
 using DataDumper.Managers;
-using DataDumper.Utilities;
-using FX_EffectSystem;
-using SNetwork;
 using DataDumper.Custom;
 
 namespace DataDumper.Patches

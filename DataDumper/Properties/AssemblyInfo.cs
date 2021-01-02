@@ -1,14 +1,10 @@
-﻿using DataDumper;
-using MelonLoader;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: MelonInfo(typeof(DataDumperMain), DataDumperMain.MODNAME, DataDumperMain.VERSION, DataDumperMain.AUTHOR, null)]
-[assembly: MelonGame("10 Chambers Collective", "GTFO")]
 [assembly: AssemblyTitle("DataDumper")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

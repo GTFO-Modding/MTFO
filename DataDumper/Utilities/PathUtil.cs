@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using DataDumper.Managers;
+using BepInEx;
 
 namespace DataDumper.Utilities
 {
@@ -25,7 +26,7 @@ namespace DataDumper.Utilities
 
         public static string MakeRelativeDirectory(string path)
         {
-            string CombinedPath = Path.Combine(MelonLoader.MelonLoaderBase.UserDataPath, path);
+            string CombinedPath = Path.Combine(Path.Combine(Paths.ConfigPath, "Rundowns"), path);
             if (!Directory.Exists(CombinedPath))
             {
                 Directory.CreateDirectory(CombinedPath);

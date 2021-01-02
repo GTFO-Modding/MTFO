@@ -1,12 +1,10 @@
 ﻿using DataDumper.Managers;
 using DataDumper.Utilities;
-using Harmony;
-using MelonLoader;
+using HarmonyLib;
 using System.IO;
 
 namespace DataDumper.Patches
 {
-
     [HarmonyPatch(typeof(BinaryEncoder), "Decode")]
     class Patch_BinaryDecoder
     {
@@ -15,7 +13,7 @@ namespace DataDumper.Patches
             //Ensure the file is game data related
             if (__result.Contains("Headers"))
             {
-                int hash = __result.GetHashCode();
+                int hash = __result.GetStableHashCode();
                 ConfigManager.gameDataLookup.TryGetValue(hash, out string name);
 
                 if (name != null)
@@ -57,9 +55,12 @@ namespace DataDumper.Patches
                         return;
                     }
 
-                    Log.Debug("----- FILE CONTENT DUMP START -----");
-                    Log.Debug(__result);
-                    Log.Debug("----- FILE CONTENT DUMP END -----");
+                    if (ConfigManager.DumpUnknownFiles)
+                    {
+                        Log.Debug("----- FILE CONTENT DUMP START -----");
+                        Log.Debug(__result);
+                        Log.Debug("----- FILE CONTENT DUMP END -----");
+                    }
                     Log.Debug("DUMPING FILE CONTENTS TO [" + errorFilePath + "]");
                     File.WriteAllText(errorFilePath, __result);
                 }

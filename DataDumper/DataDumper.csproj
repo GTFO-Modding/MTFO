@@ -31,65 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Addons-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Addons-ASM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CellSound-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\CellSound-ASM.dll</HintPath>
-    </Reference>
-    <Reference Include="DropServerSDK-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\DropServerSDK-ASM.dll</HintPath>
-    </Reference>
-    <Reference Include="GlobalFramework-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\GlobalFramework-ASM.dll</HintPath>
-    </Reference>
-    <Reference Include="Il2Cppmscorlib">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MelonLoader.ModHandler">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\MelonLoader.ModHandler.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Modules-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Modules-ASM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SNet_ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\SNet_ASM.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnhollowerBaseLib">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Utils-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Utils-ASM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Wwise-ASM">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\MelonLoader\Managed\Wwise-ASM.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Components\HotReloader.cs" />
     <Compile Include="Custom\FogRepellerConfig.cs" />
     <Compile Include="Custom\Glowsticks.cs" />
@@ -104,14 +45,81 @@
     <Compile Include="Patches\Patch_PuzzleManager.cs" />
     <Compile Include="Patches\Patch_Glowstick.cs" />
     <Compile Include="Patches\Patch_RundownTierMarker.cs" />
+    <Compile Include="ConfigStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfigStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Addons-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\unhollowed\Addons-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.Core">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\core\BepInEx.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.IL2CPP">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\core\BepInEx.IL2CPP.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\unhollowed\Il2Cppmscorlib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Modules-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\unhollowed\Modules-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnhollowerBaseLib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\core\UnhollowerBaseLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnhollowerRuntimeLib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\core\UnhollowerRuntimeLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\unhollowed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Utils-ASM">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\unhollowed\Utils-ASM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ConfigStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConfigStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)\bin\Debug\$(ProjectName).dll" "C:\Program Files (x86)\Steam\steamapps\common\GTFO\Mods" /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

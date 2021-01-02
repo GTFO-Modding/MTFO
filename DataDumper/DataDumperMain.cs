@@ -1,36 +1,37 @@
 ﻿using CellMenu;
 using DataDumper.Managers;
 using DataDumper.HotReload;
-using Harmony;
-using MelonLoader;
 using UnhollowerRuntimeLib;
+using BepInEx.IL2CPP;
+using BepInEx;
+using HarmonyLib;
+
 
 namespace DataDumper
 {
-    public class DataDumperMain : MelonMod
+    [BepInPlugin(GUID, MODNAME, VERSION)]
+    public class DataDumperMain : BasePlugin
     {
         public const string
             MODNAME = "Data-Dumper",
             AUTHOR = "Dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
-            VERSION = "2.3.0";
+            VERSION = "3.0.0";
 
 
-        public override void OnApplicationStart()
+        public override void Load()
         {
-            //Inject hot reloader
             ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
 
-            MelonLogger.Log($"Game Version: {ConfigManager.GAME_VERSION}");
 
-            //Setup hotreload if enabled
-            var harmony = HarmonyInstance.Create(GUID);
+            var harmony = new Harmony(GUID);
             if (ConfigManager.IsHotReloadEnabled)
             {
                 var hotReloadInjectPoint = typeof(CM_PageIntro).GetMethod("EXT_PressInject");
                 var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
                 harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
             }
+            harmony.PatchAll();
         }
     }
 }

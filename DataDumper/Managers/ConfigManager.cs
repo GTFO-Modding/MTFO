@@ -1,6 +1,8 @@
 ﻿using DataDumper.Utilities;
-using MelonLoader;
+using DataDumper;
 using Newtonsoft.Json;
+using BepInEx.Configuration;
+using BepInEx;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,30 +12,25 @@ namespace DataDumper.Managers
 {
     public static class ConfigManager
     {
-        private const string 
-            SECTION = "Data Dumper",
-            RUNDOWNPACKAGE = "RundownPackage",
-            HOTRELOAD = "EnableHotReload",
-            VERBOSE = "Verbose",
-            DEBUG = "Debug",
+        private const string
             CUSTOM_FOLDER = "Custom",
             GAMEDATA_LOOKUP = @"https://www.dakkhuza.com/projects/GTFO/gdlookup/";
-
+        
         private static readonly WebClient webClient = new WebClient();
+        
 
         // Anylitics Manager
 
         static ConfigManager()
-        {
+        {            
             //Setup Config
-            MelonPrefs.RegisterString(SECTION, RUNDOWNPACKAGE, "default"); 
-            MelonPrefs.RegisterBool(SECTION, HOTRELOAD, false);
-            MelonPrefs.RegisterBool(SECTION, VERBOSE, false);
-            MelonPrefs.RegisterBool(SECTION, DEBUG, false);
-            MelonPrefs.SaveConfig();
+            var CONFIG_PATH = Path.Combine(Paths.ConfigPath, "DataDumper.cfg");
 
-            //Setup Hotreload
-            IsHotReloadEnabled = MelonPrefs.GetBool(SECTION, HOTRELOAD);
+            ConfigFile config = new ConfigFile(CONFIG_PATH, true);
+
+            _enableHotReload = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_HOTRELOAD, false, ConfigStrings.SETTING_HOTRELOAD_DESC);
+            _rundownFolder = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_RUNDOWNPACKAGE, "default", ConfigStrings.SETTING_RUNDOWNPACKAGE_DESC);
+            _dumpFiles = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_DUMPFILE, false, ConfigStrings.SETTING_DUMPFILE_DESC);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
@@ -41,14 +38,12 @@ namespace DataDumper.Managers
             //Setup Paths
             GameDataLookupPath = PathUtil.MakeRelativeDirectory("_gamedatalookup");
 
-            string path = MelonPrefs.GetString(SECTION, RUNDOWNPACKAGE);
+            string path = _rundownFolder.Value;
             GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
             CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
 
             //Setup flags 
             HasCustomContent = Directory.Exists(CustomPath);
-            IsVerbose = MelonPrefs.GetBool(SECTION, VERBOSE);
-            IsDebug = MelonPrefs.GetBool(SECTION, DEBUG);
 
             //Setup folders
             if (!Directory.Exists(GameDataPath))
@@ -74,6 +69,10 @@ namespace DataDumper.Managers
             Log.Debug("HasCustomContent: " + HasCustomContent);
         }
 
+        private static readonly ConfigEntry<bool> _enableHotReload;
+        private static readonly ConfigEntry<string> _rundownFolder;
+        private static readonly ConfigEntry<bool> _dumpFiles;
+
         public static int GAME_VERSION;
 
         //GameData Lookup
@@ -92,12 +91,24 @@ namespace DataDumper.Managers
 
         //Flags
         public static bool HasCustomContent;
-        public static bool IsVerbose;
-        public static bool IsDebug;
         public static bool IsModded;
 
         //Dev Tools
-        public static bool IsHotReloadEnabled;
+        public static bool IsHotReloadEnabled 
+        { 
+            get
+            {
+                return _enableHotReload.Value;
+            } 
+        }
+
+        public static bool DumpUnknownFiles
+        {
+            get
+            {
+                return _dumpFiles.Value;
+            }
+        }
 
         private static void GetGameDataLookup()
         {
@@ -106,6 +117,7 @@ namespace DataDumper.Managers
             {
                 Log.Message("Found game data lookup locally!");
                 gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
+                Log.Debug(gameDataLookup.Count);
             }
             else
             {
@@ -145,7 +157,7 @@ namespace DataDumper.Managers
         {
             //This is really backwards because I was getting werid crashes when just trying to read the text
             //and couldn't be bothered to figure out why, probably some EOL shit or smthing
-            string gameVersionPath = Path.Combine(Imports.GetGameDirectory(), "revision.txt");
+            string gameVersionPath = Path.Combine(Paths.GameRootPath, "revision.txt");
             string gameVersion = File.ReadAllText(gameVersionPath);
             int.TryParse(gameVersion, out int result);
             return result;

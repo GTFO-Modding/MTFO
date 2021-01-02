@@ -1,40 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelonLoader;
-using DataDumper.Managers;
+﻿using BepInEx.Logging;
 
 namespace DataDumper.Utilities
 {
     public static class Log
     {
-        public static void Verbose(string msg)
+        private static readonly ManualLogSource logger;
+        static Log()
         {
-            if (!ConfigManager.IsVerbose) return;
-            MelonLogger.Log("[VERBOSE]: " + msg);
+            logger = new ManualLogSource(DataDumperMain.MODNAME);
+            Logger.Sources.Add(logger);
+        }
+        public static void Verbose(object msg)
+        {
+            logger.LogInfo(msg);
         }
 
-        public static void Debug(string msg)
+        public static void Debug(object msg)
         {
-            if (!ConfigManager.IsDebug) return;
-            MelonLogger.Log("[DEBUG] " + msg);
+            logger.LogDebug(msg);
         }
 
-        public static void Message(string msg)
+        public static void Message(object msg)
         {
-            MelonLogger.Log(msg);
+            logger.LogMessage(msg);
         }
 
-        public static void Error(string msg)
+        public static void Error(object msg)
         {
-            MelonLogger.LogError(msg);
+            logger.LogError(msg);
         }
 
-        public static void Warn(string msg)
+        public static void Warn(object msg)
         {
-            MelonLogger.LogWarning(msg);
+            logger.LogWarning(msg);
         }
     }
 }
