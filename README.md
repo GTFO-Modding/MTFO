@@ -17,7 +17,8 @@ Drag and drop the unzipped folder into bepinex/plugins
 ## Built With
 
 * [BepInEx](https://github.com/BepInEx/BepInEx) - Loading
-* [Newtonsoft Json](https://www.newtonsoft.com/json) - Custom content loading
+* [Harmony](https://harmony.pardeike.net/) - Patching
+* [Newtonsoft Json](https://www.newtonsoft.com/json) - Json parsing, what else would it be used for?
 
 ## License
 
