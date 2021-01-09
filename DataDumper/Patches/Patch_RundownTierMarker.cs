@@ -17,11 +17,11 @@ namespace DataDumper.Patches
             ContentManager contentManager = ConfigManager.CustomContent;
             if (contentManager == null) return;
 
-            __instance.m_tierMarker1.m_name = contentManager.TierNames.Tier1;//"TRANSFUSION";
-            __instance.m_tierMarker2.m_name = contentManager.TierNames.Tier2;//"VENIPUNCTURE";
-            __instance.m_tierMarker3.m_name = contentManager.TierNames.Tier3;//"MALAISE";
-            __instance.m_tierMarker4.m_name = contentManager.TierNames.Tier4;//"ANEMIA";
-            __instance.m_tierMarker5.m_name = contentManager.TierNames.Tier5;//"HYPOTENSION";
+            __instance.m_tierMarker1.m_name = contentManager.TierNames.Tier1;
+            __instance.m_tierMarker2.m_name = contentManager.TierNames.Tier2;
+            __instance.m_tierMarker3.m_name = contentManager.TierNames.Tier3;
+            __instance.m_tierMarker4.m_name = contentManager.TierNames.Tier4;
+            __instance.m_tierMarker5.m_name = contentManager.TierNames.Tier5;
 
             __instance.m_tierMarker1.UpdateHeader();
             __instance.m_tierMarker2.UpdateHeader();
