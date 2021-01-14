@@ -14,7 +14,7 @@ namespace DataDumper.Managers
     {
         private const string
             CUSTOM_FOLDER = "Custom",
-            GAMEDATA_LOOKUP = @"https://www.dakkhuza.com/projects/GTFO/gdlookup/";
+            GAMEDATA_LOOKUP = @"https://lookup.gtfomodding.dev/lookup/";
         
         private static readonly WebClient webClient = new WebClient();
         
