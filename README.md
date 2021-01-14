@@ -1,4 +1,4 @@
-# Data Dumper
+# Mod the FUCK out
 
 A bepinex plugin that saves / loads the internal configuration files (hereafter refered to as "Data Blocks") as raw json files.
 
