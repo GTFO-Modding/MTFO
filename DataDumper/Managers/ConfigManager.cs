@@ -66,7 +66,27 @@ namespace DataDumper.Managers
             GetGameDataLookup();
 
             //Debug
-            Log.Debug("HasCustomContent: " + HasCustomContent);
+            Log.Debug("---- DEBUG INFO ----");
+
+            Log.Debug($"Time: {DateTime.Now}");
+            Log.Debug($"Game Version: {GAME_VERSION}");
+            Log.Debug($"Loading Rundown: {path}");
+            Log.Debug($"GDLU Length: {gameDataLookup.Count}");
+
+
+            Log.Debug("---- PATHS ----");
+
+            Log.Debug($"Path to rundown: {GameDataPath}");
+            Log.Debug($"Path to custom content: {CustomPath}");
+            Log.Debug($"Path to GDLU: {GameDataLookupPath}");
+
+            Log.Debug("---- FLAGS ----");
+
+            Log.Debug($"Has Custom Content? {HasCustomContent}");
+            Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
+            Log.Debug($"Dump Unknown Files? {DumpUnknownFiles}");
+
+            Log.Debug($"---- DEBUG END ----");
         }
 
         private static readonly ConfigEntry<bool> _enableHotReload;
@@ -117,7 +137,6 @@ namespace DataDumper.Managers
             {
                 Log.Message("Found game data lookup locally!");
                 gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
-                Log.Debug(gameDataLookup.Count);
             }
             else
             {
