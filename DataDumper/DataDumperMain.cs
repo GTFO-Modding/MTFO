@@ -16,7 +16,7 @@ namespace DataDumper
             MODNAME = "Data-Dumper",
             AUTHOR = "Dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
-            VERSION = "3.0.0";
+            VERSION = "3.0.1";
 
 
         public override void Load()
