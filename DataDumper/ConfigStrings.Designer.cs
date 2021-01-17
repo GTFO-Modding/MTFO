@@ -97,7 +97,8 @@ namespace DataDumper {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debug Setting\nIf enabled, when an unknown data block is encounterd the files contents will be dumped into the console.
+        ///   Looks up a localized string similar to Debug Setting
+        ///If enabled, when an unknown data block is encounterd the files contents will be dumped into the console.
         /// </summary>
         internal static string SETTING_DUMPFILE_DESC {
             get {
@@ -115,7 +116,9 @@ namespace DataDumper {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Developer Setting\nHot reloading is an experimental feature that allows the user to reload game data blocks without having to restart the game\nCurrently this only works on the &apos;Rundown&apos; and &apos;LevelLayout&apos; data blocks.
+        ///   Looks up a localized string similar to Developer Setting
+        ///Hot reloading is an experimental feature that allows the user to reload game data blocks without having to restart the game
+        ///Currently this only works on the &apos;Rundown&apos; and &apos;LevelLayout&apos; data blocks.
         /// </summary>
         internal static string SETTING_HOTRELOAD_DESC {
             get {
@@ -133,7 +136,9 @@ namespace DataDumper {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of the folder containing the game data to load\nFolders containing game data should be placed in config&gt;Rundowns\n&apos;default&apos; loads a folder matching &apos;GameData_XXXXX&apos; where X is the current game version.
+        ///   Looks up a localized string similar to The name of the folder containing the game data to load
+        ///Folders containing game data should be placed in config&gt;Rundowns
+        ///&apos;default&apos; loads a folder matching &apos;GameData_XXXXX&apos; where X is the current game version.
         /// </summary>
         internal static string SETTING_RUNDOWNPACKAGE_DESC {
             get {

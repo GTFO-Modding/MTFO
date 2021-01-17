@@ -130,18 +130,23 @@
     <value>DumpUnknown</value>
   </data>
   <data name="SETTING_DUMPFILE_DESC" xml:space="preserve">
-    <value>Debug Setting\nIf enabled, when an unknown data block is encounterd the files contents will be dumped into the console</value>
+    <value>Debug Setting
+If enabled, when an unknown data block is encounterd the files contents will be dumped into the console</value>
   </data>
   <data name="SETTING_HOTRELOAD" xml:space="preserve">
     <value>EnableHotReload</value>
   </data>
   <data name="SETTING_HOTRELOAD_DESC" xml:space="preserve">
-    <value>Developer Setting\nHot reloading is an experimental feature that allows the user to reload game data blocks without having to restart the game\nCurrently this only works on the 'Rundown' and 'LevelLayout' data blocks</value>
+    <value>Developer Setting
+Hot reloading is an experimental feature that allows the user to reload game data blocks without having to restart the game
+Currently this only works on the 'Rundown' and 'LevelLayout' data blocks</value>
   </data>
   <data name="SETTING_RUNDOWNPACKAGE" xml:space="preserve">
     <value>RundownPackage</value>
   </data>
   <data name="SETTING_RUNDOWNPACKAGE_DESC" xml:space="preserve">
-    <value>The name of the folder containing the game data to load\nFolders containing game data should be placed in config&gt;Rundowns\n'default' loads a folder matching 'GameData_XXXXX' where X is the current game version</value>
+    <value>The name of the folder containing the game data to load
+Folders containing game data should be placed in config&gt;Rundowns
+'default' loads a folder matching 'GameData_XXXXX' where X is the current game version</value>
   </data>
 </root>
