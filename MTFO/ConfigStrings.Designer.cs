@@ -39,7 +39,7 @@ namespace MTFO {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DataDumper.ConfigStrings", typeof(ConfigStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MTFO.ConfigStrings", typeof(ConfigStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
