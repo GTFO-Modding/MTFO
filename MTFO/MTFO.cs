@@ -14,7 +14,7 @@ namespace MTFO
     {
         public const string
             MODNAME = "MTFO",
-            AUTHOR = "Dak",
+            AUTHOR = "dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
             VERSION = "4.0.0";
 
