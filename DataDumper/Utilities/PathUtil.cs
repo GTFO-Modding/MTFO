@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using DataDumper.Managers;
+using MTFO.Managers;
 using BepInEx;
 
-namespace DataDumper.Utilities
+namespace MTFO.Utilities
 {
     public static class PathUtil
     {

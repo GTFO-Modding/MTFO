@@ -1,5 +1,5 @@
-﻿using DataDumper.Utilities;
-using DataDumper;
+﻿using MTFO.Utilities;
+using MTFO;
 using Newtonsoft.Json;
 using BepInEx.Configuration;
 using BepInEx;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace DataDumper.Managers
+namespace MTFO.Managers
 {
     public static class ConfigManager
     {

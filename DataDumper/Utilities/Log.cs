@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
+using MTFO.Managers;
 
-namespace DataDumper.Utilities
+namespace MTFO.Utilities
 {
     public static class Log
     {
@@ -12,6 +13,7 @@ namespace DataDumper.Utilities
         }
         public static void Verbose(object msg)
         {
+            if (!ConfigManager.IsVerbose) return;
             logger.LogInfo(msg);
         }
 

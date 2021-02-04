@@ -1,12 +1,12 @@
 ﻿using HarmonyLib;
-using DataDumper.Managers;
-using DataDumper.Utilities;
+using MTFO.Managers;
+using MTFO.Utilities;
 using ChainedPuzzles;
 using UnityEngine;
-using static DataDumper.Custom.CustomBioScan;
-using DataDumper.Custom;
+using static MTFO.Custom.CustomBioScan;
+using MTFO.Custom;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(ChainedPuzzleManager), "OnAssetsLoaded")]
     class Patch_PuzzleManager

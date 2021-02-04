@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataDumper {
+namespace MTFO {
     using System;
     
     

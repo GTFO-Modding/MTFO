@@ -1,13 +1,13 @@
 ﻿using HarmonyLib;
-using DataDumper.Managers;
+using MTFO.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataDumper.Custom;
+using MTFO.Custom;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     //[HarmonyPatch(typeof(FogRepellerInstance), "Start")]
     //class Patch_FogRepellerInstance

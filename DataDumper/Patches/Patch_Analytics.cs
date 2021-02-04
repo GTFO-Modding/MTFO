@@ -3,7 +3,7 @@ using GameEvent;
 using SNetwork;
 using HarmonyLib;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(AnalyticsManager), "OnGameEvent", typeof(GameEventData))]
     class Patch_Analytics

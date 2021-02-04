@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataDumper.Utilities
+namespace MTFO.Utilities
 {
     public static class DataDumperExtensions
     {

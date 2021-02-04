@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using DataDumper.Utilities;
-using DataDumper.Custom;
+using MTFO.Utilities;
+using MTFO.Custom;
 
-namespace DataDumper.Managers
+namespace MTFO.Managers
 {
     public class ContentManager
     {

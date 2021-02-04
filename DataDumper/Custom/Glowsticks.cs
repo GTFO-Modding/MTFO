@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using DataDumper.Utilities;
+using MTFO.Utilities;
 using Newtonsoft.Json;
 
-namespace DataDumper.Custom
+namespace MTFO.Custom
 {
     public class GlowstickHolder
     {

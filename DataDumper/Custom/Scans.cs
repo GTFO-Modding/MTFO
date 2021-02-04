@@ -1,7 +1,7 @@
 ﻿using ChainedPuzzles;
 using System.Collections.Generic;
 
-namespace DataDumper.Custom
+namespace MTFO.Custom
 {
     public class ScanHolder
     {

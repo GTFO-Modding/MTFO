@@ -1,5 +1,5 @@
 ﻿using CellMenu;
-using DataDumper.Managers;
+using MTFO.Managers;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(CM_PageRundown_New), "PlaceRundown")]
     class Patch_RundownTierMarker

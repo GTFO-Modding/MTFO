@@ -1,8 +1,8 @@
 ﻿using CellMenu;
 using HarmonyLib;
-using DataDumper.Managers;
+using MTFO.Managers;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(CM_StartupScreen), "SetText")]
     class Patch_IntroText

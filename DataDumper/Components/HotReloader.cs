@@ -1,10 +1,10 @@
 ﻿using CellMenu;
-using DataDumper.Utilities;
+using MTFO.Utilities;
 using GameData;
 using System;
 using UnityEngine;
 
-namespace DataDumper.HotReload
+namespace MTFO.HotReload
 {
 	public class HotReloadInjector
 	{

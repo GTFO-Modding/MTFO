@@ -1,9 +1,9 @@
-﻿using DataDumper.Managers;
-using DataDumper.Utilities;
+﻿using MTFO.Managers;
+using MTFO.Utilities;
 using HarmonyLib;
 using System.IO;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(BinaryEncoder), "Decode")]
     class Patch_BinaryDecoder

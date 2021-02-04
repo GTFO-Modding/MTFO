@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using DataDumper.Managers;
-using DataDumper.Custom;
+using MTFO.Managers;
+using MTFO.Custom;
 
-namespace DataDumper.Patches
+namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(GlowstickInstance), "Update")]
     class Patch_Glowstick
