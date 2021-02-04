@@ -145,5 +145,23 @@ namespace MTFO {
                 return ResourceManager.GetString("SETTING_RUNDOWNPACKAGE_DESC", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verbose.
+        /// </summary>
+        internal static string SETTING_VERBOSE {
+            get {
+                return ResourceManager.GetString("SETTING_VERBOSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggles logging of information that tends to clog the console.
+        /// </summary>
+        internal static string SETTING_VERBOSE_DESC {
+            get {
+                return ResourceManager.GetString("SETTING_VERBOSE_DESC", resourceCulture);
+            }
+        }
     }
 }

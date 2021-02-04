@@ -31,6 +31,7 @@ namespace MTFO.Managers
             _enableHotReload = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_HOTRELOAD, false, ConfigStrings.SETTING_HOTRELOAD_DESC);
             _rundownFolder = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_RUNDOWNPACKAGE, "default", ConfigStrings.SETTING_RUNDOWNPACKAGE_DESC);
             _dumpFiles = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_DUMPFILE, false, ConfigStrings.SETTING_DUMPFILE_DESC);
+            _isVerbose = config.Bind(ConfigStrings.SECTION_DEBUG, ConfigStrings.SETTING_VERBOSE, false, ConfigStrings.SETTING_VERBOSE_DESC);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
@@ -85,6 +86,7 @@ namespace MTFO.Managers
             Log.Debug($"Has Custom Content? {HasCustomContent}");
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Dump Unknown Files? {DumpUnknownFiles}");
+            Log.Debug($"Verbose Logging? {IsVerbose}");
 
             Log.Debug($"---- DEBUG END ----");
         }
@@ -92,6 +94,7 @@ namespace MTFO.Managers
         private static readonly ConfigEntry<bool> _enableHotReload;
         private static readonly ConfigEntry<string> _rundownFolder;
         private static readonly ConfigEntry<bool> _dumpFiles;
+        private static readonly ConfigEntry<bool> _isVerbose;
 
         public static int GAME_VERSION;
 
@@ -112,6 +115,13 @@ namespace MTFO.Managers
         //Flags
         public static bool HasCustomContent;
         public static bool IsModded;
+        public static bool IsVerbose
+        {
+            get
+            {
+                return _isVerbose.Value;
+            }
+        }
 
         //Dev Tools
         public static bool IsHotReloadEnabled 

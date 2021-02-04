@@ -149,4 +149,10 @@ Currently this only works on the 'Rundown' and 'LevelLayout' data blocks</value>
 Folders containing game data should be placed in config&gt;Rundowns
 'default' loads a folder matching 'GameData_XXXXX' where X is the current game version</value>
   </data>
+  <data name="SETTING_VERBOSE" xml:space="preserve">
+    <value>Verbose</value>
+  </data>
+  <data name="SETTING_VERBOSE_DESC" xml:space="preserve">
+    <value>Toggles logging of information that tends to clog the console</value>
+  </data>
 </root>
