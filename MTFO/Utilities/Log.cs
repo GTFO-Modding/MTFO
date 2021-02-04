@@ -8,7 +8,7 @@ namespace MTFO.Utilities
         private static readonly ManualLogSource logger;
         static Log()
         {
-            logger = new ManualLogSource(DataDumperMain.MODNAME);
+            logger = new ManualLogSource(MTFO.MODNAME);
             Logger.Sources.Add(logger);
         }
         public static void Verbose(object msg)

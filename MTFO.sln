@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataDumper", "DataDumper\DataDumper.csproj", "{36EFE303-E896-4042-8C58-F49BB19AA265}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTFO", "MTFO\MTFO.csproj", "{36EFE303-E896-4042-8C58-F49BB19AA265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

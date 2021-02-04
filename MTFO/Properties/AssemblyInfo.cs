@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle(DataDumperMain.MODNAME)]
+[assembly: AssemblyTitle(MTFO.MTFO.MODNAME)]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct(DataDumperMain.MODNAME)]
+[assembly: AssemblyProduct(MTFO.MTFO.MODNAME)]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,5 +33,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(DataDumperMain.VERSION)]
-[assembly: AssemblyFileVersion(DataDumperMain.VERSION)]
+[assembly: AssemblyVersion(MTFO.MTFO.VERSION)]
+[assembly: AssemblyFileVersion(MTFO.MTFO.VERSION)]

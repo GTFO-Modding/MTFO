@@ -10,13 +10,13 @@ using HarmonyLib;
 namespace MTFO
 {
     [BepInPlugin(GUID, MODNAME, VERSION)]
-    public class DataDumperMain : BasePlugin
+    public class MTFO : BasePlugin
     {
         public const string
             MODNAME = "MTFO",
             AUTHOR = "Dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
-            VERSION = "3.0.1";
+            VERSION = "4.0.0";
 
 
         public override void Load()
