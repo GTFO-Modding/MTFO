@@ -12,7 +12,7 @@ The latest release of Bepinex from the bleeding edge branch.
 
 Drag and drop the unzipped folder into bepinex/plugins
 
-(Guides on a buncha stuff to come)
+See the wiki [here](https://wiki.mtfo.dev/)
 
 ## Built With
 
