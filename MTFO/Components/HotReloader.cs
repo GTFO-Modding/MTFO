@@ -50,7 +50,7 @@ namespace MTFO.HotReload
 
 					Button.SetText("Reload Game Data");
 
-					Button.add_OnBtnPressCallback((Action<int>)((number) =>
+					Button.add_OnBtnPressCallback((Action<int>)((_) =>
 					{
 						ReloadData();
 					}));
