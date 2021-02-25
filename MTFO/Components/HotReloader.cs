@@ -8,8 +8,11 @@ namespace MTFO.HotReload
 {
 	public class HotReloadInjector
 	{
+		public static bool Created = false;
 		public static void PostFix()
 		{
+			if (Created) return;
+			Created = true;
 			GameObject gameObject = new GameObject();
 			gameObject.AddComponent<HotReloader>();
 			UnityEngine.Object.DontDestroyOnLoad(gameObject);
@@ -21,47 +24,33 @@ namespace MTFO.HotReload
 	{
 		private CM_PageRundown_New Rundown;
 		private GameObject ReloadButton = null;
-		public HotReloader(IntPtr intPtr) : base(intPtr)
-		{
+		public HotReloader(IntPtr intPtr) : base(intPtr){}
+
+		void Awake()
+        {
 			Rundown = FindObjectOfType<CM_PageRundown_New>();
-		}
+			ReloadButton = Instantiate(Rundown.m_discordButton.gameObject);
+			ReloadButton = Instantiate(Rundown.m_discordButton.gameObject);
+			ReloadButton.gameObject.SetActive(true);
 
-		public void Update()
-		{
-			//this is the worst code ive ever written but it kept breaking when i did it otherways, please someone fix this
-			if (Rundown == null)
+
+			ReloadButton.gameObject.transform.position = Rundown.m_discordButton.gameObject.transform.position;
+			ReloadButton.gameObject.transform.parent = Rundown.m_discordButton.gameObject.transform;
+			RectTransform rect = ReloadButton.gameObject.GetComponent<RectTransform>();
+			rect.transform.position += new Vector3(0, 100, 0);
+			CM_Item Button = ReloadButton.GetComponent<CM_Item>();
+
+			Button.SetText("Reload Game Data");
+
+			Button.add_OnBtnPressCallback((Action<int>)((_) =>
 			{
-				Rundown = FindObjectOfType<CM_PageRundown_New>();
-				return;
-			}
-			else
-			{
-				if (ReloadButton == null)
-				{
-					ReloadButton = Instantiate(Rundown.m_discordButton.gameObject);
-					ReloadButton.gameObject.SetActive(true);
+				ReloadData();
+			}));
 
-
-					ReloadButton.gameObject.transform.position = Rundown.m_discordButton.gameObject.transform.position;
-					ReloadButton.gameObject.transform.parent = Rundown.m_discordButton.gameObject.transform;
-					RectTransform rect = ReloadButton.gameObject.GetComponent<RectTransform>();
-					rect.transform.position += new Vector3(0, 100, 0);
-					CM_Item Button = ReloadButton.GetComponent<CM_Item>();
-
-					Button.SetText("Reload Game Data");
-
-					Button.add_OnBtnPressCallback((Action<int>)((_) =>
-					{
-						ReloadData();
-					}));
-
-					RectTransform transform = ReloadButton.GetComponent<RectTransform>();
-					var aPos = transform.position;
-					aPos.y += 10;
-					transform.position = aPos;
-					return;
-				}
-			}
+			RectTransform transform = ReloadButton.GetComponent<RectTransform>();
+			var aPos = transform.position;
+			aPos.y += 10;
+			transform.position = aPos;
 		}
 
 		private void CleanIconsOfTier(Il2CppSystem.Collections.Generic.List<CM_ExpeditionIcon_New> tier)
