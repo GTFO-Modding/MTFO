@@ -19,6 +19,7 @@
     <Reference Remove="$(UnhollowedLibsFolder)\Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
