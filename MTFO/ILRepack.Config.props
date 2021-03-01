@@ -1,0 +1,6 @@
+﻿<Project>
+  <PropertyGroup>
+    <!-- disables the default ILRepack target -->
+    <DoILRepack>false</DoILRepack>
+  </PropertyGroup>
+</Project>
