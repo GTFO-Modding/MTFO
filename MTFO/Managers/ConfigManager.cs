@@ -24,7 +24,15 @@ namespace MTFO.Managers
         static ConfigManager()
         {            
             //Setup Config
-            var CONFIG_PATH = Path.Combine(Paths.ConfigPath, "DataDumper.cfg");
+            var CONFIG_PATH = Path.Combine(Paths.ConfigPath, "MTFO.cfg");
+            var OLD_CONFIG_PATH = Path.Combine(Paths.ConfigPath, "DataDumper.cfg");
+            //Handle old config
+            if (File.Exists(OLD_CONFIG_PATH))
+            {
+                Log.Debug("Updating old config");
+                File.Move(OLD_CONFIG_PATH, CONFIG_PATH);
+            }
+
 
             ConfigFile config = new ConfigFile(CONFIG_PATH, true);
 
@@ -59,8 +67,7 @@ namespace MTFO.Managers
             } catch (Exception err)
             {
                 HasCustomContent = false;
-                Log.Error(err.ToString());
-                Log.Error("Failed to init custom content!\nIs the JSON in your PuzzleTypes.json file valid?");
+                Log.Error($"Failed to init custom content!\nIs your JSON valid?\n---- ERROR MESSAGE ---- {err} ---- END ERROR MESSAGE ----");
             }
 
             //Setup GameData Lookup
@@ -180,7 +187,6 @@ namespace MTFO.Managers
                 }
             }
         }
-
 
         private static int GetGameVersion()
         {
