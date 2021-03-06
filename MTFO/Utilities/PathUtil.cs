@@ -26,12 +26,12 @@ namespace MTFO.Utilities
 
         public static string MakeRelativeDirectory(string path)
         {
-            string CombinedPath = Path.Combine(Path.Combine(Paths.ConfigPath, "Rundowns"), path);
-            if (!Directory.Exists(CombinedPath))
+            string OldPath = Path.Combine(Path.Combine(Paths.ConfigPath, "Rundowns"), path);
+            if (!Directory.Exists(OldPath))
             {
-                Directory.CreateDirectory(CombinedPath);
+                Directory.CreateDirectory(OldPath);
             }
-            return CombinedPath;
+            return OldPath;
         }
     }
 }
