@@ -127,7 +127,7 @@ namespace MTFO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RundownPackage.
+        ///   Looks up a localized string similar to LEGACY - RundownPackage.
         /// </summary>
         internal static string SETTING_RUNDOWNPACKAGE {
             get {
@@ -136,13 +136,32 @@ namespace MTFO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of the folder containing the game data to load
+        ///   Looks up a localized string similar to THIS IS A LEGACY FEATURE AND HAS NO EFFECT IF LEGACY LOADING IS NOT ENABLED
+        ///The name of the folder containing the game data to load
         ///Folders containing game data should be placed in config&gt;Rundowns
         ///&apos;default&apos; loads a folder matching &apos;GameData_XXXXX&apos; where X is the current game version.
         /// </summary>
         internal static string SETTING_RUNDOWNPACKAGE_DESC {
             get {
                 return ResourceManager.GetString("SETTING_RUNDOWNPACKAGE_DESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legacy Loading.
+        /// </summary>
+        internal static string SETTING_USE_LEGACY_PATH {
+            get {
+                return ResourceManager.GetString("SETTING_USE_LEGACY_PATH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggles legacy loading.
+        /// </summary>
+        internal static string SETTING_USE_LEGACY_PATH_DESC {
+            get {
+                return ResourceManager.GetString("SETTING_USE_LEGACY_PATH_DESC", resourceCulture);
             }
         }
         

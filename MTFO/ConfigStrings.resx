@@ -142,12 +142,19 @@ Hot reloading is an experimental feature that allows the user to reload game dat
 Currently this only works on the 'Rundown' and 'LevelLayout' data blocks</value>
   </data>
   <data name="SETTING_RUNDOWNPACKAGE" xml:space="preserve">
-    <value>RundownPackage</value>
+    <value>LEGACY - RundownPackage</value>
   </data>
   <data name="SETTING_RUNDOWNPACKAGE_DESC" xml:space="preserve">
-    <value>The name of the folder containing the game data to load
+    <value>THIS IS A LEGACY FEATURE AND HAS NO EFFECT IF LEGACY LOADING IS NOT ENABLED
+The name of the folder containing the game data to load
 Folders containing game data should be placed in config&gt;Rundowns
 'default' loads a folder matching 'GameData_XXXXX' where X is the current game version</value>
+  </data>
+  <data name="SETTING_USE_LEGACY_PATH" xml:space="preserve">
+    <value>Legacy Loading</value>
+  </data>
+  <data name="SETTING_USE_LEGACY_PATH_DESC" xml:space="preserve">
+    <value>Toggles legacy loading</value>
   </data>
   <data name="SETTING_VERBOSE" xml:space="preserve">
     <value>Verbose</value>
