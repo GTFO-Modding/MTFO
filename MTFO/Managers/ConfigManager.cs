@@ -37,18 +37,38 @@ namespace MTFO.Managers
             ConfigFile config = new ConfigFile(CONFIG_PATH, true);
 
             _enableHotReload = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_HOTRELOAD, false, ConfigStrings.SETTING_HOTRELOAD_DESC);
-            _rundownFolder = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_RUNDOWNPACKAGE, "default", ConfigStrings.SETTING_RUNDOWNPACKAGE_DESC);
             _dumpFiles = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_DUMPFILE, false, ConfigStrings.SETTING_DUMPFILE_DESC);
             _isVerbose = config.Bind(ConfigStrings.SECTION_DEBUG, ConfigStrings.SETTING_VERBOSE, false, ConfigStrings.SETTING_VERBOSE_DESC);
+            _useLegacyLoading = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_USE_LEGACY_PATH, false, ConfigStrings.SETTING_USE_LEGACY_PATH_DESC);
+
+            //Obsolte
+            _rundownFolder = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_RUNDOWNPACKAGE, "default", ConfigStrings.SETTING_RUNDOWNPACKAGE_DESC);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
 
             //Setup Paths
-            GameDataLookupPath = PathUtil.MakeRelativeDirectory("_gamedatalookup");
+            GameDataLookupPath = PathUtil.MakeRelativeDirectory(Paths.ConfigPath, "_gamedatalookup");
 
             string path = _rundownFolder.Value;
-            GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
+            if (UseLegacyLoading)
+            {
+                GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
+            } else
+            {
+                GameDataPath = PathUtil.MakeRelativeDirectory(Paths.PluginPath, "GameData_" + GAME_VERSION);
+
+                string[] files = Directory.GetFiles(Paths.PluginPath, "*.json", SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    if (Path.GetDirectoryName(file) != GameDataPath)
+                    {
+                        GameDataPath = Path.GetDirectoryName(file);
+                        break;
+                    }
+                }
+            }
+
             CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
 
             //Setup flags 
@@ -94,6 +114,7 @@ namespace MTFO.Managers
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Dump Unknown Files? {DumpUnknownFiles}");
             Log.Debug($"Verbose Logging? {IsVerbose}");
+            Log.Debug($"Using Legacy Loading? {UseLegacyLoading}");
 
             Log.Debug($"---- DEBUG END ----");
         }
@@ -102,6 +123,7 @@ namespace MTFO.Managers
         private static readonly ConfigEntry<string> _rundownFolder;
         private static readonly ConfigEntry<bool> _dumpFiles;
         private static readonly ConfigEntry<bool> _isVerbose;
+        private static readonly ConfigEntry<bool> _useLegacyLoading;
 
         public static int GAME_VERSION;
 
@@ -144,6 +166,15 @@ namespace MTFO.Managers
             get
             {
                 return _dumpFiles.Value;
+            }
+        }
+
+        //Legacy
+        public static bool UseLegacyLoading
+        {
+            get
+            {
+                return _useLegacyLoading.Value;
             }
         }
 

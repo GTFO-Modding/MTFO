@@ -24,6 +24,7 @@ namespace MTFO.Utilities
             return false;
         }
 
+        [Obsolete]
         public static string MakeRelativeDirectory(string path)
         {
             string OldPath = Path.Combine(Path.Combine(Paths.ConfigPath, "Rundowns"), path);
@@ -32,6 +33,16 @@ namespace MTFO.Utilities
                 Directory.CreateDirectory(OldPath);
             }
             return OldPath;
+        }
+
+        public static string MakeRelativeDirectory(string path, string folder)
+        {
+            string dir = Path.Combine(path, folder);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return dir;
         }
     }
 }
