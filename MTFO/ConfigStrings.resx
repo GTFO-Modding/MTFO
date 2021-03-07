@@ -151,7 +151,7 @@ Folders containing game data should be placed in config&gt;Rundowns
 'default' loads a folder matching 'GameData_XXXXX' where X is the current game version</value>
   </data>
   <data name="SETTING_USE_LEGACY_PATH" xml:space="preserve">
-    <value>Legacy Loading</value>
+    <value>LegacyLoading</value>
   </data>
   <data name="SETTING_USE_LEGACY_PATH_DESC" xml:space="preserve">
     <value>Toggles legacy loading</value>

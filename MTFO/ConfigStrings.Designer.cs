@@ -148,7 +148,7 @@ namespace MTFO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legacy Loading.
+        ///   Looks up a localized string similar to LegacyLoading.
         /// </summary>
         internal static string SETTING_USE_LEGACY_PATH {
             get {
