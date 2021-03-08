@@ -58,7 +58,7 @@ namespace MTFO.Managers
             {
                 GameDataPath = PathUtil.MakeRelativeDirectory(Paths.PluginPath, "GameData_" + GAME_VERSION);
 
-                string[] files = Directory.GetFiles(Paths.PluginPath, "*.json", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(Paths.PluginPath, "GameData_*.json", SearchOption.AllDirectories);
                 foreach (string file in files)
                 {
                     if (Path.GetDirectoryName(file) != GameDataPath)
