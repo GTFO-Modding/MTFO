@@ -16,7 +16,7 @@ namespace MTFO
             MODNAME = "MTFO",
             AUTHOR = "dak",
             GUID = "com." + AUTHOR + "." + MODNAME,
-            VERSION = VersionInfo.Version;
+            VERSION = VersionInfo.SemVer;
 
 
         public override void Load()
