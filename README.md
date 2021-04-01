@@ -1,4 +1,4 @@
-# Data Dumper
+# Mod the FUCK out
 
 A bepinex plugin that saves / loads the internal configuration files (hereafter refered to as "Data Blocks") as raw json files.
 
@@ -12,7 +12,7 @@ The latest release of Bepinex from the bleeding edge branch.
 
 Drag and drop the unzipped folder into bepinex/plugins
 
-(Guides on a buncha stuff to come)
+See the wiki [here](https://wiki.mtfo.dev/)
 
 ## Built With
 
@@ -22,5 +22,5 @@ Drag and drop the unzipped folder into bepinex/plugins
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 

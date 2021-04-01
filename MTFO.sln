@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTFO", "MTFO\MTFO.csproj", "{36EFE303-E896-4042-8C58-F49BB19AA265}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTFO.Generators", "MTFO.Generators\MTFO.Generators.csproj", "{0DCB9EE6-9FD6-45A4-8CFF-00FCCFB2E0B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36EFE303-E896-4042-8C58-F49BB19AA265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36EFE303-E896-4042-8C58-F49BB19AA265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36EFE303-E896-4042-8C58-F49BB19AA265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36EFE303-E896-4042-8C58-F49BB19AA265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCB9EE6-9FD6-45A4-8CFF-00FCCFB2E0B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCB9EE6-9FD6-45A4-8CFF-00FCCFB2E0B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCB9EE6-9FD6-45A4-8CFF-00FCCFB2E0B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCB9EE6-9FD6-45A4-8CFF-00FCCFB2E0B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1FFC6C2-0362-4AB3-8D8F-512F3960EDDC}
+	EndGlobalSection
+EndGlobal
