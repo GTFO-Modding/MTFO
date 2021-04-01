@@ -28,6 +28,10 @@ namespace MTFO.Patches
                             __result = File.ReadAllText(filePath);
                             return;
                         }
+                        else if (ConfigManager.HasPartialData)
+                        {
+                            Log.Verbose("No file found at [" + filePath + "], skipping it due to PartialData exists...");
+                        }
                         else
                         {
                             Log.Verbose("No file found at [" + filePath + "], writing file to disk...");
