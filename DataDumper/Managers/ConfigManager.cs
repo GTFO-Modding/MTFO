@@ -155,7 +155,12 @@ namespace DataDumper.Managers
 
         private static int GetGameVersion()
         {
-            return CellBuildData.GetRevision();
+            //This is really backwards because I was getting werid crashes when just trying to read the text
+            //and couldn't be bothered to figure out why, probably some EOL shit or smthing
+            string gameVersionPath = Path.Combine(Paths.GameRootPath, "revision.txt");
+            string gameVersion = File.ReadAllText(gameVersionPath);
+            int.TryParse(gameVersion, out int result);
+            return result;
         }
     }
 }
