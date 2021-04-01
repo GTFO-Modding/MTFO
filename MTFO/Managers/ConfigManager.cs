@@ -14,6 +14,7 @@ namespace MTFO.Managers
     {
         private const string
             CUSTOM_FOLDER = "Custom",
+            PARTIALDATA_FOLDER = "PartialData",
             GAMEDATA_LOOKUP = @"https://lookup.gtfomodding.dev/lookup/";
         
         private static readonly WebClient webClient = new WebClient();
@@ -70,9 +71,11 @@ namespace MTFO.Managers
             }
 
             CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
+            PartialDataPath = Path.Combine(GameDataPath, PARTIALDATA_FOLDER);
 
             //Setup flags 
             HasCustomContent = Directory.Exists(CustomPath);
+            HasPartialData = Directory.Exists(PartialDataPath);
 
             //Setup folders
             if (!Directory.Exists(GameDataPath))
@@ -139,10 +142,12 @@ namespace MTFO.Managers
         //Paths
         public static string GameDataPath;
         public static string CustomPath;
+        public static string PartialDataPath;
         private static readonly string GameDataLookupPath;
 
         //Flags
         public static bool HasCustomContent;
+        public static bool HasPartialData;
         public static bool IsModded;
         public static bool IsVerbose
         {
