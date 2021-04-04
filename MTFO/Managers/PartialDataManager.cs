@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MTFO.Managers
@@ -59,7 +60,7 @@ namespace MTFO.Managers
                 {
                     var searchOption = searchConfig.CheckSubDirectory ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
                     var searchPath = Path.Combine(ConfigManager.PartialDataPath, searchConfig.BaseSubDirectory);
-                    var files = Directory.GetFiles(searchPath, searchConfig.FileSearchPattern, searchOption);
+                    var files = Directory.GetFiles(searchPath, searchConfig.FileSearchPattern, searchOption).OrderBy(f => f);
                     foreach (var file in files)
                     {
                         if(_AddedFileList.Contains(file))
@@ -67,11 +68,10 @@ namespace MTFO.Managers
                             Log.Error($"File ({file}) has loaded multiple times!");
                             continue;
                         }
-                        else
-                        {
-                            Log.Verbose($" - {file}");
-                            cache.AddJsonBlock(File.ReadAllText(file), idConverter);
-                        }
+
+                        Log.Verbose($" - {file}");
+                        cache.AddJsonBlock(File.ReadAllText(file), idConverter);
+                        _AddedFileList.Add(file);
                     }
                 }
             }
