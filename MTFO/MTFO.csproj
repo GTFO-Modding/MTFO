@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Dependencies.props" />
+
   <PropertyGroup>
-    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\GTFO</GameFolder>
-    <BIELibsFolder>$(GameFolder)\BepInEx\core</BIELibsFolder>
-    <UnhollowedLibsFolder>$(GameFolder)\BepInEx\unhollowed</UnhollowedLibsFolder>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <RootNamespace>MTFO</RootNamespace>
     <LangVersion>preview</LangVersion>
@@ -10,18 +9,12 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>4.2.0</Version>
     <VersionPrerelease></VersionPrerelease>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="$(BIELibsFolder)\*.dll" Private="false" />
-    <Reference Include="$(UnhollowedLibsFolder)\*.dll" Private="false" />
-    <Reference Remove="$(UnhollowedLibsFolder)\Newtonsoft.Json.dll" />
-    <Reference Remove="$(UnhollowedLibsFolder)\netstandard.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="VersionInfoGenerator" Version="2.0.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Update="ConfigStrings.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -29,6 +22,7 @@
       <DependentUpon>ConfigStrings.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="ConfigStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

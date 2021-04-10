@@ -1,0 +1,48 @@
+<Project InitialTargets="ValidateGamePath">
+  <!--
+    Add a GameFolder.props file to the solution to set your game path:
+
+    <Project>
+      <PropertyGroup>
+        <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\GTFO</GameFolder>
+      </PropertyGroup>
+    </Project>
+  -->
+
+  <Import Project="$(MSBuildThisFileDirectory)/GameFolder.props" Condition="Exists('$(MSBuildThisFileDirectory)/GameFolder.props')" />
+  <Target Name="ValidateGamePath">
+    <Error Text="The GameFolder property must be set to the GTFO game folder." Condition="'$(GameFolder)' == '' or !Exists('$(GameFolder)')" />
+  </Target>
+
+  <PropertyGroup>
+    <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
+    <MonoLibsFolder>$(GameFolder)/mono/Managed</MonoLibsFolder>
+    <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
+  </PropertyGroup>
+
+  <!-- NuGet dependencies -->
+  <ItemGroup>
+    <PackageReference Include="VersionInfoGenerator" Version="2.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- BepInEx libs -->
+  <ItemGroup>
+    <Reference Include="$(BIELibsFolder)/BepInEx.*.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/UnhollowerBaseLib.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
+  </ItemGroup>
+
+  <!-- BepInEx mono libs -->
+  <ItemGroup>
+    <Reference Include="$(MonoLibsFolder)/Microsoft.Bcl.AsyncInterfaces.dll" Private="false" />
+    <Reference Include="$(MonoLibsFolder)/System.Text.Json.dll" Private="false" />
+  </ItemGroup>
+
+  <!-- Unhollowed assemblies -->
+  <ItemGroup>
+    <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
+    <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
+  </ItemGroup>
+</Project>

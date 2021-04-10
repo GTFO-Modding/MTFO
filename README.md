@@ -14,6 +14,18 @@ Drag and drop the unzipped folder into bepinex/plugins
 
 See the wiki [here](https://wiki.mtfo.dev/)
 
+### Building
+
+Add a GameFolder.props file to the project to set your game path:
+
+```xml
+<Project>
+  <PropertyGroup>
+    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\GTFO</GameFolder>
+  </PropertyGroup>
+</Project>
+```
+
 ## Built With
 
 * [BepInEx](https://github.com/BepInEx/BepInEx) - Loading
