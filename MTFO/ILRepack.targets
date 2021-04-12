@@ -1,26 +1,25 @@
 ﻿<Project>
-  <Target Name="ILRepacker" AfterTargets="Build">
+  <Target Name="EmbedAssemblies" AfterTargets="Build">
     <ItemGroup>
-      <InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)"/>
-      <InputAssemblies Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(TargetName)$(TargetExt)"/>
-      <LibraryPaths Include="$(BIELibsFolder)" />
-      <LibraryPaths Include="$(UnhollowedLibsFolder)" />
+      <_InputAssembly Include="$(OutputPath)/$(TargetName)$(TargetExt)" />
+      <_InputAssembly Include="@(EmbeddedAssembly)" />
+      <_LibraryPath Include="$(BIELibsFolder)" />
+      <_LibraryPath Include="$(UnhollowedLibsFolder)" />
     </ItemGroup>
 
     <PropertyGroup>
-      <CreateDebugInfo Condition="'$(DebugType)' == 'none'">false</CreateDebugInfo>
-      <CreateDebugInfo Condition="'$(DebugType)' != 'none'">true</CreateDebugInfo>
+      <_CreateDebugInfo Condition="'$(DebugType)' == 'none'">false</_CreateDebugInfo>
+      <_CreateDebugInfo Condition="'$(DebugType)' != 'none'">true</_CreateDebugInfo>
     </PropertyGroup>
 
     <ILRepack
       Parallel="true"
-      DebugInfo="$(CreateDebugInfo)"
-      LibraryPath="@(LibraryPaths)"
       AllowDuplicateResources="false"
-      InputAssemblies="@(InputAssemblies)"
+      DebugInfo="$(_CreateDebugInfo)"
+      LibraryPath="@(_LibraryPath)"
+      InputAssemblies="@(_InputAssembly)"
       TargetKind="SameAsPrimaryAssembly"
-      KeyFile="$(KeyFile)"
-      OutputFile="$(OutputPath)$(TargetName)$(TargetExt)"
+      OutputFile="$(OutputPath)/$(TargetName)$(TargetExt)"
     />
   </Target>
 </Project>

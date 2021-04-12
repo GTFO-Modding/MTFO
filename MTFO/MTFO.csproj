@@ -13,14 +13,17 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(BIELibsFolder)\*.dll" Private="false" />
-    <Reference Include="$(UnhollowedLibsFolder)\*.dll" Private="false" />
-    <Reference Remove="$(UnhollowedLibsFolder)\Newtonsoft.Json.dll" />
+    <Reference Include="$(BIELibsFolder)/*.dll" Private="false" />
+    <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.16.1" PrivateAssets="all" />
     <PackageReference Include="VersionInfoGenerator" Version="2.0.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedAssembly Include="$(OutputPath)/Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ConfigStrings.Designer.cs">
