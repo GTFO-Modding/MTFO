@@ -5,6 +5,8 @@ using ChainedPuzzles;
 using UnityEngine;
 using static MTFO.Custom.CustomBioScan;
 using MTFO.Custom;
+using LevelGeneration;
+using Player;
 
 namespace MTFO.Patches
 {
@@ -29,7 +31,7 @@ namespace MTFO.Patches
                 //Base instance
                 GameObject scanBase = instance.m_puzzleComponentPrefabs[scan.BaseScan];
                 GameObject scanPrefab = UnityEngine.Object.Instantiate(scanBase);
-                scanPrefab.transform.position = new Vector3(1000, 1000, 1000);
+                scanPrefab.transform.position = new Vector3(10000, 10000, 10000);
 
                 //Setup Scanner
                 CP_PlayerScanner playerScanner = scanPrefab.GetComponent<CP_PlayerScanner>();
@@ -45,7 +47,9 @@ namespace MTFO.Patches
                 scanGx.m_radius = scan.BioScanGraphics.Radius;
                 scanGx.m_colors = ConvertToColorMode(scan.BioScanGraphics.colorModeColor);
 
-
+                CP_Bioscan_Core core = scanPrefab.GetComponent<CP_Bioscan_Core>();
+                core.m_playerAgents = new Il2CppSystem.Collections.Generic.List<PlayerAgent>();
+                
                 instance.m_puzzleComponentPrefabs.Add(scan.PersistentID, scanPrefab);
             }
         }
@@ -71,9 +75,6 @@ namespace MTFO.Patches
                 clusterCore.m_distanceBetween = cluster.DistanceBetweenScans;
                 clusterCore.m_revealWithHoloPath = cluster.RevealWithHoloPath;
 
-
-
-
                 instance.m_puzzleComponentPrefabs.Add(cluster.PersistentID, clusterPrefab);
             }
         }
@@ -89,6 +90,19 @@ namespace MTFO.Patches
             }
 
             return colorModes;
+        }
+    }
+
+    [HarmonyPatch(typeof(CP_Bioscan_Core), "Update")]
+    class test
+    {
+        static bool Prefix(CP_Bioscan_Core __instance)
+        {
+            if (__instance.m_playerAgents.Count == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
