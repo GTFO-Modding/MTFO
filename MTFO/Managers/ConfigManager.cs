@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using UnityEngine;
+using UnhollowerBaseLib;
+using GameData;
 
 namespace MTFO.Managers
 {
@@ -15,9 +18,7 @@ namespace MTFO.Managers
         private const string
             CUSTOM_FOLDER = "Custom",
             GAMEDATA_LOOKUP = @"https://lookup.gtfomodding.dev/lookup/";
-        
-        private static readonly WebClient webClient = new WebClient();
-        
+                
 
         // Anylitics Manager
 
@@ -92,7 +93,7 @@ namespace MTFO.Managers
             }
 
             //Setup GameData Lookup
-            GetGameDataLookup();
+            //GetGameDataLookupV2();
 
             //Debug
             Log.Debug("---- DEBUG INFO ----");
@@ -101,20 +102,10 @@ namespace MTFO.Managers
             Log.Debug($"Game Version: {GAME_VERSION}");
             Log.Debug($"Loading Rundown: {path}");
 
-            if (gameDataLookup.Count > 0)
-            {
-                Log.Debug($"GDLU Length: {gameDataLookup.Count}");
-            } else
-            {
-                Log.Error($"GDLU IS ZERO! This should never happen!");
-            }
-
-
             Log.Debug("---- PATHS ----");
 
             Log.Debug($"Path to rundown: {GameDataPath}");
             Log.Debug($"Path to custom content: {CustomPath}");
-            Log.Debug($"Path to GDLU: {GameDataLookupPath}");
 
             Log.Debug("---- FLAGS ----");
 
@@ -136,7 +127,7 @@ namespace MTFO.Managers
         public static int GAME_VERSION;
 
         //GameData Lookup
-        public static Dictionary<int, string> gameDataLookup = new Dictionary<int, string>();
+        public static Dictionary<Il2CppStructArray<byte>, string> gameDataLookup = new Dictionary<Il2CppStructArray<byte>, string>();
 
         //Managers
         public static ContentManager CustomContent;
@@ -186,45 +177,72 @@ namespace MTFO.Managers
             }
         }
 
-        private static void GetGameDataLookup()
+        //private static void GetGameDataLookup()
+        //{
+        //    string versionLookupPath = Path.Combine(GameDataLookupPath, GAME_VERSION + ".json");
+        //    if (PathUtil.CheckFile(versionLookupPath))
+        //    {
+        //        Log.Message("Found game data lookup locally!");
+        //        gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
+        //    }
+        //    else
+        //    {
+        //        Log.Message($"No local game data lookup found matching version {GAME_VERSION}!");
+        //        Log.Message($"Trying to download game data lookup for version {GAME_VERSION}...");
+        //        try
+        //        {
+        //            string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
+        //            string gameDataLookupString = webClient.DownloadString(downloadURL);
+        //            gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
+        //            Log.Message("Caching game data lookup to disk...");
+        //            File.WriteAllText(versionLookupPath, gameDataLookupString);
+        //        }
+        //        catch
+        //        {
+        //            Log.Warn("Failed to download game data lookup for this version!");
+        //            Log.Message("Checking for previous version to fallback too...");
+        //            //This could be better, make it grab all the files in the lookup folder, order by name, pick latest / highest numbered
+        //            for (int version = GAME_VERSION; version > GAME_VERSION - 500; version--)
+        //            {
+        //                string localVerPath = Path.Combine(GameDataLookupPath, version + ".json");
+        //                if (PathUtil.CheckFile(localVerPath))
+        //                {
+        //                    Log.Message("Found older lookup table!");
+        //                    gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(localVerPath));
+        //                    Log.Warn($"USING OLD LOOKUP TABLE - Version {version}, SOME GAME DATA BLOCKS MAY BE MISSNAMED AND CUSTOM DATA BLOCKS MAY NOT LOAD!!");
+        //                    return;
+        //                }
+        //            }
+        //            Log.Error("Failed to find any lookup tables! Cannot load custom mods and game data blocks will be named incorrectly!");
+        //        }
+        //    }
+        //}
+
+        private static void GetGameDataLookupV2()
         {
-            string versionLookupPath = Path.Combine(GameDataLookupPath, GAME_VERSION + ".json");
-            if (PathUtil.CheckFile(versionLookupPath))
+            var textList = Resources.LoadAll<TextAsset>("GameData");
+            Log.Debug($"Text list: {textList.Count}");
+
+            foreach (var text in textList)
             {
-                Log.Message("Found game data lookup locally!");
-                gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(versionLookupPath));
-            }
-            else
-            {
-                Log.Message($"No local game data lookup found matching version {GAME_VERSION}!");
-                Log.Message($"Trying to download game data lookup for version {GAME_VERSION}...");
-                try
+                if (text.name.EndsWith("DataBlock_bin"))
                 {
-                    string downloadURL = GAMEDATA_LOOKUP + GAME_VERSION + ".json";
-                    string gameDataLookupString = webClient.DownloadString(downloadURL);
-                    gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(gameDataLookupString);
-                    Log.Message("Caching game data lookup to disk...");
-                    File.WriteAllText(versionLookupPath, gameDataLookupString);
-                }
-                catch
-                {
-                    Log.Warn("Failed to download game data lookup for this version!");
-                    Log.Message("Checking for previous version to fallback too...");
-                    //This could be better, make it grab all the files in the lookup folder, order by name, pick latest / highest numbered
-                    for (int version = GAME_VERSION; version > GAME_VERSION - 500; version--)
-                    {
-                        string localVerPath = Path.Combine(GameDataLookupPath, version + ".json");
-                        if (PathUtil.CheckFile(localVerPath))
-                        {
-                            Log.Message("Found older lookup table!");
-                            gameDataLookup = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(localVerPath));
-                            Log.Warn($"USING OLD LOOKUP TABLE - Version {version}, SOME GAME DATA BLOCKS MAY BE MISSNAMED AND CUSTOM DATA BLOCKS MAY NOT LOAD!!");
-                            return;
-                        }
-                    }
-                    Log.Error("Failed to find any lookup tables! Cannot load custom mods and game data blocks will be named incorrectly!");
+                    
                 }
             }
+
+            //foreach (var text in textList)
+            //{
+            //    if (text.name.EndsWith("DataBlock_bin"))
+            //    { 
+            //        Log.Debug(string.Format("Found DataBlock: {0} hash: {1}", text.name, text.bytes.GetHashCode()));
+            //        gameDataLookup.Add(text.bytes, text.name);
+            //        
+            //    } else
+            //    {
+            //        Log.Debug($"Skipping {text.name}, does not end with 'DataBlock_bin...'");
+            //    }
+            //}
         }
 
         private static int GetGameVersion()

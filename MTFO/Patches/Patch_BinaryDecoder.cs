@@ -2,19 +2,65 @@
 using MTFO.Utilities;
 using HarmonyLib;
 using System.IO;
+using UnhollowerBaseLib;
+using UnityEngine;
+using System.Collections.Generic;
+using GameData;
 
 namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(BinaryEncoder), "Decode")]
     class Patch_BinaryDecoder
     {
-        public static void Postfix(ref string __result)
+        static Il2CppArrayBase<TextAsset> lookup;
+        static List<TextAsset> gameData;
+        static Dictionary<string, string> gameDataLookup;
+        static int lookupLength = 0;
+        static int count = 0;
+
+        public static void Prefix(ref string __result)
         {
+            if (lookup == null)
+            {
+                Log.Debug("First cycle setup...");
+                lookup = Resources.LoadAll<TextAsset>("GameData");
+                gameData = new List<TextAsset>();
+                gameDataLookup = new Dictionary<string, string>();
+                foreach (var item in lookup)
+                {
+                    if (item.name.EndsWith("DataBlock_bin"))
+                    {
+                        lookupLength++;
+                        gameData.Add(item);
+                        Log.Verbose($"Added {item.name} to game data");
+                    }
+                }
+                Log.Debug($"Total length: {lookupLength}");
+                foreach (var item in gameData)
+                {
+                    string text = BinaryEncoder.Decode(GameDataInit.m_binaryEncoder, item.bytes);
+                    gameDataLookup.Add(text, item.name.Replace('.', '_'));
+                    count++;
+                    Log.Verbose($"Added {item.name} to lookup table. {count} / {lookupLength}");
+                }
+            }
+        }
+
+        public static void Postfix(ref string __result, Il2CppStructArray<byte> bytes)
+        {
+            if (count < lookupLength)
+            {
+                Log.Debug("Skip");
+                return;
+            }
+            Log.Debug("No skip");
+           
+
             //Ensure the file is game data related
             if (__result.Contains("Headers"))
             {
-                int hash = __result.GetStableHashCode();
-                ConfigManager.gameDataLookup.TryGetValue(hash, out string name);
+                int hash = bytes.GetHashCode();
+                gameDataLookup.TryGetValue(__result, out string name);
 
                 if (name != null)
                 {
@@ -25,7 +71,9 @@ namespace MTFO.Patches
                         if (File.Exists(filePath))
                         {
                             Log.Verbose("Reading [" + name + "] from disk...");
+                            Log.Verbose(filePath);
                             __result = File.ReadAllText(filePath);
+
                             return;
                         }
                         else
