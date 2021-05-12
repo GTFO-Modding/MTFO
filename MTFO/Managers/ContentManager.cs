@@ -37,7 +37,14 @@ namespace MTFO.Managers
                 if (PathUtil.CheckCustomFile(key, out string path))
                 {
                     Handlers.TryGetValue(key, out Action<string> value);
-                    value?.Invoke(path);
+                    try
+                    {
+                        value?.Invoke(path);
+                    } catch (Exception err)
+                    {
+                        Log.Error(err);
+                    }
+                    
                     Log.Debug(path);
                 }
             }
