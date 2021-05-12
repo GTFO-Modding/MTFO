@@ -30,6 +30,7 @@ namespace MTFO.Managers
             if (File.Exists(OLD_CONFIG_PATH))
             {
                 Log.Debug("Updating old config");
+                if (File.Exists(CONFIG_PATH)) File.Delete(CONFIG_PATH);
                 File.Move(OLD_CONFIG_PATH, CONFIG_PATH);
             }
 
