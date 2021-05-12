@@ -100,7 +100,14 @@ namespace MTFO.Managers
             Log.Debug($"Time: {DateTime.Now}");
             Log.Debug($"Game Version: {GAME_VERSION}");
             Log.Debug($"Loading Rundown: {path}");
-            Log.Debug($"GDLU Length: {gameDataLookup.Count}");
+
+            if (gameDataLookup.Count > 0)
+            {
+                Log.Debug($"GDLU Length: {gameDataLookup.Count}");
+            } else
+            {
+                Log.Error($"GDLU IS ZERO! This should never happen!");
+            }
 
 
             Log.Debug("---- PATHS ----");
