@@ -48,13 +48,11 @@ namespace MTFO.Patches
 
         public static void Postfix(ref string __result, Il2CppStructArray<byte> bytes)
         {
+            //Prevent writing till we've decoded all the datablocks
             if (count < lookupLength)
             {
-                Log.Debug("Skip");
                 return;
-            }
-            Log.Debug("No skip");
-           
+            }           
 
             //Ensure the file is game data related
             if (__result.Contains("Headers"))
