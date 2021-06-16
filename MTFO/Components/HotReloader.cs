@@ -3,6 +3,7 @@ using MTFO.Utilities;
 using GameData;
 using System;
 using UnityEngine;
+using Gear;
 
 namespace MTFO.HotReload
 {
