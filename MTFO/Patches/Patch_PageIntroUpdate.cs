@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageIntro), "Update")]
+    [HarmonyPatch(typeof(CM_PageIntro), "Setup")]
     class Patch_PageIntroUpdate
     {
         public static void Postfix(ref CM_PageIntro __instance)

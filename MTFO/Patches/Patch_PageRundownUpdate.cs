@@ -8,7 +8,7 @@ using System;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageRundown_New), "Update")]
+    [HarmonyPatch(typeof(CM_PageRundown_New), "Setup")]
     class Patch_PageRundownUpdate
     {
         public static void Postfix(ref CM_PageRundown_New __instance)
