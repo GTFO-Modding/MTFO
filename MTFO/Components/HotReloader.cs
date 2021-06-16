@@ -71,6 +71,18 @@ namespace MTFO.HotReload
 			CleanIconsOfTier(Rundown.m_expIconsTier4);
 			CleanIconsOfTier(Rundown.m_expIconsTier5);
 
+			// refresh player offline
+			var gearManager = GearManager.Current;
+
+			GearManager.m_allGearWithPostedIconJobs.Clear();
+
+			gearManager.Setup();
+			gearManager.LoadOfflineGearDatas();
+			gearManager.OnGearLoadingDone();
+
+			GearManager.GenerateAllGearIcons();
+
+			// refresh game data
 			GameDataInit.ReInitialize();
 			Rundown.gameObject.SetActive(true);
 			Log.Message("Reloaded!");
