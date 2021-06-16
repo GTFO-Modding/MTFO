@@ -31,7 +31,6 @@ namespace MTFO.HotReload
         {
 			Rundown = FindObjectOfType<CM_PageRundown_New>();
 			ReloadButton = Instantiate(Rundown.m_discordButton.gameObject);
-			ReloadButton = Instantiate(Rundown.m_discordButton.gameObject);
 			ReloadButton.gameObject.SetActive(true);
 
 
