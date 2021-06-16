@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
 using CellMenu;
 using TMPro;
+using UnityEngine;
+using System;
 
 namespace MTFO.Patches
 {
@@ -14,7 +15,7 @@ namespace MTFO.Patches
         {
             //Replace discord button text and link
             __instance.m_discordButton.SetText("Mod Server");
-            __instance.m_discordButton.OnBtnPressCallback = (id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh");
+            __instance.m_discordButton.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh"));
 
             //Disable and hide the matchmake button on the left
             __instance.m_matchmakeAllButton.SetVisible(false);

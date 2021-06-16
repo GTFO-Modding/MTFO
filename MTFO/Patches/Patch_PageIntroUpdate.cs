@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
 using CellMenu;
+using UnityEngine;
 
 namespace MTFO.Patches
 {
@@ -13,11 +14,11 @@ namespace MTFO.Patches
         {
             //Replace report bug button text and link
             __instance.m_startupScreen.m_btnBug.SetText("MTFO Wiki");
-            __instance.m_startupScreen.m_btnBug.OnBtnPressCallback = (id) => Application.OpenURL("https://wiki.mtfo.dev/");
+            __instance.m_startupScreen.m_btnBug.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://wiki.mtfo.dev/"));
 
             //Replace discord button text and link
             __instance.m_startupScreen.m_btnDiscord.SetText("Mod Server");
-            __instance.m_startupScreen.m_btnDiscord.OnBtnPressCallback = (id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh");
+            __instance.m_startupScreen.m_btnDiscord.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh"));
         }
     }
 }
