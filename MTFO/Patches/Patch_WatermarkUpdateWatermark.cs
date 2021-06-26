@@ -10,7 +10,7 @@ namespace MTFO.Patches
     {
         public static void Postfix(ref PUI_Watermark __instance)
         {
-            __instance.m_watermarkText.SetText("<color=red>MODDED</color>\n<color=orange>" + MTFO.MTFO.VERSION + "</color>");
+            __instance.m_watermarkText.SetText("<color=red>MODDED</color>\n<color=orange>" + VersionInfo.Version + "</color>");
         }
     }
 }

@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
 using CellMenu;
 using TMPro;
+using UnityEngine;
+using System;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageRundown_New), "Update")]
+    [HarmonyPatch(typeof(CM_PageRundown_New), "Setup")]
     class Patch_PageRundownUpdate
     {
         public static void Postfix(ref CM_PageRundown_New __instance)
         {
             //Replace discord button text and link
             __instance.m_discordButton.SetText("Mod Server");
-            __instance.m_discordButton.OnBtnPressCallback = (id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh");
+            __instance.m_discordButton.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh"));
 
             //Disable and hide the matchmake button on the left
             __instance.m_matchmakeAllButton.SetVisible(false);

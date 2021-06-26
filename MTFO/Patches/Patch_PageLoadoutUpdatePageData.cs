@@ -4,6 +4,7 @@ using System.Text;
 using HarmonyLib;
 using CellMenu;
 using TMPro;
+using UnityEngine;
 
 namespace MTFO.Patches
 {
@@ -18,7 +19,7 @@ namespace MTFO.Patches
 
             //Replace discord button text and link
             __instance.m_discordButton.SetText("Mod Server");
-            __instance.m_discordButton.OnBtnPressCallback = (id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh");
+            __instance.m_discordButton.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://discord.com/invite/rRMPtv4FAh"));
         }
     }
 }
