@@ -95,11 +95,11 @@ namespace MTFO.Patches
     }
 
     [HarmonyPatch(typeof(CP_Bioscan_Core), "Update")]
-    class test
+    class FixNullRefSpam
     {
         static bool Prefix(CP_Bioscan_Core __instance)
         {
-            if (__instance.m_playerAgents.Count == 0)
+            if (__instance.m_position.x > 9000 && __instance.m_position.y > 9000 && __instance.m_position.z > 9000)
             {
                 return false;
             }
