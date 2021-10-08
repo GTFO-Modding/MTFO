@@ -24,6 +24,7 @@ namespace MTFO.Custom
 
         public struct BioScanGx
         {
+            public string ScanText;
             public float Radius;
             public BioScanColorByMode[] colorModeColor;
         }

@@ -46,6 +46,7 @@ namespace MTFO.Patches
                 CP_Bioscan_Graphics scanGx = scanPrefab.GetComponent<CP_Bioscan_Graphics>();
                 scanGx.m_radius = scan.BioScanGraphics.Radius;
                 scanGx.m_colors = ConvertToColorMode(scan.BioScanGraphics.colorModeColor);
+                scanGx.SetText(scan.BioScanGraphics.ScanText);
 
                 CP_Bioscan_Core core = scanPrefab.GetComponent<CP_Bioscan_Core>();
                 core.m_playerAgents = new Il2CppSystem.Collections.Generic.List<PlayerAgent>();
