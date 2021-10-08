@@ -6,6 +6,7 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using System.Collections.Generic;
 using GameData;
+using System.Text.Json;
 
 namespace MTFO.Patches
 {
@@ -14,18 +15,21 @@ namespace MTFO.Patches
     {
         static Il2CppArrayBase<TextAsset> lookup;
         static List<TextAsset> gameData;
-        static Dictionary<string, string> gameDataLookup;
+        static Dictionary<int, string> localGDL;
         static int lookupLength = 0;
         static int count = 0;
 
         public static void Prefix(ref string __result)
         {
-            if (lookup == null)
+            if (lookupLength == 0)
+                localGDL = ConfigManager.gameDataLookup;
+
+            if (lookup == null && ConfigManager.gameDataLookup == null)
             {
                 Log.Debug("First cycle setup...");
                 lookup = Resources.LoadAll<TextAsset>("GameData");
                 gameData = new List<TextAsset>();
-                gameDataLookup = new Dictionary<string, string>();
+                localGDL = new Dictionary<int, string>();
                 foreach (var item in lookup)
                 {
                     if (item.name.EndsWith("DataBlock_bin"))
@@ -36,13 +40,28 @@ namespace MTFO.Patches
                     }
                 }
                 Log.Debug($"Total length: {lookupLength}");
+                if (localGDL == null)
+                {
+                    Log.Error("What????????");
+                }
                 foreach (var item in gameData)
                 {
                     string text = BinaryEncoder.Decode(GameDataInit.m_binaryEncoder, item.bytes);
-                    gameDataLookup.Add(text, item.name.Replace('.', '_'));
+                    int hash = text.GetStableHashCode();
+                    string name = item.name.Replace('.', '_');
+                    Log.Verbose($"Adding {name} with has {hash}");
+                    if (localGDL == null)
+                    {
+                        Log.Error("???????");
+                    }
+                    localGDL.Add(hash, name);
+                    Log.Verbose($"Added");
                     count++;
-                    Log.Verbose($"Added {item.name} to lookup table. {count} / {lookupLength}");
+                    Log.Verbose($"Added {name} to lookup table. {count} / {lookupLength}");
                 }
+
+                string serializedLookup = JsonSerializer.Serialize(localGDL);
+                File.WriteAllText(ConfigManager.GameDataLookupPath, serializedLookup);
             }
         }
 
@@ -58,7 +77,7 @@ namespace MTFO.Patches
             if (__result.Contains("Headers"))
             {
                 int hash = bytes.GetHashCode();
-                gameDataLookup.TryGetValue(__result, out string name);
+                localGDL.TryGetValue(__result.GetStableHashCode(), out string name);
 
                 if (name != null)
                 {

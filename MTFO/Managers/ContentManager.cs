@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using MTFO.Utilities;
 using MTFO.Custom;
+using System.Text.Json;
 
 namespace MTFO.Managers
 {
@@ -13,7 +13,6 @@ namespace MTFO.Managers
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
         public TierNames TierNames;
-        public FogRepellerConfig FogRepellerConfig;
 
         public ContentManager()
         {
@@ -22,8 +21,7 @@ namespace MTFO.Managers
                 { "welcome.txt", SetupWelcomeText },
                 { "puzzletypes.json", SetupChainedPuzzles },
                 { "glowsticks.json", SetupGlowsticks },
-                { "tiernames.json", SetupTierNames },
-                { "fogrep_config.json", SetupFogRep }
+                { "tiernames.json", SetupTierNames }
             };
             Init();
         }
@@ -59,24 +57,19 @@ namespace MTFO.Managers
         public void SetupChainedPuzzles(string path)
         {
             Log.Debug("Custom puzzles found");
-            ScanHolder = JsonConvert.DeserializeObject<ScanHolder>(File.ReadAllText(path));
+            ScanHolder = JsonSerializer.Deserialize<ScanHolder>(File.ReadAllText(path));
         }
 
         public void SetupGlowsticks(string path)
         {
             Log.Debug("Custom glowsticks found");
-            GlowstickHolder = JsonConvert.DeserializeObject<GlowstickHolder>(File.ReadAllText(path));
+            GlowstickHolder = JsonSerializer.Deserialize<GlowstickHolder>(File.ReadAllText(path));
             GlowstickHolder.Setup();
         }
 
         public void SetupTierNames(string path)
         {
-            TierNames = JsonConvert.DeserializeObject<TierNames>(File.ReadAllText(path));
-        }
-
-        public void SetupFogRep(string path)
-        {
-            FogRepellerConfig = JsonConvert.DeserializeObject<FogRepellerConfig>(File.ReadAllText(path));
+            TierNames = JsonSerializer.Deserialize<TierNames>(File.ReadAllText(path));
         }
     }
 }
