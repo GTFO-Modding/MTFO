@@ -5,6 +5,7 @@ using UnhollowerRuntimeLib;
 using BepInEx.IL2CPP;
 using BepInEx;
 using HarmonyLib;
+using UnityEngine.Analytics;
 
 
 namespace MTFO
@@ -22,7 +23,7 @@ namespace MTFO
         public override void Load()
         {
             ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
-
+            Analytics.enabled = false;
 
             var harmony = new Harmony(GUID);
             if (ConfigManager.IsHotReloadEnabled)
