@@ -99,7 +99,7 @@ namespace MTFO.Patches
     {
         static bool Prefix(CP_Bioscan_Core __instance)
         {
-            if (__instance.m_position.x > 9000 && __instance.m_position.y > 9000 && __instance.m_position.z > 9000)
+            if (__instance.gameObject.transform.position.x > 9000 && __instance.gameObject.transform.position.y > 9000 && __instance.gameObject.transform.position.z > 9000)
             {
                 return false;
             }
