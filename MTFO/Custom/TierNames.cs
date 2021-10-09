@@ -8,10 +8,10 @@ namespace MTFO.Custom
 {
     public struct TierNames
     {
-        public string Tier1;
-        public string Tier2;
-        public string Tier3;
-        public string Tier4;
-        public string Tier5;
+        public string Tier1 { get; set; }
+        public string Tier2 { get; set; }
+        public string Tier3 { get; set; }
+        public string Tier4 { get; set; }
+        public string Tier5 { get; set; }
     }
 }

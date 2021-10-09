@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using MTFO.Utilities;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MTFO.Custom
 {
@@ -12,6 +12,7 @@ namespace MTFO.Custom
             GlowstickLookup = new Dictionary<string, CustomGlowstick>();
             foreach (var glowstick in Glowsticks)
             {
+                Log.Verbose(glowstick);
                 if (GlowstickLookup.TryGetValue(glowstick.Name, out _))
                 {
                     Log.Warn($"Custom glowstick with name {glowstick.Name} already exists in the lookup! Skipping...");
@@ -26,7 +27,7 @@ namespace MTFO.Custom
             }
         }
 
-        public List<GlowstickConfig> Glowsticks;
+        public List<GlowstickConfig> Glowsticks { get; set; }
 
         [JsonIgnore]
         public Dictionary<string, CustomGlowstick> GlowstickLookup;
@@ -34,17 +35,21 @@ namespace MTFO.Custom
 
     public struct CustomGlowstick
     {
-        public Color Color;
-        public float Range;
+        public Color Color { get; set; }
+        public float Range { get; set; }
     }
 
     public struct GlowstickConfig
     {
-        public string Name;
-        public float Range;
-        public float r;
-        public float g;
-        public float b;
-        public float a;
+        public string Name { get; set; }
+        public float Range { get; set; }
+        public float r { get; set; }
+        public float g { get; set; }
+        public float b { get; set; }
+        public float a { get; set; }
+        public override string ToString()
+        {
+            return $"{Name},{Range},{r},{g},{b},{a}";
+        }
     }
 }

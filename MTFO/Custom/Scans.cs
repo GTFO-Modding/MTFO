@@ -5,47 +5,47 @@ namespace MTFO.Custom
 {
     public class ScanHolder
     {
-        public List<CustomBioScan> Scans;
-        public List<CustomClusterScan> Clusters;
+        public List<CustomBioScan> Scans { get; set; }
+        public List<CustomClusterScan> Clusters { get; set; }
     }
 
     public struct CustomBioScan
     {
-        public uint BaseScan;
-        public uint PersistentID;
-        public bool RequireAll;
-        public float ScanRadius;
-        public float[] PlayersInScanMulti;
-        public float ReduceSpeed;
-        public bool ReduceWhenNoPlayer;
-        public float ScanSpeedDecline;
-        public BioScanGx BioScanGraphics;
+        public uint BaseScan { get; set; }
+        public uint PersistentID { get; set; }
+        public bool RequireAll { get; set; }
+        public float ScanRadius { get; set; }
+        public float[] PlayersInScanMulti { get; set; }
+        public float ReduceSpeed { get; set; }
+        public bool ReduceWhenNoPlayer { get; set; }
+        public float ScanSpeedDecline { get; set; }
+        public BioScanGx BioScanGraphics { get; set; }
 
 
         public struct BioScanGx
         {
-            public string ScanText;
-            public float Radius;
-            public BioScanColorByMode[] colorModeColor;
+            public string ScanText { get; set; }
+            public float Radius { get; set; }
+            public BioScanColorByMode[] colorModeColor { get; set; }
         }
 
         public class BioScanColorByMode
         {
-            public eChainedPuzzleGraphicsColorMode mode;
-            public float r;
-            public float g;
-            public float b;
-            public float a = 1;
+            public eChainedPuzzleGraphicsColorMode mode { get; set; }
+            public float r { get; set; }
+            public float g { get; set; }
+            public float b { get; set; }
+            public float a { get; set; }
         }
     }
 
     public struct CustomClusterScan
     {
-        public uint BaseCluster;
-        public uint PersistentID;
-        public int ClusterCount;
-        public uint BioscanID;
-        public float DistanceBetweenScans;
-        public bool RevealWithHoloPath;
+        public uint BaseCluster { get; set; }
+        public uint PersistentID { get; set; }
+        public int ClusterCount { get; set; }
+        public uint BioscanID { get; set; }
+        public float DistanceBetweenScans { get; set; }
+        public bool RevealWithHoloPath { get; set; }
     }
 }
