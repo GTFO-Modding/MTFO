@@ -11,7 +11,7 @@ using UnityEngine.Analytics;
 namespace MTFO
 {
     [BepInPlugin(GUID, MODNAME, VERSION)]
-    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     public class MTFO : BasePlugin
     {
         public const string

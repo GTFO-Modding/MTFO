@@ -14,7 +14,6 @@ namespace MTFO.Managers
         private const string
             CUSTOM_FOLDER = "Custom",
             GAMEDATA_LOOKUP = @"https://lookup.gtfomodding.dev/lookup/";
-                
 
         // Anylitics Manager
 
@@ -52,7 +51,7 @@ namespace MTFO.Managers
             {
                 string content = File.ReadAllText(GameDataLookupPath);
                 Log.Verbose(content);
-                gameDataLookup = JsonSerializer.Deserialize<Dictionary<int, string>>(content);
+                gameDataLookup = JsonSerializer.Deserialize<Dictionary<int, string>>(content, ContentManager.s_SerializerOptions);
             }
 
             string path = _rundownFolder.Value;
