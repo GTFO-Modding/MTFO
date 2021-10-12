@@ -11,11 +11,11 @@ namespace MTFO.Utilities
 {
     public static class PathUtil
     {
-        public static bool CheckCustomFile(string file, out string CombinedPath)
+        public static bool CheckCustomFile(string file, out IDirectoryFile CustomFile)
         {
-            CombinedPath = Path.Combine(ConfigManager.CustomPath, file);
-            if (File.Exists(CombinedPath)) return true;
-            return false;
+            CustomFile = ConfigManager.CustomPath
+                .GetFile(file);
+            return CustomFile.Exists();
         }
 
         public static bool CheckFile(string pathToFile)

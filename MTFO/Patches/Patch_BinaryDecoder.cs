@@ -61,7 +61,9 @@ namespace MTFO.Patches
                 }
 
                 string serializedLookup = JsonSerializer.Serialize(localGDL);
-                File.WriteAllText(ConfigManager.GameDataLookupPath, serializedLookup);
+                ConfigManager.GameDataLookupPath
+                    .GetPath()
+                    .PathFile.WriteAllText($"{ConfigManager.GAME_VERSION}.json", serializedLookup);
             }
         }
 
@@ -84,19 +86,19 @@ namespace MTFO.Patches
                     Log.Verbose("Found " + name);
                     try
                     {
-                        string filePath = Path.Combine(ConfigManager.GameDataPath, name + ".json");
-                        if (File.Exists(filePath))
+                        IDirectoryFile file = ConfigManager.GameDataPath.GetFile(name + ".json");
+                        if (file.Exists())
                         {
                             Log.Verbose("Reading [" + name + "] from disk...");
-                            Log.Verbose(filePath);
-                            __result = File.ReadAllText(filePath);
+                            Log.Verbose(file);
+                            __result = file.ReadAllText();
 
                             return;
                         }
                         else
                         {
-                            Log.Verbose("No file found at [" + filePath + "], writing file to disk...");
-                            File.WriteAllText(filePath, __result);
+                            Log.Verbose("No file found at [" + file + "], writing file to disk...");
+                            file.WriteAllText(__result);
                         }
                     }
                     catch
@@ -106,17 +108,18 @@ namespace MTFO.Patches
                 }
                 else
                 {
-                    string errorPath = Path.Combine(ConfigManager.GameDataPath, "UNKNOWN");
-                    if (!Directory.Exists(errorPath))
+                    var errorPath = ConfigManager.GameDataPath
+                        .GetDirectory("UNKNOWN");
+                    if (!errorPath.Exists())
                     {
-                        Directory.CreateDirectory(errorPath);
+                        errorPath.Create();
                     }
-                    string errorFilePath = Path.Combine(errorPath, hash + ".json");
+                    var errorFilePath = errorPath.GetFile(hash + ".json");
                     Log.Error("Failed to find match for hash [" + hash + "]! Cannot load custom data for this block!");
-                    if (File.Exists(errorFilePath))
+                    if (errorFilePath.Exists())
                     {
                         Log.Warn("-- FILE FOUND IN DUMP FOLDER WITH MATCHING HASH FILE NAME, LOADING INSTEAD --");
-                        __result = File.ReadAllText(errorFilePath);
+                        __result = errorFilePath.ReadAllText();
                         return;
                     }
 
@@ -127,7 +130,7 @@ namespace MTFO.Patches
                         Log.Debug("----- FILE CONTENT DUMP END -----");
                     }
                     Log.Debug("DUMPING FILE CONTENTS TO [" + errorFilePath + "]");
-                    File.WriteAllText(errorFilePath, __result);
+                    errorFilePath.WriteAllText(__result);
                 }
             }
         }

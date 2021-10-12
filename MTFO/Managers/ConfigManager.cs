@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Text.Json;
+using System.Linq;
 
 namespace MTFO.Managers
 {
@@ -45,11 +46,13 @@ namespace MTFO.Managers
             GAME_VERSION = GetGameVersion();
 
             //Setup Paths
-            GameDataLookupPath = PathUtil.MakeRelativeDirectory(Paths.ConfigPath, "_gamedatalookup");
-            GameDataLookupPath = Path.Combine(GameDataLookupPath, $"{GAME_VERSION}.json");
-            if (File.Exists(GameDataLookupPath))
+            GameDataLookupPath = GamePath.Create(PathUtil.MakeRelativeDirectory(Paths.ConfigPath, "_gamedatalookup"))
+                .GetCurrentDirectory();
+            if (GameDataLookupPath
+                .GetPath().PathFile.Exists($"{GAME_VERSION}.json"))
             {
-                string content = File.ReadAllText(GameDataLookupPath);
+                string content = GameDataLookupPath.GetPath()
+                    .PathFile.ReadAllText($"{GAME_VERSION}.json");
                 Log.Verbose(content);
                 gameDataLookup = JsonSerializer.Deserialize<Dictionary<int, string>>(content, ContentManager.s_SerializerOptions);
             }
@@ -57,31 +60,39 @@ namespace MTFO.Managers
             string path = _rundownFolder.Value;
             if (UseLegacyLoading)
             {
-                GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
+                GameDataPath = GamePath.Create(path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION))
+                    .GetCurrentDirectory();
             } else
             {
-                GameDataPath = PathUtil.MakeRelativeDirectory(Paths.PluginPath, "GameData_" + GAME_VERSION);
+                var rawGameDataPath = PathUtil.MakeRelativeDirectory(Paths.PluginPath, "GameData_" + GAME_VERSION);
+                GameDataPath = GamePath.Create(rawGameDataPath)
+                    .GetCurrentDirectory();
 
-                string[] files = Directory.GetFiles(Paths.PluginPath, "GameData_*.json", SearchOption.AllDirectories);
-                foreach (string file in files)
+                var searchPath = GamePath.Create(Paths.PluginPath);
+
+                var files = searchPath.GetCurrentDirectory().GetFiles("GameData_*.json", SearchOption.AllDirectories);
+                foreach (var file in files)
                 {
-                    if (Path.GetDirectoryName(file) != GameDataPath)
+                    if (file.DirectoryName != rawGameDataPath)
                     {
-                        GameDataPath = Path.GetDirectoryName(file);
+                        GameDataPath = GamePath.Create(file.DirectoryName)
+                            .GetCurrentDirectory();
                         break;
                     }
                 }
             }
 
-            CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
+            CustomPath = GameDataPath
+                .GetDirectories()
+                .FirstOrDefault((dir) => dir.Name == CUSTOM_FOLDER);
 
             //Setup flags 
-            HasCustomContent = Directory.Exists(CustomPath);
+            HasCustomContent = CustomPath.Exists();
 
             //Setup folders
-            if (!Directory.Exists(GameDataPath))
+            if (!GameDataPath.Exists())
             {
-                Directory.CreateDirectory(GameDataPath);
+                GameDataPath.Create();
             }
 
             //Setup Managers
@@ -138,9 +149,9 @@ namespace MTFO.Managers
         public static string MenuText;
 
         //Paths
-        public static readonly string GameDataPath;
-        public static readonly string CustomPath;
-        public static readonly string GameDataLookupPath;
+        public static readonly IDirectory GameDataPath;
+        public static readonly IDirectory CustomPath;
+        public static readonly IDirectory GameDataLookupPath;
 
         //Flags
         public static bool HasCustomContent;
@@ -204,6 +215,12 @@ namespace MTFO.Managers
             //        Log.Debug($"Skipping {text.name}, does not end with 'DataBlock_bin...'");
             //    }
             //}
+        }
+
+        public static string ReadAllTextInGameData(string path)
+        {
+            return GameDataPath.GetPath()
+                .PathFile.ReadAllText(path);
         }
 
         private static int GetGameVersion()

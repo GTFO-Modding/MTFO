@@ -15,14 +15,14 @@ namespace MTFO.Managers
             ReadCommentHandling = JsonCommentHandling.Skip,
             PropertyNameCaseInsensitive = true
         };
-        private readonly Dictionary<string, Action<string>> Handlers;
+        private readonly Dictionary<string, Action<IDirectoryFile>> Handlers;
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
         public TierNames TierNames;
 
         public ContentManager()
         {
-            Handlers = new Dictionary<string, Action<string>>
+            Handlers = new Dictionary<string, Action<IDirectoryFile>>
             {
                 { "welcome.txt", SetupWelcomeText },
                 { "puzzletypes.json", SetupChainedPuzzles },
@@ -38,44 +38,44 @@ namespace MTFO.Managers
 
             foreach(string key in Handlers.Keys)
             {
-                if (PathUtil.CheckCustomFile(key, out string path))
+                if (PathUtil.CheckCustomFile(key, out IDirectoryFile customFile))
                 {
-                    Handlers.TryGetValue(key, out Action<string> value);
+                    Handlers.TryGetValue(key, out Action<IDirectoryFile> value);
                     try
                     {
-                        value?.Invoke(path);
+                        value?.Invoke(customFile);
                     } catch (Exception err)
                     {
                         Log.Error(err);
                     }
                     
-                    Log.Debug(path);
+                    Log.Debug(customFile);
                 }
             }
         }
 
-        public void SetupWelcomeText(string path)
+        public void SetupWelcomeText(IDirectoryFile path)
         {
             Log.Debug("Welcome text found");
-            ConfigManager.MenuText = File.ReadAllText(path);
+            ConfigManager.MenuText = path.ReadAllText();
         }
 
-        public void SetupChainedPuzzles(string path)
+        public void SetupChainedPuzzles(IDirectoryFile path)
         {
             Log.Debug("Custom puzzles found");
-            ScanHolder = JsonSerializer.Deserialize<ScanHolder>(File.ReadAllText(path), s_SerializerOptions);
+            ScanHolder = JsonSerializer.Deserialize<ScanHolder>(path.ReadAllText(), s_SerializerOptions);
         }
 
-        public void SetupGlowsticks(string path)
+        public void SetupGlowsticks(IDirectoryFile path)
         {
             Log.Debug("Custom glowsticks found");
-            GlowstickHolder = JsonSerializer.Deserialize<GlowstickHolder>(File.ReadAllText(path), s_SerializerOptions);
+            GlowstickHolder = JsonSerializer.Deserialize<GlowstickHolder>(path.ReadAllText(), s_SerializerOptions);
             GlowstickHolder.Setup();
         }
 
-        public void SetupTierNames(string path)
+        public void SetupTierNames(IDirectoryFile path)
         {
-            TierNames = JsonSerializer.Deserialize<TierNames>(File.ReadAllText(path), s_SerializerOptions);
+            TierNames = JsonSerializer.Deserialize<TierNames>(path.ReadAllText(), s_SerializerOptions);
         }
     }
 }

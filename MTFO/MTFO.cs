@@ -29,7 +29,7 @@ namespace MTFO
             var harmony = new Harmony(GUID);
             if (ConfigManager.IsHotReloadEnabled)
             {
-                var hotReloadInjectPoint = typeof(CM_PageRundown_New).GetMethod("OnEnable");
+                var hotReloadInjectPoint = typeof(GS_Startup).GetMethod("Enter");
                 var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
                 harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
             }

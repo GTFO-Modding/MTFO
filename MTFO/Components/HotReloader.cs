@@ -76,7 +76,7 @@ namespace MTFO.HotReload
 
 			GearManager.m_allGearWithPostedIconJobs.Clear();
 
-			gearManager.Setup();
+			gearManager.SetupGearContainers();
 			gearManager.LoadOfflineGearDatas();
 			gearManager.OnGearLoadingDone();
 
@@ -86,6 +86,8 @@ namespace MTFO.HotReload
 			GameDataInit.ReInitialize();
 			Rundown.gameObject.SetActive(true);
 			Log.Message("Reloaded!");
+
+			// refresh enemies
 		}
 	}
 }
