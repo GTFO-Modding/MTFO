@@ -4,6 +4,7 @@ using Gear;
 using Globals;
 using MTFO.Utilities;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Tier = Il2CppSystem.Collections.Generic.List<CellMenu.CM_ExpeditionIcon_New>;
 
@@ -31,13 +32,27 @@ namespace MTFO.HotReload
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
             this.AddOnReloadListener(this.ReloadData);
-            this.m_rundownManager = new();
-            this.m_gearManager = new();
+            this.AddOnReloadListener(new HotRundownManager());
+            this.AddOnReloadListener(new HotGearManager());
+        }
+
+        public void AddOnReloadListener(HotManagerBase manager)
+        {
+            this.AddOnReloadListener(manager.Reload);
+            if (!this.m_Managers.Contains(manager))
+                this.m_Managers.Add(manager);
         }
 
         public void AddOnReloadListener(Action<int> value)
         {
             this.m_button.add_OnBtnPressCallback(value);
+        }
+
+        public void RemoveOnReloadListener(HotManagerBase manager)
+        {
+            this.RemoveOnReloadListener(manager.Reload);
+            if (this.m_Managers.Contains(manager))
+                this.m_Managers.Remove(manager);
         }
 
         public void RemoveOnReloadListener(Action<int> value)
@@ -73,8 +88,7 @@ namespace MTFO.HotReload
 
         public static HotReloader Current;
         private CM_Item m_button;
-        private HotGearManager m_gearManager;
-        private HotRundownManager m_rundownManager;
+        private List<HotManagerBase> m_Managers = new();
         private string m_text = "Reload Game Data";
         private Vector3 m_position = new(0, 77, 0);
     }
@@ -83,7 +97,7 @@ namespace MTFO.HotReload
     {
         public HotManagerBase()
         {
-            HotReloader.Current.AddOnReloadListener(this.Reload);
+            HotReloader.Current.AddOnReloadListener(this);
         }
         public abstract void Reload(int id);
     }
