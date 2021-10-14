@@ -30,7 +30,7 @@ namespace MTFO.HotReload
             gameObject.transform.localPosition = m_position;
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
-            add_OnBtnPressCallback((Action<int>)ReloadData);
+            this.add_OnBtnPressCallback(this.ReloadData);
             this.m_rundownManager = new();
             this.m_gearManager = new();
         }
@@ -38,6 +38,11 @@ namespace MTFO.HotReload
         public void add_OnBtnPressCallback(Action<int> value)
         {
             this.m_button.add_OnBtnPressCallback(value);
+        }
+
+        public void remove_OnBtnPressCallback(Action<int> value)
+        {
+            this.m_button.remove_OnBtnPressCallback(value);
         }
 
         /// <summary>
