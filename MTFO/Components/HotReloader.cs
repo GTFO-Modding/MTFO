@@ -26,47 +26,70 @@ namespace MTFO.HotReload
 
         void Awake()
         {
-            Rundown = MainMenuGuiLayer.Current.PageRundownNew;
             gameObject.SetActive(true);
             gameObject.transform.localPosition = m_position;
-            CM_Item Button = gameObject.GetComponent<CM_Item>();
-            Button.SetText(m_text);
-            Button.add_OnBtnPressCallback((Action<int>)ReloadData);
+            CM_Item button = gameObject.GetComponent<CM_Item>();
+            button.SetText(m_text);
+            button.add_OnBtnPressCallback((Action<int>)ReloadData);
+            this.m_rundownManager = new(button);
+            this.m_gearManager = new(button);
         }
 
         /// <summary>
-        /// Clears all RenderTextures for every persistentID of the gear. Note: does not destroy the texture objects!
+        /// Re-initializes game data
         /// </summary>
-        private void CleanGearIcons()
+        public void ReloadData(int id)
         {
-            GearManager.m_allGearWithPostedIconJobs.Clear();
-            foreach (var instance in GearManager.Current.m_allGearIconTexturesPerInstanceKey)
-                instance.Clear();
+            GameDataInit.ReInitialize(); // refresh game data
+            Log.Message("Reinitialized GameData");
         }
 
         /// <summary>
-        /// Destroy all selectable gear in the lobby, leaving nothing selectable
+        /// Create a HotReloader instance if it doesn't exist and assigns it to a singleton
         /// </summary>
-        [Obsolete]
-        private void CleanGearLobbySlots()
+        public static void Setup()
         {
-            if (CM_PageLoadout.Current != null)
+            if (Current != null || MainMenuGuiLayer.Current.PageRundownNew == null) return;
+
+            GameObject button = Instantiate(
+                original: MainMenuGuiLayer.Current.PageRundownNew.m_discordButton.gameObject,
+                parent: MainMenuGuiLayer.Current.PageRundownNew.m_discordButton.transform.parent,
+                worldPositionStays: false);
+            button.name = "Button HotReload";
+            Current = button.AddComponent<HotReloader>();
+
+            Log.Debug("Created hot reload button");
+        }
+
+        public static HotReloader Current;
+        private HotGearManager m_gearManager;
+        private HotRundownManager m_rundownManager;
+        private string m_text = "Reload Game Data";
+        private Vector3 m_position = new(0, 77, 0);
+    }
+
+    class HotRundownManager
+    {
+        public HotRundownManager(CM_Item button)
+        {
+            Rundown = MainMenuGuiLayer.Current.PageRundownNew;
+            button.add_OnBtnPressCallback((Action<int>)this.Reload);
+        }
+
+        public void Reload(int id)
+        {
+            if (HasValidRundown)
             {
-                var inventoryItems = CM_PageLoadout.Current.m_popupAlign.gameObject
-                                   .GetComponentsInChildren<CM_InventorySlotItem>(true);
-                foreach (var item in inventoryItems) Destroy(item.gameObject);
+                Rundown.m_dataIsSetup = false;
+                this.CleanIconsOfTier();
+                this.TryPlaceRundown();
             }
-        }
-
-        /// <summary>
-        /// Clears the GearIDRange data from all inventory slots
-        /// </summary>
-        private void CleanGearSlots()
-        {
-            for (int i = 0; i < m_gearSlots; ++i)
+            else
             {
-                GearManager.Current.m_gearPerSlot[i].Clear();
+                Log.Error($"Failed to place the rundown due to missing Rundown id {Global.RundownIdToLoad}");
             }
+
+            Log.Message("Reloaded Rundown");
         }
 
         /// <summary>
@@ -89,7 +112,79 @@ namespace MTFO.HotReload
             foreach (var icon in tier)
             {
 
-                Destroy(icon.gameObject);
+                GameObject.Destroy(icon.gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Replace the rundown data
+        /// </summary>
+        private void TryPlaceRundown()
+        {
+            Rundown.m_currentRundownData = this.m_currentRundownData;
+            if (Rundown.m_currentRundownData != null)
+            {
+                Rundown.PlaceRundown(Rundown.m_currentRundownData);
+                Rundown.m_dataIsSetup = true;
+            }
+        }
+
+        private bool HasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
+        private RundownDataBlock m_currentRundownData => GameDataBlockBase<RundownDataBlock>.GetBlock(Global.RundownIdToLoad);
+        private CM_PageRundown_New Rundown;
+    }
+
+    class HotGearManager
+    {
+        public HotGearManager(CM_Item button)
+        {
+            button.add_OnBtnPressCallback((Action<int>)this.Reload);
+        }
+
+        public void Reload(int id)
+        {
+            GearManager.Current.m_offlineSetupDone = false;
+            this.CleanGearIcons();
+            this.CleanGearSlots();
+            GearManager.Current.SetupGearContainers(); //Re-initialize most data parameters
+            this.LoadOfflineGearDatas();
+            GearManager.GenerateAllGearIcons();
+            GearManager.Current.m_offlineSetupDone = true;
+            Log.Message("Reloaded Gear");
+        }
+
+        /// <summary>
+        /// Clears all RenderTextures for every persistentID of the gear. Note: does not destroy the texture objects!
+        /// </summary>
+        private void CleanGearIcons()
+        {
+            GearManager.m_allGearWithPostedIconJobs.Clear();
+            foreach (var instance in GearManager.Current.m_allGearIconTexturesPerInstanceKey)
+                instance.Clear();
+        }
+
+        /// <summary>
+        /// Destroy all selectable gear in the lobby, leaving nothing selectable
+        /// </summary>
+        [Obsolete]
+        private void CleanGearLobbySlots()
+        {
+            if (CM_PageLoadout.Current != null)
+            {
+                var inventoryItems = CM_PageLoadout.Current.m_popupAlign.gameObject
+                                   .GetComponentsInChildren<CM_InventorySlotItem>(true);
+                foreach (var item in inventoryItems) GameObject.Destroy(item.gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Clears the GearIDRange data from all inventory slots
+        /// </summary>
+        private void CleanGearSlots()
+        {
+            for (int i = 0; i < m_gearSlots; ++i)
+            {
+                GearManager.Current.m_gearPerSlot[i].Clear();
             }
         }
 
@@ -139,80 +234,6 @@ namespace MTFO.HotReload
                 GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
         }
 
-        /// <summary>
-        /// Re-initializes the Gear and Rundown
-        /// </summary>
-        public void ReloadData(int id)
-        {
-            GameDataInit.ReInitialize(); // refresh game data
-            Log.Message("Reinitialized GameData");
-            ReloadGear();
-            Log.Message("Reloaded Gear");
-            ReloadRundown();
-            Log.Message("Reloaded Rundown");
-        }
-
-        private void ReloadGear()
-        {
-            GearManager.Current.m_offlineSetupDone = false;
-            this.CleanGearIcons();
-            this.CleanGearSlots();
-            GearManager.Current.SetupGearContainers(); //Re-initialize most data parameters
-            this.LoadOfflineGearDatas();
-            GearManager.GenerateAllGearIcons();
-            GearManager.Current.m_offlineSetupDone = true;
-        }
-
-        private void ReloadRundown()
-        {
-            if (HasValidRundown)
-            {
-                Rundown.m_dataIsSetup = false;
-                this.CleanIconsOfTier();
-                this.TryPlaceRundown();
-            }
-            else
-            {
-                Log.Error($"Failed to place the rundown due to missing Rundown id {Global.RundownIdToLoad}");
-            }
-        }
-
-        /// <summary>
-        /// Create a HotReloader instance if it doesn't exist and assigns it to a singleton
-        /// </summary>
-        public static void Setup()
-        {
-            if (Current != null || MainMenuGuiLayer.Current.PageRundownNew == null) return;
-
-            GameObject button = Instantiate(
-                original: MainMenuGuiLayer.Current.PageRundownNew.m_discordButton.gameObject,
-                parent: MainMenuGuiLayer.Current.PageRundownNew.m_discordButton.transform.parent,
-                worldPositionStays: false);
-            button.name = "Button HotReload";
-            Current = button.AddComponent<HotReloader>();
-
-            Log.Debug("Created hot reload button");
-        }
-
-        /// <summary>
-        /// Replace the rundown data
-        /// </summary>
-        private void TryPlaceRundown()
-        {
-            Rundown.m_currentRundownData = this.m_currentRundownData;
-            if (Rundown.m_currentRundownData != null)
-            {
-                Rundown.PlaceRundown(Rundown.m_currentRundownData);
-                Rundown.m_dataIsSetup = true;
-            }
-        }
-
-        private bool HasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
-        private RundownDataBlock m_currentRundownData => GameDataBlockBase<RundownDataBlock>.GetBlock(Global.RundownIdToLoad);
-        public static HotReloader Current;
         private int m_gearSlots = 3;
-        private string m_text = "Reload Game Data";
-        private Vector3 m_position = new(0, 77, 0);
-        private CM_PageRundown_New Rundown;
     }
 }
