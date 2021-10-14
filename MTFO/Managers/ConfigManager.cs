@@ -50,7 +50,8 @@ namespace MTFO.Managers
             {
                 string content = File.ReadAllText(GameDataLookupPath);
                 Log.Verbose(content);
-                gameDataLookup = Json.Deserialize<Dictionary<int, string>>(content);
+                var json = new JsonSerializer();
+                gameDataLookup = json.Deserialize<Dictionary<int, string>>(content);
             }
 
             string path = _rundownFolder.Value;

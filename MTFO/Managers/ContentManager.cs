@@ -8,6 +8,7 @@ namespace MTFO.Managers
 {
     public class ContentManager
     {
+        private readonly JsonSerializer json;
         private readonly Dictionary<string, Action<string>> Handlers;
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
@@ -56,19 +57,19 @@ namespace MTFO.Managers
         public void SetupChainedPuzzles(string path)
         {
             Log.Debug("Custom puzzles found");
-            ScanHolder = Json.Deserialize<ScanHolder>(File.ReadAllText(path));
+            ScanHolder = json.Deserialize<ScanHolder>(File.ReadAllText(path));
         }
 
         public void SetupGlowsticks(string path)
         {
             Log.Debug("Custom glowsticks found");
-            GlowstickHolder = Json.Deserialize<GlowstickHolder>(File.ReadAllText(path));
+            GlowstickHolder = json.Deserialize<GlowstickHolder>(File.ReadAllText(path));
             GlowstickHolder.Setup();
         }
 
         public void SetupTierNames(string path)
         {
-            TierNames = Json.Deserialize<TierNames>(File.ReadAllText(path));
+            TierNames = json.Deserialize<TierNames>(File.ReadAllText(path));
         }
     }
 }
