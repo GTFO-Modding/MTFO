@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using MTFO.Utilities;
 using MTFO.Custom;
-using System.Text.Json;
 
 namespace MTFO.Managers
 {
     public class ContentManager
     {
-        internal static readonly JsonSerializerOptions s_SerializerOptions = new JsonSerializerOptions
-        {
-            AllowTrailingCommas = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            PropertyNameCaseInsensitive = true
-        };
         private readonly Dictionary<string, Action<string>> Handlers;
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
@@ -63,19 +56,19 @@ namespace MTFO.Managers
         public void SetupChainedPuzzles(string path)
         {
             Log.Debug("Custom puzzles found");
-            ScanHolder = JsonSerializer.Deserialize<ScanHolder>(File.ReadAllText(path), s_SerializerOptions);
+            ScanHolder = Json.Deserialize<ScanHolder>(File.ReadAllText(path));
         }
 
         public void SetupGlowsticks(string path)
         {
             Log.Debug("Custom glowsticks found");
-            GlowstickHolder = JsonSerializer.Deserialize<GlowstickHolder>(File.ReadAllText(path), s_SerializerOptions);
+            GlowstickHolder = Json.Deserialize<GlowstickHolder>(File.ReadAllText(path));
             GlowstickHolder.Setup();
         }
 
         public void SetupTierNames(string path)
         {
-            TierNames = JsonSerializer.Deserialize<TierNames>(File.ReadAllText(path), s_SerializerOptions);
+            TierNames = Json.Deserialize<TierNames>(File.ReadAllText(path));
         }
     }
 }
