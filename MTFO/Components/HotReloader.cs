@@ -28,11 +28,16 @@ namespace MTFO.HotReload
         {
             gameObject.SetActive(true);
             gameObject.transform.localPosition = m_position;
-            CM_Item button = gameObject.GetComponent<CM_Item>();
-            button.SetText(m_text);
-            button.add_OnBtnPressCallback((Action<int>)ReloadData);
-            this.m_rundownManager = new(button);
-            this.m_gearManager = new(button);
+            m_button = gameObject.GetComponent<CM_Item>();
+            m_button.SetText(m_text);
+            add_OnBtnPressCallback((Action<int>)ReloadData);
+            this.m_rundownManager = new();
+            this.m_gearManager = new();
+        }
+
+        public void add_OnBtnPressCallback(Action<int> value)
+        {
+            this.m_button.add_OnBtnPressCallback(value);
         }
 
         /// <summary>
@@ -62,6 +67,7 @@ namespace MTFO.HotReload
         }
 
         public static HotReloader Current;
+        private CM_Item m_button;
         private HotGearManager m_gearManager;
         private HotRundownManager m_rundownManager;
         private string m_text = "Reload Game Data";
@@ -70,10 +76,10 @@ namespace MTFO.HotReload
 
     class HotRundownManager
     {
-        public HotRundownManager(CM_Item button)
+        public HotRundownManager()
         {
             Rundown = MainMenuGuiLayer.Current.PageRundownNew;
-            button.add_OnBtnPressCallback((Action<int>)this.Reload);
+            HotReloader.Current.add_OnBtnPressCallback(this.Reload);
         }
 
         public void Reload(int id)
@@ -136,9 +142,9 @@ namespace MTFO.HotReload
 
     class HotGearManager
     {
-        public HotGearManager(CM_Item button)
+        public HotGearManager()
         {
-            button.add_OnBtnPressCallback((Action<int>)this.Reload);
+            HotReloader.Current.add_OnBtnPressCallback(this.Reload);
         }
 
         public void Reload(int id)
