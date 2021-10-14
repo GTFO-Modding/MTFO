@@ -30,17 +30,17 @@ namespace MTFO.HotReload
             gameObject.transform.localPosition = m_position;
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
-            this.add_OnBtnPressCallback(this.ReloadData);
+            this.AddOnReloadListener(this.ReloadData);
             this.m_rundownManager = new();
             this.m_gearManager = new();
         }
 
-        public void add_OnBtnPressCallback(Action<int> value)
+        public void AddOnReloadListener(Action<int> value)
         {
             this.m_button.add_OnBtnPressCallback(value);
         }
 
-        public void remove_OnBtnPressCallback(Action<int> value)
+        public void RemoveOnReloadListener(Action<int> value)
         {
             this.m_button.remove_OnBtnPressCallback(value);
         }
@@ -79,15 +79,23 @@ namespace MTFO.HotReload
         private Vector3 m_position = new(0, 77, 0);
     }
 
-    class HotRundownManager
+    public abstract class HotManagerBase
     {
-        public HotRundownManager()
+        public HotManagerBase()
+        {
+            HotReloader.Current.AddOnReloadListener(this.Reload);
+        }
+        public abstract void Reload(int id);
+    }
+
+    class HotRundownManager : HotManagerBase
+    {
+        public HotRundownManager() : base()
         {
             Rundown = MainMenuGuiLayer.Current.PageRundownNew;
-            HotReloader.Current.add_OnBtnPressCallback(this.Reload);
         }
 
-        public void Reload(int id)
+        public override void Reload(int id)
         {
             if (HasValidRundown)
             {
@@ -145,14 +153,11 @@ namespace MTFO.HotReload
         private CM_PageRundown_New Rundown;
     }
 
-    class HotGearManager
+    class HotGearManager : HotManagerBase
     {
-        public HotGearManager()
-        {
-            HotReloader.Current.add_OnBtnPressCallback(this.Reload);
-        }
+        public HotGearManager() : base() { }
 
-        public void Reload(int id)
+        public override void Reload(int id)
         {
             GearManager.Current.m_offlineSetupDone = false;
             this.CleanGearIcons();
