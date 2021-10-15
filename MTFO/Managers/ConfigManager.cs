@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.Text.Json;
 
 namespace MTFO.Managers
 {
@@ -51,7 +50,8 @@ namespace MTFO.Managers
             {
                 string content = File.ReadAllText(GameDataLookupPath);
                 Log.Verbose(content);
-                gameDataLookup = JsonSerializer.Deserialize<Dictionary<int, string>>(content, ContentManager.s_SerializerOptions);
+                var json = new JsonSerializer();
+                gameDataLookup = json.Deserialize<Dictionary<int, string>>(content);
             }
 
             string path = _rundownFolder.Value;

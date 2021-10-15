@@ -6,13 +6,13 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using System.Collections.Generic;
 using GameData;
-using System.Text.Json;
 
 namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(BinaryEncoder), "Decode")]
     class Patch_BinaryDecoder
     {
+        static JsonSerializer json = new();
         static Il2CppArrayBase<TextAsset> lookup;
         static List<TextAsset> gameData;
         static Dictionary<int, string> localGDL;
@@ -60,7 +60,7 @@ namespace MTFO.Patches
                     Log.Verbose($"Added {name} to lookup table. {count} / {lookupLength}");
                 }
 
-                string serializedLookup = JsonSerializer.Serialize(localGDL);
+                string serializedLookup = json.Serialize(localGDL);
                 File.WriteAllText(ConfigManager.GameDataLookupPath, serializedLookup);
             }
         }
