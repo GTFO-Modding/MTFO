@@ -19,8 +19,8 @@ namespace MTFO.HotReload
             if (HasValidRundown)
             {
                 Rundown.m_dataIsSetup = false;
-                this.CleanIconsOfTier();
-                this.TryPlaceRundown();
+                CleanIconsOfTier();
+                TryPlaceRundown();
             }
             else
             {

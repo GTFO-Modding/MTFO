@@ -17,9 +17,9 @@ namespace MTFO.HotReload
             gameObject.transform.localPosition = m_position;
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
-            this.AddOnReloadListener(new HotGameDataManager());
-            this.AddOnReloadListener(new HotRundownManager());
-            this.AddOnReloadListener(new HotGearManager());
+            AddOnReloadListener(new HotGameDataManager());
+            AddOnReloadListener(new HotRundownManager());
+            AddOnReloadListener(new HotGearManager());
         }
 
         /// <summary>
@@ -27,10 +27,10 @@ namespace MTFO.HotReload
         /// </summary>
         public void AddOnReloadListener(IHotManager manager)
         {
-            if (!this.m_Managers.Contains(manager))
+            if (!m_Managers.Contains(manager))
             {
-                this.m_button.add_OnBtnPressCallback((Action<int>)manager.Reload);
-                this.m_Managers.Add(manager);
+                m_button.add_OnBtnPressCallback((Action<int>)manager.Reload);
+                m_Managers.Add(manager);
             }
         }
 
@@ -39,10 +39,10 @@ namespace MTFO.HotReload
         /// </summary>
         public void RemoveOnReloadListener(IHotManager manager)
         {
-            if (this.m_Managers.Contains(manager))
+            if (m_Managers.Contains(manager))
             {
-                this.m_button.remove_OnBtnPressCallback((Action<int>)manager.Reload);
-                this.m_Managers.Remove(manager);
+                m_button.remove_OnBtnPressCallback((Action<int>)manager.Reload);
+                m_Managers.Remove(manager);
             }
                 
         }
