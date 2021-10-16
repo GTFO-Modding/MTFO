@@ -17,33 +17,36 @@ namespace MTFO.HotReload
             gameObject.transform.localPosition = m_position;
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
-            this.AddOnReloadListener(this.ReloadData);
+            this.m_button.add_OnBtnPressCallback((Action<int>)this.ReloadData);
             this.AddOnReloadListener(new HotRundownManager());
             this.AddOnReloadListener(new HotGearManager());
         }
 
+        /// <summary>
+        /// Adds callback to a button and manager to a dictionary if it doesn't exist already
+        /// </summary>
+        /// <param name="manager"></param>
         public void AddOnReloadListener(HotManagerBase manager)
         {
-            this.AddOnReloadListener(manager.Reload);
             if (!this.m_Managers.Contains(manager))
+            {
+                this.m_button.add_OnBtnPressCallback((Action<int>)manager.Reload);
                 this.m_Managers.Add(manager);
+            }
         }
 
-        public void AddOnReloadListener(Action<int> value)
-        {
-            this.m_button.add_OnBtnPressCallback(value);
-        }
-
+        /// <summary>
+        /// Removes callback from a button and manager from a dictionary if it doesn't exist already
+        /// </summary>
+        /// <param name="manager"></param>
         public void RemoveOnReloadListener(HotManagerBase manager)
         {
-            this.RemoveOnReloadListener(manager.Reload);
             if (this.m_Managers.Contains(manager))
+            {
+                this.m_button.remove_OnBtnPressCallback((Action<int>)manager.Reload);
                 this.m_Managers.Remove(manager);
-        }
-
-        public void RemoveOnReloadListener(Action<int> value)
-        {
-            this.m_button.remove_OnBtnPressCallback(value);
+            }
+                
         }
 
         /// <summary>
