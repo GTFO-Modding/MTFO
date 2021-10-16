@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MTFO.HotReload
 {
-    class HotReloader : MonoBehaviour
+    public class HotReloader : MonoBehaviour
     {
         public HotReloader(IntPtr intPtr) : base(intPtr) { }
 
