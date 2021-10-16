@@ -11,14 +11,14 @@ namespace MTFO.HotReload
     {
         public HotRundownManager()
         {
-            Rundown = MainMenuGuiLayer.Current.PageRundownNew;
+            m_rundown = MainMenuGuiLayer.Current.PageRundownNew;
         }
 
         public void Reload(int id)
         {
-            if (HasValidRundown)
+            if (m_hasValidRundown)
             {
-                Rundown.m_dataIsSetup = false;
+                m_rundown.m_dataIsSetup = false;
                 CleanIconsOfTier();
                 TryPlaceRundown();
             }
@@ -35,11 +35,11 @@ namespace MTFO.HotReload
         /// </summary>
         private void CleanIconsOfTier()
         {
-            CleanIconsOfTier(Rundown.m_expIconsTier1);
-            CleanIconsOfTier(Rundown.m_expIconsTier2);
-            CleanIconsOfTier(Rundown.m_expIconsTier3);
-            CleanIconsOfTier(Rundown.m_expIconsTier4);
-            CleanIconsOfTier(Rundown.m_expIconsTier5);
+            CleanIconsOfTier(m_rundown.m_expIconsTier1);
+            CleanIconsOfTier(m_rundown.m_expIconsTier2);
+            CleanIconsOfTier(m_rundown.m_expIconsTier3);
+            CleanIconsOfTier(m_rundown.m_expIconsTier4);
+            CleanIconsOfTier(m_rundown.m_expIconsTier5);
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace MTFO.HotReload
         /// </summary>
         private void TryPlaceRundown()
         {
-            Rundown.m_currentRundownData = this.m_currentRundownData;
-            if (Rundown.m_currentRundownData != null)
+            m_rundown.m_currentRundownData = this.m_currentRundownData;
+            if (m_rundown.m_currentRundownData != null)
             {
-                Rundown.PlaceRundown(Rundown.m_currentRundownData);
-                Rundown.m_dataIsSetup = true;
+                m_rundown.PlaceRundown(m_rundown.m_currentRundownData);
+                m_rundown.m_dataIsSetup = true;
             }
             else
             {
@@ -70,8 +70,8 @@ namespace MTFO.HotReload
             }
         }
 
-        private bool HasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
+        private bool m_hasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
         private RundownDataBlock m_currentRundownData => GameDataBlockBase<RundownDataBlock>.GetBlock(Global.RundownIdToLoad);
-        private CM_PageRundown_New Rundown;
+        private CM_PageRundown_New m_rundown;
     }
 }
