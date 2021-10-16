@@ -14,7 +14,7 @@ namespace MTFO.HotReload
             m_rundown = MainMenuGuiLayer.Current.PageRundownNew;
         }
 
-        public void Reload(int id)
+        public void OnHotReload(int id)
         {
             if (m_hasValidRundown)
             {

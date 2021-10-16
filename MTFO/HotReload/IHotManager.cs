@@ -2,6 +2,6 @@
 {
     public interface IHotManager
     {
-        public void Reload(int id);
+        public void OnHotReload(int id);
     }
 }

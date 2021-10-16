@@ -6,7 +6,7 @@ namespace MTFO.HotReload
 {
     class HotGameDataManager : IHotManager
     {
-        public void Reload(int id)
+        public void OnHotReload(int id)
         {
             GameDataInit.ReInitialize(); // refresh game data
             Log.Message("Reinitialized GameData");

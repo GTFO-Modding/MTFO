@@ -29,7 +29,7 @@ namespace MTFO.HotReload
         {
             if (!m_Managers.Contains(manager))
             {
-                m_button.add_OnBtnPressCallback((Action<int>)manager.Reload);
+                m_button.add_OnBtnPressCallback((Action<int>)manager.OnHotReload);
                 m_Managers.Add(manager);
             }
         }
@@ -41,7 +41,7 @@ namespace MTFO.HotReload
         {
             if (m_Managers.Contains(manager))
             {
-                m_button.remove_OnBtnPressCallback((Action<int>)manager.Reload);
+                m_button.remove_OnBtnPressCallback((Action<int>)manager.OnHotReload);
                 m_Managers.Remove(manager);
             }
                 

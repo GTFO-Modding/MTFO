@@ -9,7 +9,7 @@ namespace MTFO.HotReload
 {
     class HotGearManager : IHotManager
     {
-        public void Reload(int id)
+        public void OnHotReload(int id)
         {
             GearManager.Current.m_offlineSetupDone = false;
             this.CleanGearIcons();
