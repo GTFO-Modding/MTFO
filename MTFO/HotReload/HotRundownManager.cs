@@ -49,7 +49,6 @@ namespace MTFO.HotReload
         {
             foreach (var icon in tier)
             {
-
                 GameObject.Destroy(icon.gameObject);
             }
         }
