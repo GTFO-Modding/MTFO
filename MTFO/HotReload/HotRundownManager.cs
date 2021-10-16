@@ -24,7 +24,7 @@ namespace MTFO.HotReload
             }
             else
             {
-                Log.Error($"Failed to place the rundown due to missing Rundown id {Global.RundownIdToLoad}");
+                Log.Warn($"Failed to place the rundown due to missing Rundown id {Global.RundownIdToLoad}");
             }
 
             Log.Message("Reloaded Rundown");
@@ -64,6 +64,10 @@ namespace MTFO.HotReload
             {
                 Rundown.PlaceRundown(Rundown.m_currentRundownData);
                 Rundown.m_dataIsSetup = true;
+            }
+            else
+            {
+                Log.Warn("Unable to place rundown due to null data during reload");
             }
         }
 
