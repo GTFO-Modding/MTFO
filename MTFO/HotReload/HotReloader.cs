@@ -77,8 +77,8 @@ namespace MTFO.HotReload
 
         public static HotReloader Current;
         private CM_Item m_button;
-        private List<HotManagerBase> m_Managers = new();
-        private string m_text = "Reload Game Data";
-        private Vector3 m_position = new(0, 77, 0);
+        private readonly List<HotManagerBase> m_Managers = new();
+        private readonly string m_text = "Reload Game Data";
+        private readonly Vector3 m_position = new(0, 77, 0);
     }
 }

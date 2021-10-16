@@ -104,6 +104,6 @@ namespace MTFO.HotReload
                 GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
         }
 
-        private int m_gearSlots = 3;
+        private readonly int m_gearSlots = 3;
     }
 }
