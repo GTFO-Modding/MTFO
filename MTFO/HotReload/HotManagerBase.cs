@@ -1,11 +1,7 @@
 ﻿namespace MTFO.HotReload
 {
-    public abstract class HotManagerBase
+    public interface IHotManager
     {
-        public HotManagerBase()
-        {
-            HotReloader.Current.AddOnReloadListener(this);
-        }
-        public abstract void Reload(int id);
+        public void Reload(int id);
     }
 }

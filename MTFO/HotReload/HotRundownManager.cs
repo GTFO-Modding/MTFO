@@ -7,14 +7,14 @@ using Tier = Il2CppSystem.Collections.Generic.List<CellMenu.CM_ExpeditionIcon_Ne
 
 namespace MTFO.HotReload
 {
-    class HotRundownManager : HotManagerBase
+    class HotRundownManager : IHotManager
     {
-        public HotRundownManager() : base()
+        public HotRundownManager()
         {
             Rundown = MainMenuGuiLayer.Current.PageRundownNew;
         }
 
-        public override void Reload(int id)
+        public void Reload(int id)
         {
             if (HasValidRundown)
             {

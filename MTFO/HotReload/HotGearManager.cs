@@ -7,11 +7,9 @@ using UnityEngine;
 
 namespace MTFO.HotReload
 {
-    class HotGearManager : HotManagerBase
+    class HotGearManager : IHotManager
     {
-        public HotGearManager() : base() { }
-
-        public override void Reload(int id)
+        public void Reload(int id)
         {
             GearManager.Current.m_offlineSetupDone = false;
             this.CleanGearIcons();
