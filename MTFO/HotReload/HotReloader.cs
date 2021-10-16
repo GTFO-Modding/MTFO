@@ -17,7 +17,7 @@ namespace MTFO.HotReload
             gameObject.transform.localPosition = m_position;
             m_button = gameObject.GetComponent<CM_Item>();
             m_button.SetText(m_text);
-            this.m_button.add_OnBtnPressCallback((Action<int>)this.ReloadData);
+            this.AddOnReloadListener(new HotGameDataManager());
             this.AddOnReloadListener(new HotRundownManager());
             this.AddOnReloadListener(new HotGearManager());
         }
@@ -25,7 +25,6 @@ namespace MTFO.HotReload
         /// <summary>
         /// Adds callback to a button and manager to a dictionary if it doesn't exist already
         /// </summary>
-        /// <param name="manager"></param>
         public void AddOnReloadListener(IHotManager manager)
         {
             if (!this.m_Managers.Contains(manager))
@@ -38,7 +37,6 @@ namespace MTFO.HotReload
         /// <summary>
         /// Removes callback from a button and manager from a dictionary if it doesn't exist already
         /// </summary>
-        /// <param name="manager"></param>
         public void RemoveOnReloadListener(IHotManager manager)
         {
             if (this.m_Managers.Contains(manager))
@@ -47,15 +45,6 @@ namespace MTFO.HotReload
                 this.m_Managers.Remove(manager);
             }
                 
-        }
-
-        /// <summary>
-        /// Re-initializes game data
-        /// </summary>
-        public void ReloadData(int id)
-        {
-            GameDataInit.ReInitialize(); // refresh game data
-            Log.Message("Reinitialized GameData");
         }
 
         /// <summary>
