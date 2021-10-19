@@ -27,22 +27,22 @@ namespace MTFO.HotReload
         /// </summary>
         public void AddOnReloadListener(IHotManager manager)
         {
-            if (!m_Managers.Contains(manager))
+            if (!m_managers.Contains(manager))
             {
                 m_button.add_OnBtnPressCallback((Action<int>)manager.OnHotReload);
-                m_Managers.Add(manager);
+                m_managers.Add(manager);
             }
         }
 
         /// <summary>
-        /// Removes callback from a button and manager from a dictionary if it doesn't exist already
+        /// Removes callback from a button and manager from a dictionary if it does exist already
         /// </summary>
         public void RemoveOnReloadListener(IHotManager manager)
         {
-            if (m_Managers.Contains(manager))
+            if (m_managers.Contains(manager))
             {
                 m_button.remove_OnBtnPressCallback((Action<int>)manager.OnHotReload);
-                m_Managers.Remove(manager);
+                m_managers.Remove(manager);
             }
                 
         }
@@ -66,7 +66,7 @@ namespace MTFO.HotReload
 
         public static HotReloader Current;
         private CM_Item m_button;
-        private readonly List<IHotManager> m_Managers = new();
+        private readonly List<IHotManager> m_managers = new();
         private readonly string m_text = "Reload Game Data";
         private readonly Vector3 m_position = new(0, 77, 0);
     }
