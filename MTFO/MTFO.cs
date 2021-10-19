@@ -23,16 +23,16 @@ namespace MTFO
 
         public override void Load()
         {
-            ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
             Analytics.enabled = false;
 
             var harmony = new Harmony(GUID);
+
             if (ConfigManager.IsHotReloadEnabled)
             {
-                var hotReloadInjectPoint = typeof(CM_PageRundown_New).GetMethod("OnEnable");
-                var hotReloadPatch = typeof(HotReloadInjector).GetMethod("PostFix");
-                harmony.Patch(hotReloadInjectPoint, null, new HarmonyMethod(hotReloadPatch));
+                ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
+                harmony.PatchAll(typeof(HotReloadInjector));
             }
+                
             harmony.PatchAll();
         }
     }
