@@ -10,10 +10,16 @@ using UnityEngine.Analytics;
 
 namespace MTFO
 {
+    /// <summary>
+    /// Main MTFO plugin
+    /// </summary>
     [BepInPlugin(GUID, MODNAME, VERSION)]
     [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     public class MTFO : BasePlugin
     {
+        /// <summary>
+        /// Descriptors of MTFO
+        /// </summary>
         public const string
             MODNAME = "MTFO",
             AUTHOR = "dak",
@@ -21,6 +27,7 @@ namespace MTFO
             VERSION = VersionInfo.SemVer;
 
 
+        /// <inheritdoc/>
         public override void Load()
         {
             Analytics.enabled = false;

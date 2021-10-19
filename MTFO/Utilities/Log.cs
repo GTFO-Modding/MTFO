@@ -3,7 +3,7 @@ using MTFO.Managers;
 
 namespace MTFO.Utilities
 {
-    public static class Log
+    internal static class Log
     {
         private static readonly ManualLogSource logger;
         static Log()

@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace MTFO.Managers
 {
+    /// <summary>
+    /// Manages config
+    /// </summary>
     public static class ConfigManager
     {
         private const string
@@ -126,25 +129,58 @@ namespace MTFO.Managers
         private static readonly ConfigEntry<bool> _isVerbose;
         private static readonly ConfigEntry<bool> _useLegacyLoading;
 
+        /// <summary>
+        /// The current game version
+        /// </summary>
         public static int GAME_VERSION;
 
         //GameData Lookup
+        /// <summary>
+        /// Game data lookup paths
+        /// </summary>
         public static Dictionary<int, string> gameDataLookup;
 
         //Managers
+        /// <summary>
+        /// The current custom content manager
+        /// </summary>
         public static ContentManager CustomContent;
 
         //Strings
+        /// <summary>
+        /// The menu intro-text
+        /// </summary>
         public static string MenuText;
 
         //Paths
+        /// <summary>
+        /// The path to the game data
+        /// </summary>
         public static readonly string GameDataPath;
+
+        /// <summary>
+        /// The path to the current rundown's custom folder
+        /// </summary>
         public static readonly string CustomPath;
+
+        /// <summary>
+        /// The path to the current game data lookup
+        /// </summary>
         public static readonly string GameDataLookupPath;
 
         //Flags
+        /// <summary>
+        /// Whether or not a /Custom folder exists
+        /// </summary>
         public static bool HasCustomContent;
+
+        /// <summary>
+        /// Whether or not the game is modded
+        /// </summary>
         public static bool IsModded;
+        /// <summary>
+        /// Debug
+        /// </summary>
         public static bool IsVerbose
         {
             get
@@ -154,6 +190,9 @@ namespace MTFO.Managers
         }
 
         //Dev Tools
+        /// <summary>
+        /// Whether or not hot-reloading is enabled
+        /// </summary>
         public static bool IsHotReloadEnabled 
         { 
             get
@@ -162,6 +201,10 @@ namespace MTFO.Managers
             } 
         }
 
+        /// <summary>
+        /// Whether or not to dump unknown rundown files
+        /// </summary>
+        [Obsolete]
         public static bool DumpUnknownFiles
         {
             get
@@ -171,6 +214,9 @@ namespace MTFO.Managers
         }
 
         //Legacy
+        /// <summary>
+        /// Whether or not to use legacy loading.
+        /// </summary>
         public static bool UseLegacyLoading
         {
             get

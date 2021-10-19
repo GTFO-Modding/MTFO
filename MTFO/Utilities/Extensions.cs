@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MTFO.Utilities
 {
+    /// <summary>
+    /// Some util extensions
+    /// </summary>
     public static class DataDumperExtensions
     {
         /// <summary>

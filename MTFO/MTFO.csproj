@@ -11,6 +11,10 @@
     <VersionPrerelease></VersionPrerelease>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+    <DocumentationFile>./bin/Debug/MTFO.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>

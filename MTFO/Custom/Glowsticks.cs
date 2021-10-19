@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace MTFO.Custom
 {
+    /// <summary>
+    /// Custom Glowsticks
+    /// </summary>
     public class GlowstickHolder
     {
+        /// <summary>
+        /// Sets up the glowstick handler
+        /// </summary>
         public void Setup()
         {
             GlowstickLookup = new Dictionary<string, CustomGlowstick>();
@@ -27,26 +33,68 @@ namespace MTFO.Custom
             }
         }
 
+        /// <summary>
+        /// List of all glowsticks
+        /// </summary>
         public List<GlowstickConfig> Glowsticks { get; set; }
 
+        /// <summary>
+        /// Glowstick Lookup
+        /// </summary>
         [JsonIgnore]
         public Dictionary<string, CustomGlowstick> GlowstickLookup;
     }
 
+    /// <summary>
+    /// Custom glow stick
+    /// </summary>
     public struct CustomGlowstick
     {
+        /// <summary>
+        /// The color of tjhe glowstick
+        /// </summary>
         public Color Color { get; set; }
+
+        /// <summary>
+        /// The range of the glowstick
+        /// </summary>
         public float Range { get; set; }
     }
 
+    /// <summary>
+    /// The config for a glowstick
+    /// </summary>
     public struct GlowstickConfig
     {
+        /// <summary>
+        /// The glowstick name
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The glowstick range
+        /// </summary>
         public float Range { get; set; }
+
+        /// <summary>
+        /// The red color component
+        /// </summary>
         public float r { get; set; }
+        /// <summary>
+        /// The green color component
+        /// </summary>
         public float g { get; set; }
+        /// <summary>
+        /// The blue color component
+        /// </summary>
         public float b { get; set; }
+        /// <summary>
+        /// The alpha color component
+        /// </summary>
         public float a { get; set; }
+
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return $"{Name},{Range},{r},{g},{b},{a}";
