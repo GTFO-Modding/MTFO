@@ -74,6 +74,11 @@ namespace MTFO.Custom
             /// Custom scan text
             /// </summary>
             public string ScanText { get; set; }
+
+            /// <summary>
+            /// Whether or not to show the scan percent
+            /// </summary>
+            public bool ShowScanPercent { get; set; }
             /// <summary>
             /// The radius of the scan
             /// </summary>

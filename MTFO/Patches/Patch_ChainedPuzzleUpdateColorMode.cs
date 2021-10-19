@@ -7,7 +7,7 @@ namespace MTFO.Patches
     [HarmonyPatch(typeof(CP_Bioscan_Graphics), nameof(CP_Bioscan_Graphics.SetColorMode))]
     class Patch_ChainedPuzzleUpdateColorMode
     {
-        public static Regex s_replacerRegex = new Regex(@" \[[0-9]+%\]$", RegexOptions.Compiled);
+        public static Regex s_replacerRegex = new Regex(@" \[[0-9]+%\]<size=0>Show-Percent$", RegexOptions.Compiled);
 
         private static string GetProgressString(CP_Bioscan_Graphics graphics)
         {
@@ -19,9 +19,15 @@ namespace MTFO.Patches
 
         public static void Postfix(CP_Bioscan_Graphics __instance)
         {
-            string text = s_replacerRegex.Replace(__instance.m_textMeshRenderer.text, "");
+            string text = __instance.m_textMeshRenderer.text;
 
-            __instance.SetText($"{text} [{GetProgressString(__instance)}]");
+            if (text.EndsWith("<size=0>Show-Percent"))
+            {
+                text = s_replacerRegex.Replace(text, "");
+                text += $" [{GetProgressString(__instance)}]<size=0>Show-Percent";
+            }
+
+            __instance.SetText(text);
         }
     }
 }
