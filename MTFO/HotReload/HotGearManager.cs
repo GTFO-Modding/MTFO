@@ -63,21 +63,28 @@ namespace MTFO.HotReload
         {
             var blocks = GameDataBlockBase<PlayerOfflineGearDataBlock>.GetAllBlocks();
             Log.Verbose($"Loading {blocks.Length} gear");
-            for (int index = 0; index < blocks.Length; ++index)
+            foreach (var block in blocks) ParseAndStashGear(block);
+        }
+
+        /// <summary>
+        /// Sets up gear by verifying it is usable and then passes it to the overloaded variant
+        /// </summary>
+        private void ParseAndStashGear(PlayerOfflineGearDataBlock block)
+        {
+            if (block.Type == eOfflineGearType.StandardInventory
+            ||  block.Type == eOfflineGearType.RundownSpecificInventory)
             {
-                if (blocks[index].Type == eOfflineGearType.StandardInventory
-                || blocks[index].Type == eOfflineGearType.RundownSpecificInventory)
+                if (string.IsNullOrEmpty(block.GearJSON))
                 {
-                    if (!string.IsNullOrEmpty(blocks[index].GearJSON))
-                    {
-                        ParseAndStashGear(
-                            itemId: blocks[index].name,
-                            itemInstanceId: $"OfflineGear_ID_{blocks[index].persistentID}",
-                            gearJSON: blocks[index].GearJSON,
-                            offlineType: blocks[index].Type
-                        );
-                    }
+                    Log.Warn($"Offline gear {block.name} GearJson is null or empty");
+                    return;
                 }
+                ParseAndStashGear(
+                    itemId:         block.name,
+                    itemInstanceId: $"OfflineGear_ID_{block.persistentID}",
+                    gearJSON:       block.GearJSON,
+                    offlineType:    block.Type
+                );
             }
         }
 
