@@ -62,7 +62,7 @@ namespace MTFO.HotReload
         private void LoadOfflineGearDatas()
         {
             var blocks = GameDataBlockBase<PlayerOfflineGearDataBlock>.GetAllBlocks();
-            Log.Debug($"Loading {blocks.Length} gear");
+            Log.Verbose($"Loading {blocks.Length} gear");
             for (int index = 0; index < blocks.Length; ++index)
             {
                 if (blocks[index].Type == eOfflineGearType.StandardInventory
