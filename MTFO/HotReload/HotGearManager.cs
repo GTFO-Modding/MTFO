@@ -62,60 +62,13 @@ namespace MTFO.HotReload
         private void LoadOfflineGearDatas()
         {
             var blocks = GameDataBlockBase<PlayerOfflineGearDataBlock>.GetAllBlocks();
+            if (blocks == null)
+            {
+                Log.Warn("Unable to get Player Offline Gear blocks");
+                return;
+            }
             Log.Verbose($"Loading {blocks.Length} gear");
-            foreach (var block in blocks) ParseAndStashGear(block);
-        }
-
-        /// <summary>
-        /// Sets up gear by verifying it is usable and then passes it to the overloaded variant
-        /// </summary>
-        private void ParseAndStashGear(PlayerOfflineGearDataBlock block)
-        {
-            if (block.Type == eOfflineGearType.StandardInventory
-            ||  block.Type == eOfflineGearType.RundownSpecificInventory)
-            {
-                if (string.IsNullOrEmpty(block.GearJSON))
-                {
-                    Log.Warn($"Offline gear {block.name} GearJson is null or empty");
-                    return;
-                }
-                ParseAndStashGear(
-                    itemId:         block.name,
-                    itemInstanceId: $"OfflineGear_ID_{block.persistentID}",
-                    gearJSON:       block.GearJSON,
-                    offlineType:    block.Type
-                );
-            }
-        }
-
-        /// <summary>
-        /// Sets up gear referencing an item base and assigns it a inventory slot
-        /// </summary>
-        private void ParseAndStashGear(
-            string itemId,
-            string itemInstanceId,
-            string gearJSON,
-            eOfflineGearType offlineType)
-        {
-            var gearIdRange = new GearIDRange(gearJSON);
-            if (gearIdRange == null)
-            {
-                Log.Warn($"Unable to stash gear {itemId} due to null GearIDRange");
-                return;
-            }
-            gearIdRange.PlayfabItemId = itemId;
-            gearIdRange.PlayfabItemInstanceId = itemInstanceId;
-            gearIdRange.OfflineGearType = offlineType;
-            uint compID = gearIdRange.GetCompID(eGearComponent.BaseItem);
-            var itemDataBlock = compID > 0U
-                              ? GameDataBlockBase<ItemDataBlock>.GetBlock(compID)
-                              : null;
-            if (itemDataBlock == null)
-            {
-                Log.Warn($"Unable to stash gear {itemId} due to null ItemDataBlock");
-                return;
-            }
-            GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
+            foreach (var block in blocks) OfflineGear.Load(block);
         }
 
         private readonly int m_gearSlots = 3;
