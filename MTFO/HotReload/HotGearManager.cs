@@ -91,15 +91,24 @@ namespace MTFO.HotReload
             eOfflineGearType offlineType)
         {
             var gearIdRange = new GearIDRange(gearJSON);
-            if (gearIdRange == null) return;
+            if (gearIdRange == null)
+            {
+                Log.Warn($"Unable to stash gear {itemId} due to null GearIDRange");
+                return;
+            }
             gearIdRange.PlayfabItemId = itemId;
             gearIdRange.PlayfabItemInstanceId = itemInstanceId;
             gearIdRange.OfflineGearType = offlineType;
-            var itemDataBlock = gearIdRange.GetCompID(eGearComponent.BaseItem) > 0U
-                              ? GameDataBlockBase<ItemDataBlock>.GetBlock(gearIdRange.GetCompID(eGearComponent.BaseItem))
+            uint compID = gearIdRange.GetCompID(eGearComponent.BaseItem);
+            var itemDataBlock = compID > 0U
+                              ? GameDataBlockBase<ItemDataBlock>.GetBlock(compID)
                               : null;
-            if (itemDataBlock != null)
-                GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
+            if (itemDataBlock == null)
+            {
+                Log.Warn($"Unable to stash gear {itemId} due to null ItemDataBlock");
+                return;
+            }
+            GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
         }
 
         private readonly int m_gearSlots = 3;
