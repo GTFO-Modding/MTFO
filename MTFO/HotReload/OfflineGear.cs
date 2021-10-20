@@ -8,23 +8,17 @@ namespace MTFO.HotReload
     {
         private OfflineGear(PlayerOfflineGearDataBlock block)
         {
-            if (TryParseGearJson(block.GearJSON, out GearIDRange))
+            if (TryParseGearJson(block.GearJSON, out GearIDRange)
+            &&  TryParseGearID(GearIDRange, out ItemData, out inventorySlot))
             {
                 GearIDRange.PlayfabItemId = block.name;
                 GearIDRange.PlayfabItemInstanceId = $"OfflineGear_ID_{block.persistentID}";
                 GearIDRange.OfflineGearType = block.Type;
-                if (TryParseGearID(GearIDRange, out ItemData, out inventorySlot))
-                {
-                    persistentID = block.persistentID;
-                }
-                else
-                {
-                    Log.Warn($"Unable to parse GearIDRange for offline gear {block.persistentID}");
-                }
+                persistentID = block.persistentID;
             }
             else
             {
-                Log.Warn($"Unable to assign GearIDRange parameters due to null GearIDRange for OfflineGear [{block.persistentID}] {block.name}");
+                Log.Warn($"Unable to construct Offline Gear [{block.persistentID}] {block.name}");
             }
         }
 
@@ -43,21 +37,28 @@ namespace MTFO.HotReload
 
         private bool TryParseGearID(GearIDRange gearIDRange, out ItemDataBlock itemData, out int inventorySlot)
         {
+            inventorySlot = 0;
+            itemData = null;
+
+            if (gearIDRange == null)
+            {
+                Log.Warn("Unable to parse GearIDRange due to it being null");
+                return false;
+            }
+
             uint compID = gearIDRange.GetCompID(eGearComponent.BaseItem);
             itemData = compID > 0U
                          ? GameDataBlockBase<ItemDataBlock>.GetBlock(compID)
                          : null;
+
             if (itemData == null)
             {
                 Log.Warn($"Invalid ItemDataBlock for component in offlinear gear [c:{compID}]");
-                inventorySlot = 0;
                 return false;
             }
-            else
-            {
-                inventorySlot = (int)itemData.inventorySlot;
-                return true;
-            }
+
+            inventorySlot = (int)itemData.inventorySlot;
+            return true;
         }
 
         public static void Load(PlayerOfflineGearDataBlock block)
