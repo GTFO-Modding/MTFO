@@ -8,12 +8,15 @@ namespace MTFO.HotReload
     {
         private OfflineGear(PlayerOfflineGearDataBlock block)
         {
-            if (TryParseGearJson(block.GearJSON, out GearIDRange)
-            &&  TryParseGearID(GearIDRange, out ItemData, out inventorySlot))
+            if (TryParseGearJson(block.GearJSON, out GearIDRange))
             {
                 GearIDRange.PlayfabItemId = block.name;
                 GearIDRange.PlayfabItemInstanceId = $"OfflineGear_ID_{block.persistentID}";
                 GearIDRange.OfflineGearType = block.Type;
+            }
+
+            if(TryParseGearID(GearIDRange, out ItemData, out inventorySlot))
+            {
                 persistentID = block.persistentID;
             }
             else
