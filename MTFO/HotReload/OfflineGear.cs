@@ -66,20 +66,10 @@ namespace MTFO.HotReload
 
         public static void Load(PlayerOfflineGearDataBlock block)
         {
-            if (TryParse(block, out var gear))
+            if (TryParse(block, out var gear)
+            &&  TryStash(gear))
             {
-                if (TryStash(gear))
-                {
-                    Log.Verbose($"Loaded offline gear [{block.persistentID}] {block.name}");
-                }
-                else
-                {
-                    Log.Warn($"Unable to stash offline gear [{block.persistentID}] {block.name}");
-                }
-            }
-            else
-            {
-                Log.Warn($"Unable to parse offline gear [{block.persistentID}] {block.name}");
+                Log.Verbose($"Loaded offline gear [{block.persistentID}] {block.name}");
             }
         }
 
