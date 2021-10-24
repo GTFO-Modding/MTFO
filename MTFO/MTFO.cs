@@ -29,7 +29,7 @@ namespace MTFO
 
             if (ConfigManager.IsHotReloadEnabled)
             {
-                ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
+                ClassInjector.RegisterTypeInIl2Cpp<HotReloaderBehaviour>();
                 harmony.PatchAll(typeof(HotReloadInjector));
             }
                 
