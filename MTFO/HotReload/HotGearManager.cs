@@ -18,7 +18,7 @@ namespace MTFO.HotReload
             this.LoadOfflineGearDatas();
             GearManager.GenerateAllGearIcons();
             GearManager.Current.m_offlineSetupDone = true;
-            Log.Message("Reloaded Gear");
+            Log.Verbose("Reloaded Gear");
         }
 
         /// <summary>

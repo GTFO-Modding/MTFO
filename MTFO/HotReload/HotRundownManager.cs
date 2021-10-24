@@ -27,7 +27,7 @@ namespace MTFO.HotReload
                 Log.Warn($"Failed to place the rundown due to missing Rundown id {Global.RundownIdToLoad}");
             }
 
-            Log.Message("Reloaded Rundown");
+            Log.Verbose("Reloaded Rundown");
         }
 
         /// <summary>

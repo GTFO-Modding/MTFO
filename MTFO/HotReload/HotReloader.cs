@@ -61,7 +61,7 @@ namespace MTFO.HotReload
             button.name = "Button HotReload";
             Current = button.AddComponent<HotReloader>();
 
-            Log.Debug("Created hot reload button");
+            Log.Verbose("Created hot reload button");
         }
 
         public static HotReloader Current;
