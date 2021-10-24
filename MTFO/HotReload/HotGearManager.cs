@@ -50,7 +50,7 @@ namespace MTFO.HotReload
         /// </summary>
         private void CleanGearSlots()
         {
-            for (int i = 0; i < m_gearSlots; ++i)
+            for (int i = 0; i < gearSlotsTotal; ++i)
             {
                 GearManager.Current.m_gearPerSlot[i].Clear();
             }
@@ -71,6 +71,6 @@ namespace MTFO.HotReload
             foreach (var block in blocks) OfflineGear.Load(block);
         }
 
-        private readonly int m_gearSlots = 3;
+        private readonly int gearSlotsTotal = 3;
     }
 }

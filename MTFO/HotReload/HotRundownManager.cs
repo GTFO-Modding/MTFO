@@ -11,14 +11,14 @@ namespace MTFO.HotReload
     {
         public HotRundownManager()
         {
-            m_rundown = MainMenuGuiLayer.Current.PageRundownNew;
+            rundownPage = MainMenuGuiLayer.Current.PageRundownNew;
         }
 
         public void OnHotReload(int id)
         {
-            if (m_hasValidRundown)
+            if (hasValidRundown)
             {
-                m_rundown.m_dataIsSetup = false;
+                rundownPage.m_dataIsSetup = false;
                 CleanIconsOfTier();
                 TryPlaceRundown();
             }
@@ -35,11 +35,11 @@ namespace MTFO.HotReload
         /// </summary>
         private void CleanIconsOfTier()
         {
-            CleanIconsOfTier(m_rundown.m_expIconsTier1);
-            CleanIconsOfTier(m_rundown.m_expIconsTier2);
-            CleanIconsOfTier(m_rundown.m_expIconsTier3);
-            CleanIconsOfTier(m_rundown.m_expIconsTier4);
-            CleanIconsOfTier(m_rundown.m_expIconsTier5);
+            CleanIconsOfTier(rundownPage.m_expIconsTier1);
+            CleanIconsOfTier(rundownPage.m_expIconsTier2);
+            CleanIconsOfTier(rundownPage.m_expIconsTier3);
+            CleanIconsOfTier(rundownPage.m_expIconsTier4);
+            CleanIconsOfTier(rundownPage.m_expIconsTier5);
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace MTFO.HotReload
         /// </summary>
         private void TryPlaceRundown()
         {
-            m_rundown.m_currentRundownData = this.m_currentRundownData;
-            if (m_rundown.m_currentRundownData != null)
+            rundownPage.m_currentRundownData = this.rundownDataCurrent;
+            if (rundownPage.m_currentRundownData != null)
             {
-                m_rundown.PlaceRundown(m_rundown.m_currentRundownData);
-                m_rundown.m_dataIsSetup = true;
+                rundownPage.PlaceRundown(rundownPage.m_currentRundownData);
+                rundownPage.m_dataIsSetup = true;
             }
             else
             {
@@ -70,8 +70,8 @@ namespace MTFO.HotReload
             }
         }
 
-        private bool m_hasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
-        private RundownDataBlock m_currentRundownData => GameDataBlockBase<RundownDataBlock>.GetBlock(Global.RundownIdToLoad);
-        private CM_PageRundown_New m_rundown;
+        private bool hasValidRundown => GameDataBlockBase<RundownDataBlock>.s_blockByID.ContainsKey(Global.RundownIdToLoad);
+        private RundownDataBlock rundownDataCurrent => GameDataBlockBase<RundownDataBlock>.GetBlock(Global.RundownIdToLoad);
+        private CM_PageRundown_New rundownPage;
     }
 }

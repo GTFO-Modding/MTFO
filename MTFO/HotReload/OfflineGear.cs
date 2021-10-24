@@ -8,14 +8,14 @@ namespace MTFO.HotReload
     {
         private OfflineGear(PlayerOfflineGearDataBlock block)
         {
-            if (TryParseGearJson(block.GearJSON, out GearIDRange))
+            if (TryParseGearJson(block.GearJSON, out gearIDRange))
             {
-                GearIDRange.PlayfabItemId = block.name;
-                GearIDRange.PlayfabItemInstanceId = $"OfflineGear_ID_{block.persistentID}";
-                GearIDRange.OfflineGearType = block.Type;
+                gearIDRange.PlayfabItemId = block.name;
+                gearIDRange.PlayfabItemInstanceId = $"OfflineGear_ID_{block.persistentID}";
+                gearIDRange.OfflineGearType = block.Type;
             }
 
-            if(TryParseGearID(GearIDRange, out ItemData, out inventorySlot))
+            if(TryParseGearID(gearIDRange, out itemData, out inventorySlot))
             {
                 persistentID = block.persistentID;
             }
@@ -95,22 +95,22 @@ namespace MTFO.HotReload
                 Log.Warn("Unable to stash due to null offline gear");
                 return false;
             }
-            if (gear.GearIDRange == null)
+            if (gear.gearIDRange == null)
             {
                 Log.Warn($"Unable to stash offline gear due to null GearIDRange [{gear.persistentID}]");
                 return false;
             }
-            if (gear.ItemData == null)
+            if (gear.itemData == null)
             {
                 Log.Warn($"Unable to stash offline gear due to null ItemDataBlock [{gear.persistentID}]");
                 return false;
             }
-            GearManager.Current.m_gearPerSlot[gear.inventorySlot].Add(gear.GearIDRange);
+            GearManager.Current.m_gearPerSlot[gear.inventorySlot].Add(gear.gearIDRange);
             return true;
         }
 
-        private GearIDRange GearIDRange;
-        private ItemDataBlock ItemData;
+        private GearIDRange gearIDRange;
+        private ItemDataBlock itemData;
         private int inventorySlot;
         private uint persistentID;
     }
