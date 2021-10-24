@@ -1,4 +1,7 @@
-﻿namespace MTFO.HotReload
+﻿using CellMenu;
+using UnityEngine;
+
+namespace MTFO.HotReload
 {
     public static class HotReloader
     {
@@ -9,6 +12,19 @@
         {
             if (behaviour == null) Setup();
             behaviour.AddManager(manager);
+        }
+
+        /// <summary>
+        /// Instantiates a CM_Item button and adds the returned component to it
+        /// </summary>
+        public static HotReloaderBehaviour Instantiate(CM_PageRundown_New pageRundownNew)
+        {
+            if (pageRundownNew == null) return null;
+            GameObject button = Object.Instantiate(
+                original: pageRundownNew.m_discordButton.gameObject,
+                parent: pageRundownNew.m_discordButton.transform.parent,
+                worldPositionStays: false);
+            return button.AddComponent<HotReloaderBehaviour>();
         }
 
         /// <summary>
@@ -27,7 +43,7 @@
         {
             if (behaviour == null)
             {
-                behaviour = HotReloaderBehaviour.Instantiate(MainMenuGuiLayer.Current.PageRundownNew);
+                behaviour = Instantiate(MainMenuGuiLayer.Current.PageRundownNew);
                 AddOnReloadListener(new HotGameDataManager());
                 AddOnReloadListener(new HotRundownManager());
                 AddOnReloadListener(new HotGearManager());

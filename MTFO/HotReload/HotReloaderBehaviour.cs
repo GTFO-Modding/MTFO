@@ -11,20 +11,6 @@ namespace MTFO.HotReload
         public HotReloaderBehaviour(IntPtr value) : base(value) { }
 
         /// <summary>
-        /// Instantiates a CM_Item button and adds the returned component to it
-        /// </summary>
-        public static HotReloaderBehaviour Instantiate(CM_PageRundown_New pageRundownNew)
-        {
-            if (pageRundownNew == null) return null;
-            GameObject button = Instantiate(
-                original: pageRundownNew.m_discordButton.gameObject,
-                parent: pageRundownNew.m_discordButton.transform.parent,
-                worldPositionStays: false);
-            return button.AddComponent<HotReloaderBehaviour>();
-        }
-
-
-        /// <summary>
         /// Adds callback to a button and manager to a dictionary if it doesn't exist already
         /// </summary>
         public void AddManager(IHotManager manager)
