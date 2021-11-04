@@ -8,7 +8,7 @@ namespace MTFO.Managers
 {
     public class ContentManager
     {
-        private readonly JsonSerializer json;
+        private readonly JsonSerializer json = new();
         private readonly Dictionary<string, Action<string>> Handlers;
         public ScanHolder ScanHolder;
         public GlowstickHolder GlowstickHolder;
