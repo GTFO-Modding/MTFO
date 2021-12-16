@@ -15,7 +15,7 @@ namespace MTFO.Patches
         {
             //Replace text blurb on the top right in lobby
             __instance.m_movingContentHolder.Find("ShareServerId/ShareText").gameObject.GetComponent<TextMeshPro>()
-                .SetText("Do not play modded content on the official GTFO server or online matchmake lobbies.\n\nFeel free to join the unofficial discord server linked below and ask people to play.");
+                .SetText("<color=red><b>Do not play modded content on the official GTFO server or online matchmake lobbies.</b></color>\n\nFeel free to join the unofficial discord server linked below and ask people to play.");
 
             //Replace discord button text and link
             __instance.m_discordButton.SetText("Mod Server");
