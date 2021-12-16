@@ -13,12 +13,11 @@ namespace MTFO.Custom
     {
         public uint BaseScan { get; set; }
         public uint PersistentID { get; set; }
-        public bool RequireAll { get; set; }
+        public int PlayerRequirement { get; set; }
         public float ScanRadius { get; set; }
         public float[] PlayersInScanMulti { get; set; }
         public float ReduceSpeed { get; set; }
         public bool ReduceWhenNoPlayer { get; set; }
-        public float ScanSpeedDecline { get; set; }
         public BioScanGx BioScanGraphics { get; set; }
 
 

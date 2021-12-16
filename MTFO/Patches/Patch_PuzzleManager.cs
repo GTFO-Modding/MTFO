@@ -37,10 +37,9 @@ namespace MTFO.Patches
                 CP_PlayerScanner playerScanner = scanPrefab.GetComponent<CP_PlayerScanner>();
                 playerScanner.m_reduceSpeed = scan.ReduceSpeed;
                 playerScanner.m_reduceWhenNoPlayer = scan.ReduceWhenNoPlayer;
-                playerScanner.m_scanSpeedDecline = scan.ScanSpeedDecline;
                 playerScanner.m_scanRadius = scan.ScanRadius;
                 playerScanner.m_scanSpeeds = scan.PlayersInScanMulti;
-                playerScanner.m_requireAllPlayers = scan.RequireAll;
+                playerScanner.m_playerRequirement = (PlayerRequirement)scan.PlayerRequirement;
 
                 //Setup Graphics
                 CP_Bioscan_Graphics scanGx = scanPrefab.GetComponent<CP_Bioscan_Graphics>();
