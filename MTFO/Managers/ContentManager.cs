@@ -18,7 +18,6 @@ namespace MTFO.Managers
         {
             Handlers = new Dictionary<string, Action<string>>
             {
-                { "welcome.txt", SetupWelcomeText },
                 { "puzzletypes.json", SetupChainedPuzzles },
                 { "glowsticks.json", SetupGlowsticks },
                 { "tiernames.json", SetupTierNames }
@@ -46,12 +45,6 @@ namespace MTFO.Managers
                     Log.Debug(path);
                 }
             }
-        }
-
-        public void SetupWelcomeText(string path)
-        {
-            Log.Debug("Welcome text found");
-            ConfigManager.MenuText = File.ReadAllText(path);
         }
 
         public void SetupChainedPuzzles(string path)

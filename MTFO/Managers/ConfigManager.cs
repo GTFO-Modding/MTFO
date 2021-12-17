@@ -134,9 +134,6 @@ namespace MTFO.Managers
         //Managers
         public static ContentManager CustomContent;
 
-        //Strings
-        public static string MenuText;
-
         //Paths
         public static readonly string GameDataPath;
         public static readonly string CustomPath;
