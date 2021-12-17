@@ -13,7 +13,6 @@ namespace MTFO.HotReload
 
         void Awake()
         {
-            gameObject.SetActive(true);
             gameObject.transform.localPosition = buttonPosition;
             button = gameObject.GetComponent<CM_Item>();
             button.SetText(buttonLabel);
@@ -44,7 +43,6 @@ namespace MTFO.HotReload
                 button.remove_OnBtnPressCallback((Action<int>)manager.OnHotReload);
                 managers.Remove(manager);
             }
-                
         }
 
         /// <summary>
@@ -60,6 +58,7 @@ namespace MTFO.HotReload
                 worldPositionStays: false);
             button.name = "Button HotReload";
             Current = button.AddComponent<HotReloader>();
+            button.SetActive(true);
 
             Log.Verbose("Created hot reload button");
         }
