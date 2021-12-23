@@ -1,12 +1,5 @@
-﻿using System;
-using MTFO.Utilities;
-using System.Collections.Generic;
-using System.Text;
 using HarmonyLib;
 using CellMenu;
-using GameData;
-using TMPro;
-using UnityEngine;
 
 namespace MTFO.Patches
 {
