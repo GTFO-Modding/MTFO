@@ -49,7 +49,12 @@ namespace MTFO.Patches
 
                 CP_Bioscan_Core core = scanPrefab.GetComponent<CP_Bioscan_Core>();
                 core.m_playerAgents = new Il2CppSystem.Collections.Generic.List<PlayerAgent>();
-                
+
+                // setup holopath
+                CP_Holopath_Spline spline = scanPrefab.GetComponentInChildren<CP_Holopath_Spline>();
+                if (spline != null && scan.RevealSpeed > 0f)
+                    spline.m_revealSpeed = scan.RevealSpeed;
+
                 instance.m_puzzleComponentPrefabs.Add(scan.PersistentID, scanPrefab);
             }
         }
@@ -67,6 +72,7 @@ namespace MTFO.Patches
 
                 //Get references
                 CP_Cluster_Core clusterCore = clusterPrefab.GetComponent<CP_Cluster_Core>();
+                CP_Holopath_Spline spline = clusterPrefab.GetComponentInChildren<CP_Holopath_Spline>();
                 GameObject scanPrefab = instance.m_puzzleComponentPrefabs[cluster.BioscanID];
 
                 //Set values
@@ -74,6 +80,8 @@ namespace MTFO.Patches
                 clusterCore.m_childPuzzlePrefab = scanPrefab;
                 clusterCore.m_distanceBetween = cluster.DistanceBetweenScans;
                 clusterCore.m_revealWithHoloPath = cluster.RevealWithHoloPath;
+                if (spline != null && cluster.RevealSpeed > 0f)
+                    spline.m_revealSpeed = cluster.RevealSpeed;
 
                 instance.m_puzzleComponentPrefabs.Add(cluster.PersistentID, clusterPrefab);
             }
