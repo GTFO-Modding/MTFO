@@ -18,6 +18,7 @@ namespace MTFO.Custom
         public float[] PlayersInScanMulti { get; set; }
         public float ReduceSpeed { get; set; }
         public bool ReduceWhenNoPlayer { get; set; }
+        public float RevealSpeed { get; set; }
         public BioScanGx BioScanGraphics { get; set; }
 
 
@@ -45,6 +46,7 @@ namespace MTFO.Custom
         public int ClusterCount { get; set; }
         public uint BioscanID { get; set; }
         public float DistanceBetweenScans { get; set; }
+        public float RevealSpeed { get; set; }
         public bool RevealWithHoloPath { get; set; }
     }
 }
