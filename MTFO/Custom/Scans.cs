@@ -18,7 +18,7 @@ namespace MTFO.Custom
         Instant
     }
 
-    public struct CustomBioScan : IRevealibleScanConfig
+    public struct CustomBioScan : IRevealableScanConfig
     {
         public uint BaseScan { get; set; }
         public uint PersistentID { get; set; }
@@ -49,7 +49,7 @@ namespace MTFO.Custom
         }
     }
 
-    public struct CustomClusterScan : IRevealibleScanConfig
+    public struct CustomClusterScan : IRevealableScanConfig
     {
         public uint BaseCluster { get; set; }
         public uint PersistentID { get; set; }
@@ -61,7 +61,7 @@ namespace MTFO.Custom
         public bool RevealWithHoloPath { get; set; }
     }
 
-    interface IRevealibleScanConfig
+    interface IRevealableScanConfig
     {
         uint PersistentID { get; }
         float RevealTime { get; }
@@ -71,7 +71,7 @@ namespace MTFO.Custom
 
     static class IRevealibleScanConfigExtensions
     {
-        public static void ApplySplineRevealSpeed(this IRevealibleScanConfig scan, CP_Holopath_Spline spline)
+        public static void ApplySplineRevealSpeed(this IRevealableScanConfig scan, CP_Holopath_Spline spline)
         {
             float revealTime = scan.RevealTime;
 
