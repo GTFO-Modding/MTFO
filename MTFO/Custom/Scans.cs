@@ -1,5 +1,6 @@
 ﻿using ChainedPuzzles;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MTFO.Custom
 {
@@ -7,6 +8,12 @@ namespace MTFO.Custom
     {
         public List<CustomBioScan> Scans { get; set; }
         public List<CustomClusterScan> Clusters { get; set; }
+    }
+
+    public enum RevealDistanceMode
+    {
+        Distance,
+        Time
     }
 
     public struct CustomBioScan
@@ -18,7 +25,10 @@ namespace MTFO.Custom
         public float[] PlayersInScanMulti { get; set; }
         public float ReduceSpeed { get; set; }
         public bool ReduceWhenNoPlayer { get; set; }
-        public float RevealSpeed { get; set; }
+        public float RevealTime { get; set; }
+        [JsonIgnore]
+        internal float SplineRevealSpeed => 1f / this.RevealTime;
+        public RevealDistanceMode RevealTimeDistanceMode { get; set; }
         public BioScanGx BioScanGraphics { get; set; }
 
 
@@ -46,7 +56,10 @@ namespace MTFO.Custom
         public int ClusterCount { get; set; }
         public uint BioscanID { get; set; }
         public float DistanceBetweenScans { get; set; }
-        public float RevealSpeed { get; set; }
+        public float RevealTime { get; set; }
+        [JsonIgnore]
+        internal float SplineRevealSpeed => 1f / this.RevealTime;
+        public RevealDistanceMode RevealTimeDistanceMode { get; set; }
         public bool RevealWithHoloPath { get; set; }
     }
 }
