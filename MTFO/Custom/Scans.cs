@@ -26,19 +26,16 @@ namespace MTFO.Custom
         {
             public string ScanText { get; set; }
             public float Radius { get; set; }
-            public BioScanColorByMode[] colorModeColor { get; set; }
+            public BioScanColorByMode[] ColorModeColor { get; set; }
         }
 
         public class BioScanColorByMode
         {
-            // fix dak's skill issue :)
-#pragma warning disable IDE1006 // Naming Styles
-            public eChainedPuzzleGraphicsColorMode mode { get; set; }
-            public float r { get; set; }
-            public float g { get; set; }
-            public float b { get; set; }
-            public float a { get; set; }
-#pragma warning restore IDE1006 // Naming Styles
+            public eChainedPuzzleGraphicsColorMode Mode { get; set; }
+            public float R { get; set; }
+            public float G { get; set; }
+            public float B { get; set; }
+            public float A { get; set; }
         }
     }
 

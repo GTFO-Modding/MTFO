@@ -74,7 +74,7 @@ namespace MTFO.Managers
                 //Setup Graphics
                 var scanGx = scanPrefab.GetComponent<CP_Bioscan_Graphics>();
                 scanGx.m_radius = scan.BioScanGraphics.Radius;
-                scanGx.m_colors = ConvertToColorMode(scan.BioScanGraphics.colorModeColor);
+                scanGx.m_colors = ConvertToColorMode(scan.BioScanGraphics.ColorModeColor);
                 scanGx.SetText(scan.BioScanGraphics.ScanText);
 
                 var core = scanPrefab.GetComponent<CP_Bioscan_Core>();
@@ -139,7 +139,7 @@ namespace MTFO.Managers
             for (int i = 0; i < bioScanColorByModes.Length; i++)
             {
                 var bsMode = bioScanColorByModes[i];
-                colorModes[i] = new() { col = new(bsMode.r, bsMode.g, bsMode.b, bsMode.a), mode = bsMode.mode };
+                colorModes[i] = new() { col = new(bsMode.R, bsMode.G, bsMode.B, bsMode.A), mode = bsMode.Mode };
             }
 
             return colorModes;
