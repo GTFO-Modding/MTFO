@@ -25,18 +25,14 @@ namespace MTFO.Patches
                 return;
 
             var puzzleType = instanceOwner.Data.ChainedPuzzle[puzzleIndex];
-            if (!CustomPuzzleManager.TryGetScanByID(puzzleType.PuzzleType, out var scan) ||
-                (scan.RevealTime <= 0f && scan.RevealTimeDistanceMode == RevealDistanceMode.Distance))
+            if (!CustomPuzzleManager.TryGetScanByID(puzzleType.PuzzleType, out var scan))
                 return;
 
             var spline = __instance.m_spline.TryCast<CP_Holopath_Spline>();
             if (spline == null)
                 return;
 
-            if (scan.RevealTime > 0f)
-                spline.m_revealSpeed = scan.SplineRevealSpeed;
-            if (scan.RevealTimeDistanceMode == RevealDistanceMode.Time)
-                spline.m_splineLength = 1f;
+            scan.ApplySplineRevealSpeed(spline);
         }
 
         [HarmonyPostfix]
@@ -60,7 +56,7 @@ namespace MTFO.Patches
 
             // check children first for valid reveal speed before checking cluster
             if (CustomPuzzleManager.TryGetScanByID(cluster.BioscanID, out var scan) &&
-                (scan.RevealTime > 0f || scan.RevealTimeDistanceMode != RevealDistanceMode.Distance))
+                (scan.RevealTime > 0f || scan.RevealMode != RevealMode.ScaleByDistance))
             {
                 foreach (var childPuzzle in __instance.m_childCores)
                 {
@@ -70,21 +66,15 @@ namespace MTFO.Patches
                     var childSpline = child.m_spline.TryCast<CP_Holopath_Spline>();
                     if (childSpline == null) continue;
 
-                    if (scan.RevealTime > 0f)
-                        childSpline.m_revealSpeed = scan.SplineRevealSpeed;
-                    if (scan.RevealTimeDistanceMode == RevealDistanceMode.Time)
-                        childSpline.m_splineLength = 1f; // set it to one so constant distance
+                    scan.ApplySplineRevealSpeed(childSpline);
                 }
             }
-
-            if (cluster.RevealTime <= 0f)
-                return;
 
             var spline = __instance.m_spline.TryCast<CP_Holopath_Spline>();
             if (spline == null)
                 return;
 
-            spline.m_revealSpeed = cluster.RevealTime;
+            scan.ApplySplineRevealSpeed(spline);
         }
     }
 }
