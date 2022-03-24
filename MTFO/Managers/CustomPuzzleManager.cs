@@ -9,9 +9,7 @@ using System.Collections.Generic;
 namespace MTFO.Managers
 {
     /// <summary>
-    /// Handles all custom puzzle related stuff so it
-    /// isn't in a single patch like c'mon Dak you
-    /// had one job.
+    /// Handles all custom puzzle related content.
     /// </summary>
     public static class CustomPuzzleManager
     {
@@ -60,7 +58,7 @@ namespace MTFO.Managers
                 //Base instance
                 var scanBase = manager.m_puzzleComponentPrefabs[scan.BaseScan];
                 var scanPrefab = GameObject.Instantiate(scanBase);
-                // why
+                // hide scan. Really far away so null ref patch works.
                 scanPrefab.transform.position = new(10000, 10000, 10000);
 
                 //Setup Scanner
@@ -111,7 +109,7 @@ namespace MTFO.Managers
                 //Base Instance
                 var clusterBase = manager.m_puzzleComponentPrefabs[cluster.BaseCluster];
                 var clusterPrefab = GameObject.Instantiate(clusterBase);
-                // why
+                // hide scan
                 clusterPrefab.transform.position = new(1000, 1000, 1000);
 
                 //Get references
