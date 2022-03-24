@@ -1,5 +1,6 @@
 ﻿using ChainedPuzzles;
 using HarmonyLib;
+using MTFO.Custom;
 using MTFO.Managers;
 
 namespace MTFO.Patches
@@ -25,7 +26,7 @@ namespace MTFO.Patches
 
             var puzzleType = instanceOwner.Data.ChainedPuzzle[puzzleIndex];
             if (!CustomPuzzleManager.TryGetScanByID(puzzleType.PuzzleType, out var scan) ||
-                (scan.RevealTime <= 0f && scan.RevealTimeDistanceMode == Custom.RevealDistanceMode.Distance))
+                (scan.RevealTime <= 0f && scan.RevealTimeDistanceMode == RevealDistanceMode.Distance))
                 return;
 
             var spline = __instance.m_spline.TryCast<CP_Holopath_Spline>();
@@ -34,7 +35,7 @@ namespace MTFO.Patches
 
             if (scan.RevealTime > 0f)
                 spline.m_revealSpeed = scan.SplineRevealSpeed;
-            if (scan.RevealTimeDistanceMode == Custom.RevealDistanceMode.Time)
+            if (scan.RevealTimeDistanceMode == RevealDistanceMode.Time)
                 spline.m_splineLength = 1f;
         }
 
@@ -59,7 +60,7 @@ namespace MTFO.Patches
 
             // check children first for valid reveal speed before checking cluster
             if (CustomPuzzleManager.TryGetScanByID(cluster.BioscanID, out var scan) &&
-                (scan.RevealTime > 0f || scan.RevealTimeDistanceMode != Custom.RevealDistanceMode.Distance))
+                (scan.RevealTime > 0f || scan.RevealTimeDistanceMode != RevealDistanceMode.Distance))
             {
                 foreach (var childPuzzle in __instance.m_childCores)
                 {
@@ -71,7 +72,7 @@ namespace MTFO.Patches
 
                     if (scan.RevealTime > 0f)
                         childSpline.m_revealSpeed = scan.SplineRevealSpeed;
-                    if (scan.RevealTimeDistanceMode == Custom.RevealDistanceMode.Time)
+                    if (scan.RevealTimeDistanceMode == RevealDistanceMode.Time)
                         childSpline.m_splineLength = 1f; // set it to one so constant distance
                 }
             }
