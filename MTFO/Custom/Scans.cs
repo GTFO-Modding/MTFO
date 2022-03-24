@@ -31,11 +31,14 @@ namespace MTFO.Custom
 
         public class BioScanColorByMode
         {
+            // fix dak's skill issue :)
+#pragma warning disable IDE1006 // Naming Styles
             public eChainedPuzzleGraphicsColorMode mode { get; set; }
             public float r { get; set; }
             public float g { get; set; }
             public float b { get; set; }
             public float a { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
         }
     }
 
