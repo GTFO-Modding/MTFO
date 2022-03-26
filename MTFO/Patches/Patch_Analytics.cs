@@ -11,7 +11,6 @@ namespace MTFO.Patches
     {
         public static bool Prefix(GameEventData data)
         {
-            Log.Verbose($"{data.customAnalyticsPayload}");
             return false;
         }
     }

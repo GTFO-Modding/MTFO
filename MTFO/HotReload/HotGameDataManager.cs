@@ -9,7 +9,7 @@ namespace MTFO.HotReload
         public void OnHotReload(int id)
         {
             GameDataInit.ReInitialize(); // refresh game data
-            Log.Message("Reinitialized GameData");
+            Log.Verbose("Reinitialized GameData");
         }
     }
 }

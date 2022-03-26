@@ -11,7 +11,7 @@ namespace MTFO.Managers
     /// </summary>
     public class ContentManager
     {
-        private readonly JsonSerializer json;
+        private readonly JsonSerializer json = new();
         private readonly Dictionary<string, Action<string>> Handlers;
         /// <summary>
         /// Custom Scans
@@ -34,7 +34,6 @@ namespace MTFO.Managers
         {
             Handlers = new Dictionary<string, Action<string>>
             {
-                { "welcome.txt", SetupWelcomeText },
                 { "puzzletypes.json", SetupChainedPuzzles },
                 { "glowsticks.json", SetupGlowsticks },
                 { "tiernames.json", SetupTierNames }

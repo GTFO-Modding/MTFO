@@ -13,10 +13,9 @@ namespace MTFO.HotReload
 
         void Awake()
         {
-            gameObject.SetActive(true);
-            gameObject.transform.localPosition = m_position;
-            m_button = gameObject.GetComponent<CM_Item>();
-            m_button.SetText(m_text);
+            gameObject.transform.localPosition = buttonPosition;
+            button = gameObject.GetComponent<CM_Item>();
+            button.SetText(buttonLabel);
             AddOnReloadListener(new HotGameDataManager());
             AddOnReloadListener(new HotRundownManager());
             AddOnReloadListener(new HotGearManager());
@@ -27,10 +26,10 @@ namespace MTFO.HotReload
         /// </summary>
         public void AddOnReloadListener(IHotManager manager)
         {
-            if (!m_managers.Contains(manager))
+            if (!managers.Contains(manager))
             {
-                m_button.add_OnBtnPressCallback((Action<int>)manager.OnHotReload);
-                m_managers.Add(manager);
+                button.add_OnBtnPressCallback((Action<int>)manager.OnHotReload);
+                managers.Add(manager);
             }
         }
 
@@ -39,12 +38,11 @@ namespace MTFO.HotReload
         /// </summary>
         public void RemoveOnReloadListener(IHotManager manager)
         {
-            if (m_managers.Contains(manager))
+            if (managers.Contains(manager))
             {
-                m_button.remove_OnBtnPressCallback((Action<int>)manager.OnHotReload);
-                m_managers.Remove(manager);
+                button.remove_OnBtnPressCallback((Action<int>)manager.OnHotReload);
+                managers.Remove(manager);
             }
-                
         }
 
         /// <summary>
@@ -60,14 +58,15 @@ namespace MTFO.HotReload
                 worldPositionStays: false);
             button.name = "Button HotReload";
             Current = button.AddComponent<HotReloader>();
+            button.SetActive(true);
 
-            Log.Debug("Created hot reload button");
+            Log.Verbose("Created hot reload button");
         }
 
         public static HotReloader Current;
-        private CM_Item m_button;
-        private readonly List<IHotManager> m_managers = new();
-        private readonly string m_text = "Reload Game Data";
-        private readonly Vector3 m_position = new(0, 77, 0);
+        private CM_Item button;
+        private readonly string buttonLabel = "Reload Game Data";
+        private readonly Vector3 buttonPosition = new(0, 77, 0);
+        private readonly List<IHotManager> managers = new();
     }
 }

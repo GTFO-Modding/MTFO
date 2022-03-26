@@ -32,7 +32,6 @@ namespace MTFO.Custom
         /// The persistent ID of this bio scan
         /// </summary>
         public uint PersistentID { get; set; }
-
         /// <summary>
         /// Whether or not all members are required to progress the scan
         /// </summary>
@@ -41,6 +40,7 @@ namespace MTFO.Custom
         /// The radius at which players will be counted in the scan
         /// </summary>
         public float ScanRadius { get; set; }
+        public int PlayerRequirement { get; set; }
         /// <summary>
         /// Multipliers for scan speed for players in scan
         /// </summary>

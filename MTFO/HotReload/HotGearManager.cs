@@ -18,7 +18,7 @@ namespace MTFO.HotReload
             this.LoadOfflineGearDatas();
             GearManager.GenerateAllGearIcons();
             GearManager.Current.m_offlineSetupDone = true;
-            Log.Message("Reloaded Gear");
+            Log.Verbose("Reloaded Gear");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace MTFO.HotReload
         /// </summary>
         private void CleanGearSlots()
         {
-            for (int i = 0; i < m_gearSlots; ++i)
+            for (int i = 0; i < gearSlotsTotal; ++i)
             {
                 GearManager.Current.m_gearPerSlot[i].Clear();
             }
@@ -62,46 +62,15 @@ namespace MTFO.HotReload
         private void LoadOfflineGearDatas()
         {
             var blocks = GameDataBlockBase<PlayerOfflineGearDataBlock>.GetAllBlocks();
-            Log.Debug($"Loading {blocks.Length} gear");
-            for (int index = 0; index < blocks.Length; ++index)
+            if (blocks == null)
             {
-                if (blocks[index].Type == eOfflineGearType.StandardInventory
-                || blocks[index].Type == eOfflineGearType.RundownSpecificInventory)
-                {
-                    if (!string.IsNullOrEmpty(blocks[index].GearJSON))
-                    {
-                        ParseAndStashGear(
-                            itemId: blocks[index].name,
-                            itemInstanceId: $"OfflineGear_ID_{blocks[index].persistentID}",
-                            gearJSON: blocks[index].GearJSON,
-                            offlineType: blocks[index].Type
-                        );
-                    }
-                }
+                Log.Warn("Unable to get Player Offline Gear blocks");
+                return;
             }
+            Log.Verbose($"Loading {blocks.Length} gear");
+            foreach (var block in blocks) OfflineGear.Load(block);
         }
 
-        /// <summary>
-        /// Sets up gear referencing an item base and assigns it a inventory slot
-        /// </summary>
-        private void ParseAndStashGear(
-            string itemId,
-            string itemInstanceId,
-            string gearJSON,
-            eOfflineGearType offlineType)
-        {
-            var gearIdRange = new GearIDRange(gearJSON);
-            if (gearIdRange == null) return;
-            gearIdRange.PlayfabItemId = itemId;
-            gearIdRange.PlayfabItemInstanceId = itemInstanceId;
-            gearIdRange.OfflineGearType = offlineType;
-            var itemDataBlock = gearIdRange.GetCompID(eGearComponent.BaseItem) > 0U
-                              ? GameDataBlockBase<ItemDataBlock>.GetBlock(gearIdRange.GetCompID(eGearComponent.BaseItem))
-                              : null;
-            if (itemDataBlock != null)
-                GearManager.Current.m_gearPerSlot[(int)itemDataBlock.inventorySlot].Add(gearIdRange);
-        }
-
-        private readonly int m_gearSlots = 3;
+        private readonly int gearSlotsTotal = 3;
     }
 }
