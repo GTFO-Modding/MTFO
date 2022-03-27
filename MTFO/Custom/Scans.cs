@@ -85,7 +85,7 @@ namespace MTFO.Custom
                     }
                     // ensure constant distance.
                     spline.m_splineLength = 1f;
-                    spline.m_revealSpeed = 1f / revealTime;
+                    spline.m_revealSpeed = revealTime;
                     break;
                 case RevealMode.ScaleByDistance:
                     if (revealTime < 0f)
@@ -96,7 +96,7 @@ namespace MTFO.Custom
                     else if (revealTime == 0f)
                         return;
 
-                    spline.m_revealSpeed = 1f / revealTime;
+                    spline.m_revealSpeed = revealTime;
                     break;
                 case RevealMode.Instant:
                     spline.m_revealSpeed = -1f;
