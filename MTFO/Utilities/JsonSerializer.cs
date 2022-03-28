@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Native = System.Text.Json.JsonSerializer;
@@ -17,6 +18,7 @@ namespace MTFO.Utilities
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 WriteIndented = true
             };
+            Options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
         }
 
         public JsonSerializer(
@@ -33,6 +35,7 @@ namespace MTFO.Utilities
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 WriteIndented = writeIndented
             };
+            Options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
         }
         /// <summary>
         /// Checks if a file exists and will deserialize it using the given type, otherwise it will construct the output and write it to a file
