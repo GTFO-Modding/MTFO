@@ -20,6 +20,7 @@ namespace MTFO.Patches
             if (owner == null)
                 return;
 
+            //TODO: change owner fetching method -> add custom component that includes their puzzle persistentID once Field inject has merged.
             ChainedPuzzleInstance instanceOwner = owner.TryCast<ChainedPuzzleInstance>();
             if (instanceOwner == null)
                 return;
@@ -29,10 +30,19 @@ namespace MTFO.Patches
                 return;
 
             var spline = __instance.m_spline.TryCast<CP_Holopath_Spline>();
-            if (spline == null)
-                return;
+            if (spline != null)
+            {
+                scan.ApplySplineRevealSpeed(spline);
+            }
 
-            scan.ApplySplineRevealSpeed(spline);
+            var graphic = __instance.m_graphics.TryCast<CP_Bioscan_Graphics>();
+            if (graphic != null)
+            {
+                if (!string.IsNullOrEmpty(scan.BioScanGraphics.ScanText))
+                {
+                    graphic.SetText(scan.BioScanGraphics.ScanText);
+                }
+            }
         }
 
         [HarmonyPostfix]
@@ -64,9 +74,19 @@ namespace MTFO.Patches
                     if (child == null) continue;
 
                     var childSpline = child.m_spline.TryCast<CP_Holopath_Spline>();
-                    if (childSpline == null) continue;
+                    if (childSpline != null)
+                    {
+                        scan.ApplySplineRevealSpeed(childSpline);
+                    }
 
-                    scan.ApplySplineRevealSpeed(childSpline);
+                    var childGraphic = child.m_graphics.TryCast<CP_Bioscan_Graphics>();
+                    if (childGraphic != null)
+                    {
+                        if (!string.IsNullOrEmpty(scan.BioScanGraphics.ScanText))
+                        {
+                            childGraphic.SetText(scan.BioScanGraphics.ScanText);
+                        }
+                    }
                 }
             }
 
