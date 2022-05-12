@@ -1,12 +1,10 @@
-﻿using CellMenu;
-using MTFO.Managers;
+﻿using MTFO.Managers;
 using MTFO.HotReload;
-using UnhollowerRuntimeLib;
 using BepInEx.IL2CPP;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine.Analytics;
-
+using Il2CppInterop.Runtime.Injection;
 
 namespace MTFO
 {
