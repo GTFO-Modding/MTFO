@@ -1,12 +1,11 @@
-﻿using CellMenu;
-using MTFO.Managers;
+﻿using MTFO.Managers;
 using MTFO.HotReload;
-using UnhollowerRuntimeLib;
 using BepInEx.IL2CPP;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine.Analytics;
-
+using Il2CppInterop.Runtime.Injection;
+using GTFO.API;
 
 namespace MTFO
 {
@@ -27,11 +26,14 @@ namespace MTFO
 
             var harmony = new Harmony(GUID);
 
-            if (ConfigManager.IsHotReloadEnabled)
+            AssetAPI.OnImplReady += () =>
             {
-                ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
-                harmony.PatchAll(typeof(HotReloadInjector));
-            }
+                if (ConfigManager.IsHotReloadEnabled)
+                {
+                    ClassInjector.RegisterTypeInIl2Cpp<HotReloader>();
+                    harmony.PatchAll(typeof(HotReloadInjector));
+                }
+            };
                 
             harmony.PatchAll();
         }

@@ -2,7 +2,7 @@
   <Import Project="Dependencies.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net6</TargetFrameworks>
     <RootNamespace>MTFO</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Copyright>© dakkhuza 2021</Copyright>
