@@ -7,7 +7,7 @@
     <LangVersion>preview</LangVersion>
     <Copyright>© dakkhuza 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>4.3.7</Version>
+    <Version>4.3.10</Version>
     <VersionPrerelease></VersionPrerelease>
   </PropertyGroup>
 
