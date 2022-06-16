@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using GameData;
 using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 namespace MTFO.Patches
 {

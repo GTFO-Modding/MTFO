@@ -18,11 +18,11 @@ namespace MTFO.Patches
             if (__instance.m_state == eFadeState.FadeOut || __instance.m_state == eFadeState.Done) return;
             if (!ConfigManager.CustomContent.GlowstickHolder.GlowstickLookup.TryGetValue(__instance.PublicName, out CustomGlowstick customGlowstick)) return;
 
-            if (__instance.m_hasLight)
+            if (__instance.m_light != null)
             {
-                __instance.m_light.SetRange(customGlowstick.Range);
-                __instance.m_light.SetColor(customGlowstick.Color * __instance.m_progression);
-                __instance.m_light.UpdateData();
+                __instance.m_light.Range = customGlowstick.Range;
+                __instance.m_light.Color = customGlowstick.Color * __instance.m_progression;
+                __instance.m_light.UpdateVisibility(true);
             }
         }
     }
