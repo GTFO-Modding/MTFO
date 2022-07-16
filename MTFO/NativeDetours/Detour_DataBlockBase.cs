@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace MTFO.NativeDetours
 {
+    using DBBase = GameDataBlockBase<EnemyDataBlock>;
+
     internal static class Detour_DataBlockBase
     {
         private unsafe delegate IntPtr GetFileContentsDel(Il2CppMethodInfo* methodInfo);
@@ -35,9 +37,9 @@ namespace MTFO.NativeDetours
             }
 
             _Detour = Detours.Create(
-               typeof(GameDataBlockBase<EnemyDataBlock>),
+               typeof(DBBase),
                isGenericMethod: false,
-               "GetFileContents",
+               nameof(DBBase.GetFileContents),
                typeof(string).FullName,
                new string[] { },
                Dtor_GetFileContents,
