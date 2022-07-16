@@ -27,7 +27,7 @@ namespace MTFO.NativeDetours
 
         public static unsafe void Patch()
         {
-            _BasePathToDump = Path.Combine(Paths.BepInExRootPath, "gamedata", CellBuildData.GetRevision().ToString());
+            _BasePathToDump = Path.Combine(Paths.BepInExRootPath, "GameData-Dump", CellBuildData.GetRevision().ToString());
             if (ConfigManager.DumpGameData)
             {
                 if (!Directory.Exists(_BasePathToDump))
