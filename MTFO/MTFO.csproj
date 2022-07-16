@@ -9,6 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>4.3.10</Version>
     <VersionPrerelease></VersionPrerelease>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
