@@ -36,14 +36,13 @@ namespace MTFO.NativeDetours
                 }
             }
 
-            _Detour = Detours.Create(
-               typeof(DBBase),
-               isGenericMethod: false,
-               nameof(DBBase.GetFileContents),
-               typeof(string).FullName,
-               new string[] { },
-               Dtor_GetFileContents,
-               out _Original);
+            var method = Il2CppAPI.GetIl2CppMethod<DBBase>(
+                nameof(DBBase.GetFileContents),
+                typeof(string).FullName,
+                isGeneric: false,
+                Array.Empty<string>());
+
+            _Detour = INativeDetour.CreateAndApply((nint)method, Dtor_GetFileContents, out _Original);
         }
 
         private static unsafe IntPtr Dtor_GetFileContents(Il2CppMethodInfo* methodInfo)
