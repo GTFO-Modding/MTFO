@@ -126,13 +126,6 @@
   <data name="SECTION_GENERAL" xml:space="preserve">
     <value>General Settings</value>
   </data>
-  <data name="SETTING_DUMPFILE" xml:space="preserve">
-    <value>DumpUnknown</value>
-  </data>
-  <data name="SETTING_DUMPFILE_DESC" xml:space="preserve">
-    <value>Debug Setting
-If enabled, when an unknown data block is encounterd the files contents will be dumped into the console</value>
-  </data>
   <data name="SETTING_HOTRELOAD" xml:space="preserve">
     <value>EnableHotReload</value>
   </data>
