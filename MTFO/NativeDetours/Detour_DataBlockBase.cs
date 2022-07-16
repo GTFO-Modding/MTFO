@@ -40,11 +40,11 @@ namespace MTFO.NativeDetours
                "GetFileContents",
                typeof(string).FullName,
                new string[] { },
-               Dtor_DoLoadFromDisk,
+               Dtor_GetFileContents,
                out _Original);
         }
 
-        private static unsafe IntPtr Dtor_DoLoadFromDisk(Il2CppMethodInfo* methodInfo)
+        private static unsafe IntPtr Dtor_GetFileContents(Il2CppMethodInfo* methodInfo)
         {
             var originalResult = _Original.Invoke(methodInfo);
 
