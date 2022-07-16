@@ -88,6 +88,24 @@ namespace MTFO {
         }
         
         /// <summary>
+        ///   Dump GameData과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string SETTING_DUMPDATA {
+            get {
+                return ResourceManager.GetString("SETTING_DUMPDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dump GameData to BepInEx/gamedata/revision path?과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string SETTING_DUMPDATA_DESC {
+            get {
+                return ResourceManager.GetString("SETTING_DUMPDATA_DESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   EnableHotReload과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string SETTING_HOTRELOAD {

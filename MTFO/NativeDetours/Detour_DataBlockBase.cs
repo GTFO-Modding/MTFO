@@ -1,4 +1,5 @@
-﻿using BepInEx.IL2CPP.Hook;
+﻿using BepInEx;
+using BepInEx.IL2CPP.Hook;
 using GameData;
 using GTFO.API;
 using Il2CppInterop.Runtime;
@@ -18,11 +19,21 @@ namespace MTFO.NativeDetours
     {
         private unsafe delegate IntPtr GetFileContentsDel(Il2CppMethodInfo* methodInfo);
 
+        private static string _BasePathToDump;
         private static INativeDetour _Detour; //To Prevent GC Error
         private static GetFileContentsDel _Original;
 
         public static unsafe void Patch()
         {
+            _BasePathToDump = Path.Combine(Paths.BepInExRootPath, "gamedata", CellBuildData.GetRevision().ToString());
+            if (ConfigManager.DumpGameData)
+            {
+                if (!Directory.Exists(_BasePathToDump))
+                {
+                    Directory.CreateDirectory(_BasePathToDump);
+                }
+            }
+
             _Detour = Detours.Create(
                typeof(GameDataBlockBase<EnemyDataBlock>),
                isGenericMethod: false,
@@ -35,6 +46,8 @@ namespace MTFO.NativeDetours
 
         private static unsafe IntPtr Dtor_DoLoadFromDisk(Il2CppMethodInfo* methodInfo)
         {
+            var originalResult = _Original.Invoke(methodInfo);
+
             try
             {
                 var method = UnityVersionHandler.Wrap(methodInfo);
@@ -47,6 +60,13 @@ namespace MTFO.NativeDetours
                 var fileName = IL2CPP.Il2CppStringToManaged(fileNamePtr).Replace('.', '_');
 
                 Log.Verbose($"GetFileContents Call of {fileName}");
+
+                if (ConfigManager.DumpGameData)
+                {
+                    File.WriteAllText(Path.Combine(_BasePathToDump, $"{fileName}.json"), IL2CPP.Il2CppStringToManaged(originalResult));
+                    Log.Verbose($"{fileName} has dumped to '{_BasePathToDump}'");
+                }
+
                 string filePath = Path.Combine(ConfigManager.GameDataPath, $"{fileName}.json");
                 if (File.Exists(filePath))
                 {
@@ -71,7 +91,7 @@ namespace MTFO.NativeDetours
                 Log.Error($"Exception were found while handling  Detour;Falling back to original content!");
                 Log.Error(e.ToString());
             }
-            return _Original.Invoke(methodInfo);
+            return originalResult;
         }
     }
 }

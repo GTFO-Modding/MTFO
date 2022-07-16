@@ -33,6 +33,7 @@ namespace MTFO.Managers
             ConfigFile config = new(CONFIG_PATH, true);
 
             _enableHotReload = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_HOTRELOAD, false, ConfigStrings.SETTING_HOTRELOAD_DESC);
+            _dumpGameData = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_DUMPDATA, false, ConfigStrings.SETTING_DUMPDATA_DESC);
             _isVerbose = config.Bind(ConfigStrings.SECTION_DEBUG, ConfigStrings.SETTING_VERBOSE, false, ConfigStrings.SETTING_VERBOSE_DESC);
             _useLegacyLoading = config.Bind(ConfigStrings.SECTION_GENERAL, ConfigStrings.SETTING_USE_LEGACY_PATH, false, ConfigStrings.SETTING_USE_LEGACY_PATH_DESC);
 
@@ -120,6 +121,7 @@ namespace MTFO.Managers
 
         private static readonly ConfigEntry<bool> _enableHotReload;
         private static readonly ConfigEntry<string> _rundownFolder;
+        private static readonly ConfigEntry<bool> _dumpGameData;
         private static readonly ConfigEntry<bool> _isVerbose;
         private static readonly ConfigEntry<bool> _useLegacyLoading;
 
@@ -154,6 +156,14 @@ namespace MTFO.Managers
             {
                 return _enableHotReload.Value;
             } 
+        }
+
+        public static bool DumpGameData
+        {
+            get
+            {
+                return _dumpGameData.Value;
+            }
         }
 
         //Legacy
