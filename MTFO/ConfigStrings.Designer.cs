@@ -19,7 +19,7 @@ namespace MTFO {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ConfigStrings {
@@ -88,21 +88,20 @@ namespace MTFO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DumpUnknown.
+        ///   Looks up a localized string similar to Dump GameData.
         /// </summary>
-        internal static string SETTING_DUMPFILE {
+        internal static string SETTING_DUMPDATA {
             get {
-                return ResourceManager.GetString("SETTING_DUMPFILE", resourceCulture);
+                return ResourceManager.GetString("SETTING_DUMPDATA", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debug Setting
-        ///If enabled, when an unknown data block is encounterd the files contents will be dumped into the console.
+        ///   Looks up a localized string similar to Dump GameData to BepInEx/gamedata/revision path?.
         /// </summary>
-        internal static string SETTING_DUMPFILE_DESC {
+        internal static string SETTING_DUMPDATA_DESC {
             get {
-                return ResourceManager.GetString("SETTING_DUMPFILE_DESC", resourceCulture);
+                return ResourceManager.GetString("SETTING_DUMPDATA_DESC", resourceCulture);
             }
         }
         

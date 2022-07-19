@@ -6,6 +6,7 @@ using HarmonyLib;
 using UnityEngine.Analytics;
 using Il2CppInterop.Runtime.Injection;
 using GTFO.API;
+using MTFO.NativeDetours;
 
 namespace MTFO
 {
@@ -36,6 +37,7 @@ namespace MTFO
             };
                 
             harmony.PatchAll();
+            Detour_DataBlockBase.Patch();
         }
     }
 }
