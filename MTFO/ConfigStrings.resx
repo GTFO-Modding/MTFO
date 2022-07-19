@@ -130,7 +130,7 @@
     <value>Dump GameData</value>
   </data>
   <data name="SETTING_DUMPDATA_DESC" xml:space="preserve">
-    <value>Dump GameData to BepInEx/gamedata/revision path?</value>
+    <value>Dump GameData to BepInEx/GameData-Dump/revision path?</value>
   </data>
   <data name="SETTING_HOTRELOAD" xml:space="preserve">
     <value>EnableHotReload</value>
