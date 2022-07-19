@@ -115,6 +115,7 @@ namespace MTFO.Managers
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Verbose Logging? {IsVerbose}");
             Log.Debug($"Using Legacy Loading? {UseLegacyLoading}");
+            Log.Debug($"Dump Game Data? {DumpGameData}");
 
             Log.Debug($"---- DEBUG END ----");
         }
