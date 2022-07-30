@@ -62,14 +62,14 @@ namespace MTFO.CustomCP
                 }
 
                 //Base instance
-                var scanBase = manager.m_puzzleComponentPrefabs[scanData.BaseScan];
-                if (scanBase.GetComponent<CP_Bioscan_Core>() == null)
+                var scanBasePrefab = manager.m_puzzleComponentPrefabs[scanData.BaseScan];
+                if (scanBasePrefab.GetComponent<CP_Bioscan_Core>() == null)
                 {
                     Log.Error($"BaseScan id: {scanData.PersistentID} does not have {nameof(CP_Bioscan_Core)} component!");
                     continue;
                 }
 
-                var scanPrefab = UnityEngine.Object.Instantiate(scanBase);
+                var scanPrefab = UnityEngine.Object.Instantiate(scanBasePrefab);
                 // hide scan. Really far away so null ref patch works.
                 scanPrefab.transform.position = new(10000, 10000, 10000);
 
@@ -111,11 +111,11 @@ namespace MTFO.CustomCP
                 var core = scanPrefab.GetComponent<CP_Bioscan_Core>();
                 core.m_playerAgents = new();
 
+                var data = scanPrefab.AddComponent<CorePuzzleData>();
+                data.PersistentID.Set(scanData.PersistentID);
+
                 s_scanMap.Add(scanData.PersistentID, scanData); // if this breaks it's your problem, not mine.
                 manager.m_puzzleComponentPrefabs.Add(scanData.PersistentID, scanPrefab);
-
-                var data = core.gameObject.AddComponent<CorePuzzleData>();
-                data.PersistentID.Set(scanData.PersistentID);
             }
         }
 
@@ -138,18 +138,18 @@ namespace MTFO.CustomCP
                 }
                 if (!manager.m_puzzleComponentPrefabs.ContainsKey(clusterData.BioscanID))
                 {
-                    Log.Error($"Custom cluster scan with persistent ID {clusterData.PersistentID} references a non-existing biscan of persistent ID {clusterData.BioscanID}");
+                    Log.Error($"Custom cluster scan with persistent ID {clusterData.PersistentID} references a non-existing bioscan of persistent ID {clusterData.BioscanID}");
                     continue;
                 }
 
                 //Base Instance
-                var clusterBase = manager.m_puzzleComponentPrefabs[clusterData.BaseCluster];
-                if (clusterBase.GetComponent<CP_Cluster_Core>() == null)
+                var clusterBasePrefab = manager.m_puzzleComponentPrefabs[clusterData.BaseCluster];
+                if (clusterBasePrefab.GetComponent<CP_Cluster_Core>() == null)
                 {
                     Log.Error($"BaseScan id: {clusterData.PersistentID} does not have {nameof(CP_Cluster_Core)} component!");
                     continue;
                 }
-                var clusterPrefab = UnityEngine.Object.Instantiate(clusterBase);
+                var clusterPrefab = UnityEngine.Object.Instantiate(clusterBasePrefab);
                 // hide scan
                 clusterPrefab.transform.position = new(1000, 1000, 1000);
 
@@ -163,11 +163,11 @@ namespace MTFO.CustomCP
                 clusterCore.m_distanceBetween = clusterData.DistanceBetweenScans;
                 clusterCore.m_revealWithHoloPath = clusterData.RevealWithHoloPath;
 
+                var data = clusterPrefab.AddComponent<ClusterPuzzleData>();
+                data.PersistentID.Set(clusterData.PersistentID);
+
                 s_clusterMap.Add(clusterData.PersistentID, clusterData); // if this breaks it's your problem, not mine.
                 manager.m_puzzleComponentPrefabs.Add(clusterData.PersistentID, clusterPrefab);
-
-                var data = clusterCore.gameObject.AddComponent<ClusterPuzzleData>();
-                data.PersistentID.Set(clusterData.PersistentID);
             }
         }
 

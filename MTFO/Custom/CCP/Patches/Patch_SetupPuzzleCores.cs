@@ -31,7 +31,7 @@ namespace MTFO.CustomCP.Patches
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(typeof(CP_Cluster_Core), nameof(CP_Cluster_Core.Setup))]
-        public static void SetupSpline(CP_Cluster_Core __instance, int puzzleIndex, iChainedPuzzleOwner owner)
+        public static void SetupSpline(CP_Cluster_Core __instance)
         {
             var clusterData = __instance.GetComponent<ClusterPuzzleData>();
             if (clusterData == null)

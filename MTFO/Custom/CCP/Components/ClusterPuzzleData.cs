@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime.InteropTypes.Fields;
+﻿using ChainedPuzzles;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace MTFO.Custom.CCP.Components
     internal sealed class ClusterPuzzleData : MonoBehaviour
     {
         public Il2CppValueField<uint> PersistentID;
+
+        public CP_Bioscan_Hud[] ChildHuds = Array.Empty<CP_Bioscan_Hud>();
     }
 }
