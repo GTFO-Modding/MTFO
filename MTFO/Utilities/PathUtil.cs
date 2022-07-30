@@ -28,7 +28,7 @@ namespace MTFO.Utilities
         public static string MakeRelativeDirectory(string path, bool createPath = true)
         {
             string OldPath = Path.Combine(Path.Combine(Paths.ConfigPath, "Rundowns"), path);
-            if (!Directory.Exists(OldPath))
+            if (createPath && !Directory.Exists(OldPath))
             {
                 Directory.CreateDirectory(OldPath);
             }
