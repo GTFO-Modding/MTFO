@@ -1,5 +1,6 @@
 ﻿using CellMenu;
 using GameData;
+using MTFO.API;
 using MTFO.Utilities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace MTFO.HotReload
             AddOnReloadListener(new HotGameDataManager());
             AddOnReloadListener(new HotRundownManager());
             AddOnReloadListener(new HotGearManager());
+            button.add_OnBtnPressCallback(new Action<int>((_) => { MTFOHotReloadAPI.HotReloaded(); }));
         }
 
         /// <summary>
