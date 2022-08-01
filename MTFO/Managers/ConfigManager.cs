@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System.Linq;
 
 namespace MTFO.Managers
 {
@@ -54,34 +55,44 @@ namespace MTFO.Managers
                 gameDataLookup = json.Deserialize<Dictionary<int, string>>(content);
             }
 
-            string path = _rundownFolder.Value;
+            
             if (UseLegacyLoading)
             {
-                GameDataPath = path != "default" ? PathUtil.MakeRelativeDirectory(path) : PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION);
-            } else
+                string path = _rundownFolder.Value;
+                if (path.Equals("default", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    GameDataPath = PathUtil.MakeRelativeDirectory("GameData_" + GAME_VERSION, createPath: false);
+                }
+                else
+                {
+                    GameDataPath = PathUtil.MakeRelativeDirectory(path, createPath: false);
+                }
+                HasGameDataPath = Directory.Exists(GameDataPath);
+            }
+            else
             {
-                GameDataPath = PathUtil.MakeRelativeDirectory(Paths.PluginPath, "GameData_" + GAME_VERSION);
-
                 string[] files = Directory.GetFiles(Paths.PluginPath, "GameData_*.json", SearchOption.AllDirectories);
-                foreach (string file in files)
+                foreach (string file in files.OrderBy(Path.GetDirectoryName))
                 {
                     if (Path.GetDirectoryName(file) != GameDataPath)
                     {
+                        HasGameDataPath = true;
                         GameDataPath = Path.GetDirectoryName(file);
                         break;
                     }
                 }
             }
 
-            CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
-
-            //Setup flags 
-            HasCustomContent = Directory.Exists(CustomPath);
-
-            //Setup folders
-            if (!Directory.Exists(GameDataPath))
+            if (HasGameDataPath)
             {
-                Directory.CreateDirectory(GameDataPath);
+                CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
+                HasCustomContent = Directory.Exists(CustomPath);
+            }
+            else
+            {
+                GameDataPath = string.Empty;
+                CustomPath = string.Empty;
+                HasCustomContent = false;
             }
 
             //Setup Managers
@@ -102,7 +113,6 @@ namespace MTFO.Managers
 
             Log.Debug($"Time: {DateTime.Now}");
             Log.Debug($"Game Version: {GAME_VERSION}");
-            Log.Debug($"Loading Rundown: {path}");
 
             Log.Debug("---- PATHS ----");
 
@@ -111,6 +121,7 @@ namespace MTFO.Managers
 
             Log.Debug("---- FLAGS ----");
 
+            Log.Debug($"Has GameData Path? {HasGameDataPath}");
             Log.Debug($"Has Custom Content? {HasCustomContent}");
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Verbose Logging? {IsVerbose}");
@@ -140,8 +151,9 @@ namespace MTFO.Managers
         public static readonly string GameDataLookupPath;
 
         //Flags
-        public static bool HasCustomContent;
-        public static bool IsModded;
+        public static bool HasGameDataPath = false;
+        public static bool HasCustomContent = false;
+        public static bool IsModded = false;
         public static bool IsVerbose
         {
             get
