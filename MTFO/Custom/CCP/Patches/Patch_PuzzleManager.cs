@@ -1,24 +1,22 @@
 ﻿using HarmonyLib;
-using MTFO.Managers;
 using ChainedPuzzles;
+using MTFO.CustomCP;
 
-namespace MTFO.Patches
+namespace MTFO.CustomCP.Patches
 {
     [HarmonyPatch(typeof(ChainedPuzzleManager), nameof(ChainedPuzzleManager.OnAssetsLoaded))]
-    class Patch_PuzzleManager
+    static class Patch_PuzzleManager
     {
-        public static void Postfix(ChainedPuzzleManager __instance)
+        internal static void Postfix(ChainedPuzzleManager __instance)
         {
             CustomPuzzleManager.Initialize(__instance);
         }
-
-        
     }
 
     [HarmonyPatch(typeof(CP_Bioscan_Core), nameof(CP_Bioscan_Core.Update))]
-    class FixNullRefSpam
+    static class FixNullRefSpam
     {
-        static bool Prefix(CP_Bioscan_Core __instance)
+        internal static bool Prefix(CP_Bioscan_Core __instance)
         {
             if (__instance.gameObject.transform.position.x > 9000 && __instance.gameObject.transform.position.y > 9000 && __instance.gameObject.transform.position.z > 9000)
             {

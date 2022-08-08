@@ -34,6 +34,7 @@ namespace MTFO.Custom
 
         public struct BioScanGx
         {
+            public bool HideScanText { get; set; }
             public string ScanText { get; set; }
             public float Radius { get; set; }
             public BioScanColorByMode[] ColorModeColor { get; set; }
