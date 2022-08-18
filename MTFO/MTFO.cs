@@ -1,6 +1,6 @@
 ﻿using MTFO.Managers;
 using MTFO.HotReload;
-using BepInEx.IL2CPP;
+using BepInEx.Unity.IL2CPP;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine.Analytics;

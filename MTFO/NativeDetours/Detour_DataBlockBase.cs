@@ -1,5 +1,5 @@
 ﻿using BepInEx;
-using BepInEx.IL2CPP.Hook;
+using BepInEx.Unity.IL2CPP.Hook;
 using GameData;
 using GTFO.API;
 using Il2CppInterop.Runtime;
