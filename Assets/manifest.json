@@ -1,0 +1,9 @@
+{
+    "name": "MTFO",
+    "version_number": "4.4.4",
+    "website_url": "https://gtfo-modding.gitbook.io/wiki/",
+    "description": "The premier in GTFO DataBlock editing ;^)",
+    "dependencies": [
+        "BepInEx-BepInExPack_GTFO-1.5.0"
+    ]
+}
