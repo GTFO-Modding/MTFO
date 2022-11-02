@@ -29,8 +29,6 @@ Add a GameFolder.props file to the project to set your game path:
 ## Built With
 
 * [BepInEx](https://github.com/BepInEx/BepInEx) - Loading
-* [Harmony](https://harmony.pardeike.net/) - Patching
-* [Newtonsoft Json](https://www.newtonsoft.com/json) - Json parsing, what else would it be used for?
 
 ## License
 
