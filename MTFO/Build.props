@@ -3,13 +3,13 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AssemblyName>$(SolutionName)</AssemblyName>
-		<BuildDirectory>$(BepInEx)\plugins\$(SolutionName)\</BuildDirectory>
+		<BuildDirectory>$(BepInEx)\plugins\$(SolutionName)</BuildDirectory>
 		<DebugType>None</DebugType>
 		<LangVersion>latest</LangVersion>
 		<OutputPath>$(BuildDirectory)</OutputPath>
 		<RootNamespace>$(AssemblyName)</RootNamespace>
 	</PropertyGroup>
 	<Target Name="PostBuild" BeforeTargets="PostBuildEvent">
-		<Exec Command="del $(OutputPath)$(AssemblyName).deps.json" />
+		<Exec Command="del $(OutputPath)\$(AssemblyName).deps.json" />
 	</Target>
 </Project>
