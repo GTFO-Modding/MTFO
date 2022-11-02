@@ -1,33 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="Dependencies.props" />
-
-  <PropertyGroup>
-    <TargetFrameworks>net6</TargetFrameworks>
-    <RootNamespace>MTFO</RootNamespace>
-    <LangVersion>preview</LangVersion>
-    <Copyright>© dakkhuza 2021</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>4.4.4</Version>
-    <VersionPrerelease></VersionPrerelease>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="ConfigStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ConfigStrings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="ConfigStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConfigStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<Import Project="Dependencies.props" />
+	<Import Project="Build.props" />
+	
+	<PropertyGroup>
+		<Copyright>© dakkhuza 2021</Copyright>
+		<Description>Patch GTFO GameData files or dump them</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Version>5.0.0</Version>
+	</PropertyGroup>
 </Project>

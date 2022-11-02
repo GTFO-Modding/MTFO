@@ -1,47 +1,33 @@
+<!--
+Add a GameFolder.props file to the solution to set your game path:
+
+<Project>
+	<PropertyGroup>
+		<GameFolder>C:\Program Files (x86)\Steam\steamapps\common\GTFO</GameFolder>
+	</PropertyGroup>
+</Project>
+-->
+
 <Project InitialTargets="ValidateGamePath">
-	<!--
-		Add a GameFolder.props file to the solution to set your game path:
-		<Project>
-			<PropertyGroup>
-				<GameFolder>C:\Program Files (x86)\Steam\steamapps\common\GTFO</GameFolder>
-			</PropertyGroup>
-		</Project>
-	-->
-	<Import Project="$(MSBuildThisFileDirectory)\GameFolder.props" Condition="Exists('$(MSBuildThisFileDirectory)\GameFolder.props')" />
+	<Import Project="GameFolder.props" Condition="Exists('GameFolder.props')" />
+
+	<ItemGroup>
+		<PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+		<Reference Include="$(BepInEx)\interop\*.dll" Private="false" />
+		<Reference Remove="$(BepInEx)\interop\netstandard.dll" />
+		<Reference Remove="$(BepInEx)\interop\Newtonsoft.Json.dll" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<BepInEx>$(GameFolder)\BepInEx</BepInEx>
+		<RestoreAdditionalProjectSources>
+			https://api.nuget.org/v3/index.json;
+			https://nuget.bepinex.dev/v3/index.json
+		</RestoreAdditionalProjectSources>
+	</PropertyGroup>
 
 	<Target Name="ValidateGamePath">
 		<Error Text="The GameFolder property must be set to the GTFO game folder." Condition="'$(GameFolder)' == '' or !Exists('$(GameFolder)')" />
 	</Target>
-
-	<PropertyGroup>
-		<BIELibsFolder>$(GameFolder)\BepInEx\core</BIELibsFolder>
-		<CorLibsFolder>$(GameFolder)\dotnet</CorLibsFolder>
-		<InteropLibsFolder>$(GameFolder)\BepInEx\interop</InteropLibsFolder>
-		<PluginsFolder>$(GameFolder)\BepInEx\plugins</PluginsFolder>
-	</PropertyGroup>
-
-	<!-- NuGet Packages -->
-	<ItemGroup>
-		<PackageReference Include="VersionInfoGenerator" Version="2.0.0" PrivateAssets="all" />
-	</ItemGroup>
-
-	<!-- Assemblies -->
-	<ItemGroup>
-		<!-- BepInEx -->
-		<Reference Include="$(BIELibsFolder)\BepInEx.*.dll" Private="false" />
-		<Reference Include="$(BIELibsFolder)\0Harmony.dll" Private="false" />
-		<Reference Include="$(BIELibsFolder)\MonoMod.RuntimeDetour.dll" Private="false" />
-		<Reference Include="$(BIELibsFolder)\Il2CppInterop.*.dll" Private="false" />
-
-		<!-- CoreCLR -->
-		<Reference Include="$(CorLibsFolder)\*.dll" Private="false" />
-
-		<!-- Interop -->
-		<Reference Include="$(InteropLibsFolder)/*.dll" Private="false" />
-		<Reference Remove="$(InteropLibsFolder)/netstandard.dll" />
-		<Reference Remove="$(InteropLibsFolder)/Newtonsoft.Json.dll" />
-
-		<!-- Plugins -->
-		<Reference Include="$(PluginsFolder)\GTFO-API.dll" Private="false" />
-	</ItemGroup>
 </Project>
