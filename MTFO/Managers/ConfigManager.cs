@@ -42,7 +42,7 @@ namespace MTFO.Managers
             //Get game version
             GAME_VERSION = GetGameVersion();
 
-            GameDataPath = ResolveGameDataPath(Path.Combine(Paths.BepInExRootPath, "GameData", "MTFO"));
+            GameDataPath = ResolveGameDataPath(Path.Combine(Paths.BepInExRootPath, "GameData"));
             if (string.IsNullOrEmpty(GameDataPath)) GameDataPath = ResolveGameDataPath(Paths.PluginPath);
 
             if (HasGameDataPath)
