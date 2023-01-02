@@ -33,13 +33,9 @@
 		<Reference Include="$(BIELibsFolder)\MonoMod.RuntimeDetour.dll" Private="false" />
 		<Reference Include="$(BIELibsFolder)\Il2CppInterop.*.dll" Private="false" />
 
-		<!-- CoreCLR -->
-		<Reference Include="$(CorLibsFolder)\*.dll" Private="false" />
-
 		<!-- Interop -->
 		<Reference Include="$(InteropLibsFolder)/*.dll" Private="false" />
 		<Reference Remove="$(InteropLibsFolder)/netstandard.dll" />
-		<Reference Remove="$(InteropLibsFolder)/Newtonsoft.Json.dll" />
 
 		<!-- Plugins -->
 		<Reference Include="$(PluginsFolder)\GTFO-API.dll" Private="false" />

@@ -10,6 +10,7 @@
     <Version>4.4.4</Version>
     <VersionPrerelease></VersionPrerelease>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
