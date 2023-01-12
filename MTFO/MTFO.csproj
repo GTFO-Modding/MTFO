@@ -4,18 +4,14 @@
   <PropertyGroup>
     <TargetFrameworks>net6</TargetFrameworks>
     <RootNamespace>MTFO</RootNamespace>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Copyright>© dakkhuza 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>4.5.0</Version>
     <VersionPrerelease></VersionPrerelease>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<Platforms>AnyCPU;x64</Platforms>
+	<Platforms>x64</Platforms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="ConfigStrings.Designer.cs">

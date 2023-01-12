@@ -7,13 +7,10 @@ using System.Text;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch]
+    [HarmonyPatch(typeof(CP_Holopath_Spline), nameof(CP_Holopath_Spline.Reveal))]
     static class Patch_InstantRevealPuzzlePath
     {
-        [HarmonyPrefix]
-        [HarmonyWrapSafe]
-        [HarmonyPatch(typeof(CP_Holopath_Spline), nameof(CP_Holopath_Spline.Reveal))]
-        public static bool Reveal(CP_Holopath_Spline __instance)
+        public static bool Prefix(CP_Holopath_Spline __instance)
         {
             if (__instance.m_revealSpeed < 0)
             {

@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageRundown_New), "PlaceRundown")]
-    class Patch_RundownTierMarker
+    [HarmonyPatch(typeof(CM_PageRundown_New), nameof(CM_PageRundown_New.PlaceRundown))]
+    static class Patch_RundownTierMarker
     {
         public static void Postfix(CM_PageRundown_New __instance)
         {

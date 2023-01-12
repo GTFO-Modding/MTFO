@@ -43,12 +43,17 @@ namespace MTFO.Managers
             GAME_VERSION = GetGameVersion();
 
             GameDataPath = ResolveGameDataPath(Path.Combine(Paths.BepInExRootPath, "GameData"));
-            if (string.IsNullOrEmpty(GameDataPath)) GameDataPath = ResolveGameDataPath(Paths.PluginPath);
+            if (string.IsNullOrEmpty(GameDataPath))
+            {
+                GameDataPath = ResolveGameDataPath(Paths.PluginPath);
+                Log.Warn("Plugin paths for gamedata are under legacy support and will be removed in the future. Considering migrating to the '\\BepInEx\\GameData' folder.");
+            }
 
             if (HasGameDataPath)
             {
                 CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
                 HasCustomContent = Directory.Exists(CustomPath);
+                Log.Warn("Consider migrating custom json data to the '\\BepInEx\\GameData folder instead");
             }
             else
             {

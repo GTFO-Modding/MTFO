@@ -4,13 +4,13 @@ using MTFO.Custom;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(GlowstickInstance), "Update")]
-    class Patch_Glowstick
+    [HarmonyPatch(typeof(GlowstickInstance), nameof(GlowstickInstance.Update))]
+    static class Patch_Glowstick
     {
         //This could be written more efficently if you re-make the glowstick logic and then just overwrite the original
         //
         //but im lazy
-        public static void Postfix(ref GlowstickInstance __instance)
+        public static void Postfix(GlowstickInstance __instance)
         {
             if (!ConfigManager.HasCustomContent) return;
             if (ConfigManager.CustomContent.GlowstickHolder == null) return;
