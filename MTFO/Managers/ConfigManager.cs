@@ -43,7 +43,9 @@ namespace MTFO.Managers
             GAME_VERSION = GetGameVersion();
 
             GameDataPath = ResolveGameDataPath(Path.Combine(Paths.BepInExRootPath, "GameData"));
-            if (string.IsNullOrEmpty(GameDataPath))
+            IsPluginGameDataPath = string.IsNullOrEmpty(GameDataPath);
+
+            if (IsPluginGameDataPath)
             {
                 GameDataPath = ResolveGameDataPath(Paths.PluginPath);
                 Log.Warn("Plugin paths for gamedata are under legacy support and will be removed in the future. Considering migrating to the '\\BepInEx\\GameData' folder.");
@@ -53,13 +55,13 @@ namespace MTFO.Managers
             {
                 CustomPath = Path.Combine(GameDataPath, CUSTOM_FOLDER);
                 HasCustomContent = Directory.Exists(CustomPath);
-                Log.Warn("Consider migrating custom json data to the '\\BepInEx\\GameData folder instead");
             }
             else
             {
                 GameDataPath = string.Empty;
                 CustomPath = string.Empty;
                 HasCustomContent = false;
+                IsPluginGameDataPath = false;
             }
 
             //Setup Managers
@@ -86,6 +88,7 @@ namespace MTFO.Managers
             Log.Debug("---- FLAGS ----");
 
             Log.Debug($"Has GameData Path? {HasGameDataPath}");
+            Log.Debug($"Using plugin GameData path? {IsPluginGameDataPath}");
             Log.Debug($"Has Custom Content? {HasCustomContent}");
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Verbose Logging? {IsVerbose}");
@@ -111,6 +114,7 @@ namespace MTFO.Managers
         public static bool HasGameDataPath = false;
         public static bool HasCustomContent = false;
         public static bool IsModded = false;
+        public static bool IsPluginGameDataPath = false;
         public static bool IsVerbose
         {
             get
