@@ -3,10 +3,10 @@ using CellMenu;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageLoadout), "UpdatePlayerBars")]
-    class Patch_PageLoadoutUpdatePlayerBars
+    [HarmonyPatch(typeof(CM_PageLoadout), nameof(CM_PageLoadout.UpdatePlayerBars))]
+    static class Patch_PageLoadoutUpdatePlayerBars
     {
-        public static void Prefix(ref CM_PageLoadout __instance)
+        public static void Prefix(CM_PageLoadout __instance)
         {
             //Disable matchmake buttons behind players
             foreach(CM_PlayerLobbyBar playerLobbyBar in __instance.m_playerLobbyBars)

@@ -9,9 +9,9 @@ using System;
 namespace MTFO.Patches
 {
     [HarmonyPatch(typeof(CM_PageRundown_New), nameof(CM_PageRundown_New.Intro_RevealRundown))]
-    class Patch_PageRundownNew
+    static class Patch_PageRundownNew
     {
-        public static void Postfix(ref CM_PageRundown_New __instance)
+        public static void Postfix(CM_PageRundown_New __instance)
         {
             //Replace discord button text and link
             __instance.m_discordButton.SetText("MOD SERVER");

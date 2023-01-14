@@ -6,8 +6,8 @@ using MTFO.Utilities;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(AnalyticsManager), "OnGameEvent", typeof(GameEventData))]
-    class Patch_Analytics
+    [HarmonyPatch(typeof(AnalyticsManager), nameof(AnalyticsManager.OnGameEvent), typeof(GameEventData))]
+    static class Patch_Analytics
     {
         public static bool Prefix(GameEventData data)
         {
@@ -15,8 +15,8 @@ namespace MTFO.Patches
         }
     }
 
-    [HarmonyPatch(typeof(SNet_Core_STEAM), "SetFriendsData", new Type[] { typeof(FriendsDataType), typeof(string) })]
-    class Patch_RichPresence2
+    [HarmonyPatch(typeof(SNet_Core_STEAM), nameof(SNet_Core_STEAM.SetFriendsData), typeof(FriendsDataType), typeof(string))]
+    static class Patch_RichPresence2
     {
         public static void Prefix(FriendsDataType type, ref string data, SNet_Core_STEAM __instance)
         {

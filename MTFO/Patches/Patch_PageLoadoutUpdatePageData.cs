@@ -8,10 +8,10 @@ using UnityEngine;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(CM_PageLoadout), "UpdatePageData")]
-    class Patch_PageLoadoutUpdatePageData
+    [HarmonyPatch(typeof(CM_PageLoadout), nameof(CM_PageLoadout.UpdatePageData))]
+    static class Patch_PageLoadoutUpdatePageData
     {
-        public static void Prefix(ref CM_PageLoadout __instance)
+        public static void Prefix(CM_PageLoadout __instance)
         {
             //Replace text blurb on the top right in lobby
             __instance.m_movingContentHolder.Find("ShareServerId/ShareText").gameObject.GetComponent<TextMeshPro>()
