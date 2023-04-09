@@ -132,6 +132,12 @@
   <data name="SETTING_DUMPDATA_DESC" xml:space="preserve">
     <value>Dump GameData to BepInEx/GameData-Dump/revision path?</value>
   </data>
+  <data name="SETTING_DUMPDATA_MODE" xml:space="preserve">
+    <value>Dump GameData Mode</value>
+  </data>
+  <data name="SETTING_DUMPDATA_MODE_DESC" xml:space="preserve">
+    <value>How to Dump GameData? (Single = Dump gamedata in each single file / PartialData = Dump few gamedata as PartialData / FullPartialData = Dump Everything into PartialData)</value>
+  </data>
   <data name="SETTING_HOTRELOAD" xml:space="preserve">
     <value>EnableHotReload</value>
   </data>

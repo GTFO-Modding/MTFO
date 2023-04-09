@@ -44,5 +44,14 @@ namespace MTFO.Utilities
             }
             return dir;
         }
+
+        public static void PrepareEmptyDirectory(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
+            Directory.CreateDirectory(path);
+        }
     }
 }

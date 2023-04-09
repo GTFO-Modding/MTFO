@@ -4,13 +4,17 @@ using GameData;
 using GTFO.API;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Runtime;
+using MTFO.API;
 using MTFO.Managers;
 using MTFO.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace MTFO.NativeDetours
@@ -30,10 +34,7 @@ namespace MTFO.NativeDetours
             _BasePathToDump = Path.Combine(Paths.BepInExRootPath, "GameData-Dump", CellBuildData.GetRevision().ToString());
             if (ConfigManager.DumpGameData)
             {
-                if (!Directory.Exists(_BasePathToDump))
-                {
-                    Directory.CreateDirectory(_BasePathToDump);
-                }
+                PathUtil.PrepareEmptyDirectory(_BasePathToDump);
             }
 
             var method = Il2CppAPI.GetIl2CppMethod<DBBase>(
@@ -51,48 +52,170 @@ namespace MTFO.NativeDetours
 
             try
             {
-                var method = UnityVersionHandler.Wrap(methodInfo);
-                var klass = UnityVersionHandler.Wrap(method.Class);
+                var datablock = new DataBlockBaseWrapper(methodInfo);
+                var datablockName = datablock.BinaryFileName;
+                var jsonFileName = $"{datablockName}.json";
 
-                var fileNameFieldPtr = IL2CPP.GetIl2CppField(klass.Pointer, "m_fileNameBytesNoExt");
+                Log.Verbose($"GetFileContents Call of {datablockName}");
 
-                var fileNamePtr = IntPtr.Zero;
-                IL2CPP.il2cpp_field_static_get_value(fileNameFieldPtr, &fileNamePtr);
-                var fileName = IL2CPP.Il2CppStringToManaged(fileNamePtr).Replace('.', '_');
+                var json = ReadContent(datablock, originalResult);
+                var jsonNode = json.ToJsonNode();
+                var blocks = jsonNode["Blocks"].AsArray();
 
-                Log.Verbose($"GetFileContents Call of {fileName}");
-
+                //
+                // Dump Vanilla Blocks
+                //
                 if (ConfigManager.DumpGameData)
                 {
-                    File.WriteAllText(Path.Combine(_BasePathToDump, $"{fileName}.json"), IL2CPP.Il2CppStringToManaged(originalResult));
-                    Log.Verbose($"{fileName} has dumped to '{_BasePathToDump}'");
+                    DumpContent(datablock, json);
                 }
 
-                string filePath = Path.Combine(ConfigManager.GameDataPath, $"{fileName}.json");
-                if (File.Exists(filePath))
+                //
+                // Read Partial Data JSONs
+                //
+                var pDataPath = Path.Combine(ConfigManager.GameDataPath, datablock.FileName);
+                if (Directory.Exists(pDataPath))
                 {
-                    Log.Verbose($"Reading [{fileName}] from disk...");
-                    Log.Verbose(filePath);
-
-                    var json = File.ReadAllText(filePath);
-                    if (string.IsNullOrWhiteSpace(json))
+                    int count = 0;
+                    foreach (var filePath in Directory.GetFiles(pDataPath, "*.json"))
                     {
-                        throw new InvalidDataException($"File Content for '{filePath}' was null or whitespace! This is not allowed!");
+                        if (!File.Exists(filePath))
+                        {
+                            continue;
+                        }
+
+                        if (File.OpenRead(filePath).TryParseJsonNode(dispose: true, out var pDataNode))
+                        {
+                            blocks.Add(pDataNode);
+                            count++;
+                        }
                     }
 
-                    return IL2CPP.ManagedStringToIl2Cpp(json);
+                    Log.Verbose($" - Added {count} partial data of {datablockName}");
                 }
-                else
+
+                //
+                // Custom API
+                //
+                var jsonItemsToInject = new List<string>();
+                MTFOGameDataAPI.Invoke_OnGameDataContentLoad(datablock.FileName, json, in jsonItemsToInject);
+                foreach(var injectJson in jsonItemsToInject)
                 {
-                    Log.Verbose($"No file found at [{fileName}]");
+                    if (injectJson.TryParseToJsonNode(out var externalPDataJsonNode))
+                    {
+                        blocks.Add(externalPDataJsonNode);
+                    }
                 }
+
+                //
+                // Update LastPersistentID
+                //
+                var highestPresistentID = 0u;
+                foreach (var block in jsonNode["Blocks"].AsArray())
+                {
+                    var id = (uint)block["persistentID"].AsValue();
+                    if (id > highestPresistentID)
+                    {
+                        highestPresistentID = id;
+                    }
+                }
+                jsonNode["LastPersistentID"] = highestPresistentID;
+
+                //
+                // Pass Result
+                //
+                var resultJson = jsonNode.ToJsonStringIndented();
+                var resultJsonPtr = IL2CPP.ManagedStringToIl2Cpp(resultJson);
+                MTFOGameDataAPI.Invoke_OnGameDataContentLoaded(datablock.FileName, resultJson);
+                return resultJsonPtr;
             }
             catch (Exception e)
             {
-                Log.Error($"Exception were found while handling  Detour;Falling back to original content!");
+                Log.Error($"Exception were found while handling Detour;Falling back to original content!");
                 Log.Error(e.ToString());
             }
             return originalResult;
+        }
+
+        private static string ReadContent(DataBlockBaseWrapper datablock, IntPtr originalContentPtr)
+        {
+            var fileName = datablock.BinaryFileName;
+            var jsonFileName = $"{fileName}.json";
+            var originalJson = IL2CPP.Il2CppStringToManaged(originalContentPtr);
+
+            if (ConfigManager.DumpGameData)
+            {
+                File.WriteAllText(Path.Combine(_BasePathToDump, jsonFileName), originalJson);
+                Log.Verbose($"{fileName} has dumped to '{_BasePathToDump}'");
+            }
+
+            string filePath = Path.Combine(ConfigManager.GameDataPath, jsonFileName);
+            if (File.Exists(filePath))
+            {
+                Log.Verbose($"Reading [{fileName}] from disk...");
+                Log.Verbose(filePath);
+
+                var json = File.ReadAllText(filePath);
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    throw new InvalidDataException($"File Content for '{filePath}' was null or whitespace! This is not allowed!");
+                }
+
+                return json;
+            }
+            else
+            {
+                Log.Verbose($"No file found at [{fileName}]");
+                return originalJson;
+            }
+        }
+
+        private static void DumpContent(DataBlockBaseWrapper datablock, string json)
+        {
+            if (!json.TryParseToJsonNode(out var jsonNode))
+            {
+                Log.Verbose($"Unable to dump {datablock.FileName}, Invalid Json Content!");
+                return;
+            }
+            var blocks = jsonNode["Blocks"].AsArray();
+
+            var shouldMakeItPartialData = false;
+            switch (ConfigManager.DumpMode)
+            {
+                case DumpGameDataMode.Single:
+                    shouldMakeItPartialData = false;
+                    break;
+
+                case DumpGameDataMode.PartialData:
+                    shouldMakeItPartialData = datablock.PreferPartialBlockOnDump;
+                    break;
+
+                case DumpGameDataMode.FullPartialData:
+                    shouldMakeItPartialData = true;
+                    break;
+            }
+
+            if (shouldMakeItPartialData) //PartialData Dump Moment
+            {
+                var folderName = datablock.FileName;
+                var baseFolder = Path.Combine(_BasePathToDump, folderName);
+                PathUtil.PrepareEmptyDirectory(baseFolder);
+
+                foreach (var block in blocks)
+                {
+                    var partialJsonFileName = $"{block["persistentID"]}__{block["name"]}.json";
+                    var partialDataSavePath = Path.Combine(baseFolder, partialJsonFileName);
+                    File.WriteAllText(partialDataSavePath, block.ToJsonStringIndented());
+                }
+                jsonNode["Blocks"] = new JsonArray();
+            }
+
+            var fileName = datablock.BinaryFileName;
+            var jsonFileName = $"{fileName}.json";
+
+            var savePath = Path.Combine(_BasePathToDump, jsonFileName);
+            File.WriteAllText(savePath, jsonNode.ToJsonStringIndented());
+            Log.Verbose($"{datablock.FileName} has dumped to '{_BasePathToDump}'");
         }
     }
 }

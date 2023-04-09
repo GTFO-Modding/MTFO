@@ -19,7 +19,7 @@ namespace MTFO {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ConfigStrings {
@@ -102,6 +102,24 @@ namespace MTFO {
         internal static string SETTING_DUMPDATA_DESC {
             get {
                 return ResourceManager.GetString("SETTING_DUMPDATA_DESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dump GameData Mode.
+        /// </summary>
+        internal static string SETTING_DUMPDATA_MODE {
+            get {
+                return ResourceManager.GetString("SETTING_DUMPDATA_MODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to Dump GameData? (Single = Dump gamedata in each single file / PartialData = Dump few gamedata as PartialData / FullPartialData = Dump Everything into PartialData).
+        /// </summary>
+        internal static string SETTING_DUMPDATA_MODE_DESC {
+            get {
+                return ResourceManager.GetString("SETTING_DUMPDATA_MODE_DESC", resourceCulture);
             }
         }
         
