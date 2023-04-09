@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace MTFO
         {
             AllowTrailingCommas = true,
             ReadCommentHandling = JsonCommentHandling.Skip,
-            WriteIndented = true
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
 
         public static string ToJsonStringIndented(this JsonNode jsonNode)
