@@ -136,7 +136,7 @@
     <value>Dump GameData Mode</value>
   </data>
   <data name="SETTING_DUMPDATA_MODE_DESC" xml:space="preserve">
-    <value>How to Dump GameData? (Single = Dump gamedata in each single file / PartialData = Dump few gamedata as PartialData / FullPartialData = Dump Everything into PartialData)</value>
+    <value>The mode in which to dump game data. (Single = Legacy dumping style. Each datablock is writen to it's own file / PartialData = Dumps commonly used datablocks with each entry as it's own file / FullPartialData = Dumps everything as Partial Data)</value>
   </data>
   <data name="SETTING_HOTRELOAD" xml:space="preserve">
     <value>EnableHotReload</value>
