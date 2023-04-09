@@ -10,6 +10,15 @@ using HarmonyLib;
 
 namespace MTFO.Managers
 {
+    using CText = ConfigStrings;
+
+    public enum DumpGameDataMode
+    {
+        Single,
+        PartialData,
+        FullPartialData
+    }
+
     public static class ConfigManager
     {
         private const string CUSTOM_FOLDER = "Custom";
@@ -35,9 +44,10 @@ namespace MTFO.Managers
 
             ConfigFile config = new(CONFIG_PATH, true);
 
-            _enableHotReload = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_HOTRELOAD, false, ConfigStrings.SETTING_HOTRELOAD_DESC);
-            _dumpGameData = config.Bind(ConfigStrings.SECTION_DEV, ConfigStrings.SETTING_DUMPDATA, false, ConfigStrings.SETTING_DUMPDATA_DESC);
-            _isVerbose = config.Bind(ConfigStrings.SECTION_DEBUG, ConfigStrings.SETTING_VERBOSE, false, ConfigStrings.SETTING_VERBOSE_DESC);
+            _enableHotReload = config.Bind(CText.SECTION_DEV, CText.SETTING_HOTRELOAD, false, CText.SETTING_HOTRELOAD_DESC);
+            _dumpGameData = config.Bind(CText.SECTION_DEV, CText.SETTING_DUMPDATA, false, CText.SETTING_DUMPDATA_DESC);
+            _dumpGameDataMode = config.Bind(CText.SECTION_DEV, CText.SETTING_DUMPDATA_MODE, DumpGameDataMode.Single, CText.SETTING_DUMPDATA_MODE_DESC);
+            _isVerbose = config.Bind(CText.SECTION_DEBUG, CText.SETTING_VERBOSE, false, CText.SETTING_VERBOSE_DESC);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
@@ -100,6 +110,7 @@ namespace MTFO.Managers
         private static readonly ConfigEntry<bool> _enableHotReload;
         private static readonly ConfigEntry<bool> _dumpGameData;
         private static readonly ConfigEntry<bool> _isVerbose;
+        private static readonly ConfigEntry<DumpGameDataMode> _dumpGameDataMode;
 
         public static int GAME_VERSION;
 
@@ -117,27 +128,23 @@ namespace MTFO.Managers
         public static bool IsPluginGameDataPath = false;
         public static bool IsVerbose
         {
-            get
-            {
-                return _isVerbose.Value;
-            }
+            get => _isVerbose.Value;
         }
 
         //Dev Tools
         public static bool IsHotReloadEnabled 
         { 
-            get
-            {
-                return _enableHotReload.Value;
-            } 
+            get => _enableHotReload.Value;
         }
 
         public static bool DumpGameData
         {
-            get
-            {
-                return _dumpGameData.Value;
-            }
+            get => _dumpGameData.Value;
+        }
+
+        public static DumpGameDataMode DumpMode
+        {
+            get => _dumpGameDataMode.Value;
         }
 
         private static int GetGameVersion()
