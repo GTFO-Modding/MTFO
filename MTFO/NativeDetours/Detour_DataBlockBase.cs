@@ -56,19 +56,19 @@ namespace MTFO.NativeDetours
                 var datablockName = datablock.BinaryFileName;
                 var jsonFileName = $"{datablockName}.json";
 
-                Log.Verbose($"GetFileContents Call of {datablockName}");
-
-                var json = ReadContent(datablock, originalResult);
-                var jsonNode = json.ToJsonNode();
-                var blocks = jsonNode["Blocks"].AsArray();
-
                 //
                 // Dump Vanilla Blocks
                 //
                 if (ConfigManager.DumpGameData)
                 {
-                    DumpContent(datablock, json);
+                    DumpContent(datablock, IL2CPP.Il2CppStringToManaged(originalResult));
                 }
+
+                Log.Verbose($"GetFileContents Call of {datablockName}");
+
+                var json = ReadContent(datablock, originalResult);
+                var jsonNode = json.ToJsonNode();
+                var blocks = jsonNode["Blocks"].AsArray();
 
                 //
                 // Read Partial Data JSONs
@@ -143,12 +143,6 @@ namespace MTFO.NativeDetours
             var jsonFileName = $"{fileName}.json";
             var originalJson = IL2CPP.Il2CppStringToManaged(originalContentPtr);
 
-            if (ConfigManager.DumpGameData)
-            {
-                File.WriteAllText(Path.Combine(_BasePathToDump, jsonFileName), originalJson);
-                Log.Verbose($"{fileName} has dumped to '{_BasePathToDump}'");
-            }
-
             string filePath = Path.Combine(ConfigManager.GameDataPath, jsonFileName);
             if (File.Exists(filePath))
             {
@@ -177,7 +171,6 @@ namespace MTFO.NativeDetours
                 Log.Verbose($"Unable to dump {datablock.FileName}, Invalid Json Content!");
                 return;
             }
-            var blocks = jsonNode["Blocks"].AsArray();
 
             var shouldMakeItPartialData = false;
             switch (ConfigManager.DumpMode)
@@ -197,6 +190,7 @@ namespace MTFO.NativeDetours
 
             if (shouldMakeItPartialData) //PartialData Dump Moment
             {
+                var blocks = jsonNode["Blocks"].AsArray();
                 var folderName = datablock.FileName;
                 var baseFolder = Path.Combine(_BasePathToDump, folderName);
                 PathUtil.PrepareEmptyDirectory(baseFolder);
@@ -206,6 +200,7 @@ namespace MTFO.NativeDetours
                     var partialJsonFileName = $"{block["persistentID"]}__{block["name"]}.json";
                     var partialDataSavePath = Path.Combine(baseFolder, partialJsonFileName);
                     File.WriteAllText(partialDataSavePath, block.ToJsonStringIndented());
+                    Log.Verbose($" - Save... {partialDataSavePath}");
                 }
                 jsonNode["Blocks"] = new JsonArray();
             }
