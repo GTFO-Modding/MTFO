@@ -66,8 +66,8 @@ namespace MTFO.NativeDetours
 
                 Log.Verbose($"GetFileContents Call of {datablockName}");
 
-                var json = ReadContent(datablock, originalResult);
-                var jsonNode = json.ToJsonNode();
+                var jsonStream = GetContentStream(datablock, originalResult);
+                var jsonNode = jsonStream.ToJsonNode();
                 var blocks = jsonNode["Blocks"].AsArray();
 
                 //
@@ -79,12 +79,13 @@ namespace MTFO.NativeDetours
                     int count = 0;
                     foreach (var filePath in Directory.GetFiles(pDataPath, "*.json"))
                     {
+                        Log.Verbose($" - Trying to add PartialData [{filePath}]");
                         if (!File.Exists(filePath))
                         {
                             continue;
                         }
 
-                        if (File.OpenRead(filePath).TryParseJsonNode(dispose: true, out var pDataNode))
+                        if (PathUtil.OpenUtf8Stream(filePath).TryParseJsonNode(dispose: true, out var pDataNode))
                         {
                             blocks.Add(pDataNode);
                             count++;
@@ -98,12 +99,19 @@ namespace MTFO.NativeDetours
                 // Custom API
                 //
                 var jsonItemsToInject = new List<string>();
-                MTFOGameDataAPI.Invoke_OnGameDataContentLoad(datablock.FileName, json, in jsonItemsToInject);
+                MTFOGameDataAPI.Invoke_OnGameDataContentLoad(datablock.FileName, jsonStream, in jsonItemsToInject);
                 foreach(var injectJson in jsonItemsToInject)
                 {
-                    if (injectJson.TryParseToJsonNode(out var externalPDataJsonNode))
+                    try
                     {
-                        blocks.Add(externalPDataJsonNode);
+                        var newBlock = injectJson.ToJsonNode();
+                        blocks.Add(newBlock);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"Exception were found while reading Injected Json Data!");
+                        Log.Error(e.ToString());
+                        Log.Error($"Full Json:\n{injectJson}");
                     }
                 }
 
@@ -137,7 +145,7 @@ namespace MTFO.NativeDetours
             return originalResult;
         }
 
-        private static string ReadContent(DataBlockBaseWrapper datablock, IntPtr originalContentPtr)
+        private static Stream GetContentStream(DataBlockBaseWrapper datablock, IntPtr originalContentPtr)
         {
             var fileName = datablock.BinaryFileName;
             var jsonFileName = $"{fileName}.json";
@@ -146,21 +154,14 @@ namespace MTFO.NativeDetours
             string filePath = Path.Combine(ConfigManager.GameDataPath, jsonFileName);
             if (File.Exists(filePath))
             {
-                Log.Verbose($"Reading [{fileName}] from disk...");
+                Log.Verbose($"Opening filestream of [{fileName}] from disk...");
                 Log.Verbose(filePath);
-
-                var json = File.ReadAllText(filePath);
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    throw new InvalidDataException($"File Content for '{filePath}' was null or whitespace! This is not allowed!");
-                }
-
-                return json;
+                return PathUtil.OpenUtf8Stream(filePath);
             }
             else
             {
                 Log.Verbose($"No file found at [{fileName}]");
-                return originalJson;
+                return new MemoryStream(Encoding.UTF8.GetBytes(originalJson));
             }
         }
 

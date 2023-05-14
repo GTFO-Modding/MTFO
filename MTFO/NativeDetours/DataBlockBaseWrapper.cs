@@ -33,7 +33,7 @@ namespace MTFO.NativeDetours
         public IntPtr ClassPointer { get; private set; }
         public string FileName { get; private set; }
         public string BinaryFileName { get; private set; }
-        public bool PreferPartialBlockOnDump { get; private set; } = false; 
+        public bool PreferPartialBlockOnDump { get; private set; } = false;
 
         private IntPtr Ptr__m_fileNameNoExt;
 
