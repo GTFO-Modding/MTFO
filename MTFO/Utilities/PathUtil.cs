@@ -9,8 +9,30 @@ using BepInEx;
 
 namespace MTFO.Utilities
 {
+    public enum BaseDirectory
+    {
+        BepInEx,
+        Plugins,
+        GameData,
+    }
+
     public static class PathUtil
     {
+        public static string Prepare(BaseDirectory baseDir, params string[] subDirs)
+        {
+            var baseDirPath = baseDir switch
+            {
+                BaseDirectory.BepInEx => Paths.BepInExRootPath,
+                BaseDirectory.Plugins => Paths.PluginPath,
+                BaseDirectory.GameData => Path.Combine(Paths.BepInExRootPath, "GameData"),
+                _ => throw new ArgumentOutOfRangeException(nameof(baseDir), $"{baseDir} is not a valid value for Argument: {nameof(baseDir)}")
+            };
+
+            string path = (subDirs == null || subDirs.Length <= 0) ? baseDirPath : Path.Combine(baseDirPath, Path.Combine(subDirs));
+            Directory.CreateDirectory(path);
+            return path;
+        }
+
         public static bool CheckCustomFile(string file, out string CombinedPath)
         {
             CombinedPath = Path.Combine(ConfigManager.CustomPath, file);
