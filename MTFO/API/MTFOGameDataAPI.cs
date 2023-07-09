@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,12 @@ namespace MTFO.API
         public static event GameDataContentLoadEvent OnGameDataContentLoad;
         public static event GameDataContentLoadedDelegate OnGameDataContentLoaded;
 
-        internal static void Invoke_OnGameDataContentLoad(string datablockName, string jsonContent, in List<string> jsonItemsToInject)
+        internal static void Invoke_OnGameDataContentLoad(string datablockName, Stream jsonContentStream, in List<string> jsonItemsToInject)
         {
-            OnGameDataContentLoad?.Invoke(datablockName, jsonContent, in jsonItemsToInject);
+            if (OnGameDataContentLoad != null)
+            {
+                OnGameDataContentLoad.Invoke(datablockName, new StreamReader(jsonContentStream).ReadToEnd(), in jsonItemsToInject);
+            }
         }
 
         internal static void Invoke_OnGameDataContentLoaded(string datablockName, string jsonContent)

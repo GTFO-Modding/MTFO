@@ -75,5 +75,10 @@ namespace MTFO.Utilities
             }
             Directory.CreateDirectory(path);
         }
+
+        public static Stream OpenUtf8Stream(string filePath)
+        {
+            return new StreamReader(filePath, Encoding.UTF8).BaseStream;
+        }
     }
 }

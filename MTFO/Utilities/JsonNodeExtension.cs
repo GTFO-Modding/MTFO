@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MTFO
@@ -18,7 +19,7 @@ namespace MTFO
             CommentHandling = JsonCommentHandling.Skip
         };
 
-        private static JsonSerializerOptions _JsonSerializerOptions = new()
+        private static readonly JsonSerializerOptions _JsonSerializerOptions = new()
         {
             AllowTrailingCommas = true,
             ReadCommentHandling = JsonCommentHandling.Skip,
@@ -45,11 +46,11 @@ namespace MTFO
             }
         }
 
-        public static bool TryParseJsonNode(this FileStream fileStream, bool dispose, out JsonNode jsonNode)
+        public static bool TryParseJsonNode(this Stream stream, bool dispose, out JsonNode jsonNode)
         {
             try
             {
-                jsonNode = JsonNode.Parse(fileStream, null, _JsonDocumentOptions);
+                jsonNode = stream.ToJsonNode();
                 return jsonNode != null;
             }
             catch
@@ -61,7 +62,7 @@ namespace MTFO
             {
                 if (dispose)
                 {
-                    fileStream.Close();
+                    stream.Close();
                 }
             }
         }
@@ -69,6 +70,11 @@ namespace MTFO
         public static JsonNode ToJsonNode(this string json)
         {
             return JsonNode.Parse(json, null, _JsonDocumentOptions);
+        }
+
+        public static JsonNode ToJsonNode(this Stream jsonStream)
+        {
+            return JsonNode.Parse(jsonStream, null, _JsonDocumentOptions);
         }
 
         public static bool TryAddJsonItem(this JsonArray jsonArray, string json)
