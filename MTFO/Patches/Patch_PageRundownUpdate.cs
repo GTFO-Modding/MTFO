@@ -27,9 +27,10 @@ namespace MTFO.Patches
             __instance.m_aboutTheRundownButton.OnBtnPressCallback = (Action<int>)((id) => Application.OpenURL("https://gtfo.thunderstore.io/"));
 
             //Hide the matchmake button when selecting an expedition
-            __instance.m_expeditionWindow.m_matchButton.SetText("MATCHMAKE DISABLED");
-            __instance.m_expeditionWindow.m_matchButton.m_visible = false;
-            __instance.m_expeditionWindow.m_matchButton.OnBtnPressCallback = null;
+            //bricks on R8, commenting it out --hirnu
+            //__instance.m_expeditionWindow.m_matchButton.SetText("MATCHMAKE DISABLED");
+            //__instance.m_expeditionWindow.m_matchButton.m_visible = false;
+            //__instance.m_expeditionWindow.m_matchButton.OnBtnPressCallback = null;
         }
     }
 }
