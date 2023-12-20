@@ -126,6 +126,12 @@
   <data name="SECTION_GENERAL" xml:space="preserve">
     <value>General Settings</value>
   </data>
+  <data name="SETTING_DISABLE_ACHIEVEMENTS" xml:space="preserve">
+    <value>Disable Achievements</value>
+  </data>
+  <data name="SETTING_DISABLE_ACHIEVEMENTS_DESC" xml:space="preserve">
+    <value>Disables achievements unlocking. Custom rundowns may make certain achievements easier to unlock or even cause them to erroneously unlock. If you don't care about this you can set this to false</value>
+  </data>
   <data name="SETTING_DUMPDATA" xml:space="preserve">
     <value>Dump GameData</value>
   </data>
