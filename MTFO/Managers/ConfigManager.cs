@@ -48,6 +48,7 @@ namespace MTFO.Managers
             _dumpGameData = config.Bind(CText.SECTION_DEV, CText.SETTING_DUMPDATA, false, CText.SETTING_DUMPDATA_DESC);
             _dumpGameDataMode = config.Bind(CText.SECTION_DEV, CText.SETTING_DUMPDATA_MODE, DumpGameDataMode.Single, CText.SETTING_DUMPDATA_MODE_DESC);
             _isVerbose = config.Bind(CText.SECTION_DEBUG, CText.SETTING_VERBOSE, false, CText.SETTING_VERBOSE_DESC);
+            _disableAchievements = config.Bind(CText.SECTION_GENERAL, CText.SETTING_DISABLE_ACHIEVEMENTS, true, CText.SETTING_DISABLE_ACHIEVEMENTS_DESC);
 
             //Get game version
             GAME_VERSION = GetGameVersion();
@@ -103,6 +104,7 @@ namespace MTFO.Managers
             Log.Debug($"Hot Reload Enabled? {IsHotReloadEnabled}");
             Log.Debug($"Verbose Logging? {IsVerbose}");
             Log.Debug($"Dump Game Data? {DumpGameData}");
+            Log.Debug($"Are Achievements Disabled? {DisableAchievements}");
 
             Log.Debug($"---- DEBUG END ----");
         }
@@ -111,6 +113,7 @@ namespace MTFO.Managers
         private static readonly ConfigEntry<bool> _dumpGameData;
         private static readonly ConfigEntry<bool> _isVerbose;
         private static readonly ConfigEntry<DumpGameDataMode> _dumpGameDataMode;
+        private static readonly ConfigEntry<bool> _disableAchievements;
 
         public static int GAME_VERSION;
 
@@ -129,6 +132,11 @@ namespace MTFO.Managers
         public static bool IsVerbose
         {
             get => _isVerbose.Value;
+        }
+
+        public static bool DisableAchievements
+        {
+            get => _disableAchievements.Value;
         }
 
         //Dev Tools
