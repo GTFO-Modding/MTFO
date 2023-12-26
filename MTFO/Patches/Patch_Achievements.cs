@@ -4,29 +4,17 @@ using SNetwork;
 using HarmonyLib;
 using MTFO.Utilities;
 using MTFO.Managers;
+using Steamworks;
 
 namespace MTFO.Patches
 {
-    [HarmonyPatch(typeof(AchievementManager), nameof(AchievementManager.Setup))]
-    static class Patch_Achievements
+    [HarmonyPatch(typeof(SteamUserStats), nameof(SteamUserStats.SetAchievement))]
+    internal static class Patch_SteamAPI_Achievement
     {
-        public static void Prefix(AchievementManager __instance)
+        static bool Prefix(string pchName)
         {
-            if (!ConfigManager.DisableAchievements) return; 
-            __instance.m_allAchievements.Clear();
-            __instance.enabled = false;
-            Log.Debug($"Cleared achievements {__instance.m_allAchievements.Count}");
-        }
-    }
-
-    [HarmonyPatch(typeof(AchievementManager), nameof(AchievementManager.CanSkipAchievement))]
-    static class Patch_Achievements2
-    {
-        public static bool Prefix(ref bool __result)
-        {
-            if (!ConfigManager.DisableAchievements) return false;
-            __result = true;
-            Log.Debug("Skipped achievement");
+            if (!ConfigManager.DisableAchievements) return true;
+            Log.Error($"Achievement Completion Blocked: {pchName}");
             return false;
         }
     }
