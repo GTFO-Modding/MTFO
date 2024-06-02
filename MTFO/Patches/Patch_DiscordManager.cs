@@ -9,7 +9,7 @@ namespace MTFO.Patches
         [HarmonyPrefix]
         private static bool Pre_UpdateDiscordDetails(eDiscordDetailsDisplay details)
         {
-            if (details == null) return false;
+            if (details == null) return true;
             if (Globals.Global.RundownIdToLoad != 1) return true;
             String detailName = details.ToString();
             if (detailName.Equals("OnSuccess") || detailName.Equals("OnFail"))
