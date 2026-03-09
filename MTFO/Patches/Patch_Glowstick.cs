@@ -20,7 +20,7 @@ namespace MTFO.Patches
 
             if (__instance.m_light != null)
             {
-                __instance.m_light.Range = customGlowstick.Range;
+                __instance.m_light.Range = AgentModifierManager.ApplyModifier(__instance.Owner, AgentModifier.GlowstickEffect, customGlowstick.Range);
                 __instance.m_light.Color = customGlowstick.Color * __instance.m_progression;
                 __instance.m_light.UpdateVisibility(true);
             }
